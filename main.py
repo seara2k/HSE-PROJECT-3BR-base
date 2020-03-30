@@ -45,24 +45,37 @@ class Child(tk.Toplevel):
     def init_child(self):
         self.title("Добавить строку")
         self.geometry('300x400')
-        # self.resizable(False, False)
+        self.resizable(False, False)
 
-        label_description = tk.Label(self, text='DADADADADADADA')
-        label_description.place(x=50, y=50)
+        label_ID = tk.Label(self, text='ID')
+        label_ID.place(x=30, y=50)
 
-        self.entry_description = ttk.Entry(self)
-        self.entry_description.place(x=100, y=50)
+        label_Full_Name = tk.Label(self, text='Full Name')
+        label_Full_Name.place(x=30, y=100)
 
-        self.entry_description = ttk.Entry(self)
-        self.entry_description.place(x=100, y=30)
+        label_Phone_Number = tk.Label(self, text="Phone Number")
+        label_Phone_Number.place(x=30, y=150)
 
-        self.entry_description = ttk.Entry(self)
-        self.entry_description.place(x=100, y=70)
+        label_City = tk.Label(self, text="City")
+        label_City.place(x=30, y=200)
+
+
+        self.ID = ttk.Entry(self)
+        self.ID.place(x=150, y=50)
+
+        self.Full_Name = ttk.Entry(self)
+        self.Full_Name.place(x=150, y=100)
+
+        self.Phone_Number = ttk.Entry(self)
+        self.Phone_Number.place(x=150, y=150)
+
+        self.City = ttk.Entry(self)
+        self.City.place(x=150, y=200)
 
 		# добавить u
-        self.combobox = ttk.Combobox(self, values=["LOLO", "DADADA"])
-        self.combobox.current(0)
-        self.combobox.place(x=100, y=20)
+        #self.combobox = ttk.Combobox(self, values=["LOLO", "DADADA"])
+        #self.combobox.current(0)
+        #self.combobox.place(x=100, y=20)
 
         btn_clear = ttk.Button(self, text="Закрыть", command=self.destroy)
         btn_clear.place(x=300, y=80)
@@ -85,6 +98,10 @@ class DB:
         self.c.execute(
             '''CREATE TABLE IF NOT EXIST jostko("ID" integer primary key,"Full Name" text,"Phone Number" text,"City" text)''')
         self.conn.commit()
+
+
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
