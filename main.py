@@ -8,6 +8,7 @@ class Main(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
         self.init_main()
+        self.DB = DB
 
     def init_main(self):
 
@@ -19,18 +20,21 @@ class Main(tk.Frame):
         btn_open_dialog.pack(side=tk.LEFT)
 
         self.tree = ttk.Treeview(self, columns=(
-            'ID', 'Full Name', "Phone Number", "City"), height=100, show='headings')
+            'ID', 'Full_Name', "Phone_Number", "City"), height=100, show='headings')
         self.tree.column('ID', width=230, anchor=tk.CENTER)
-        self.tree.column('Full Name', width=230, anchor=tk.CENTER)
-        self.tree.column("Phone Number", width=230, anchor=tk.CENTER)
+        self.tree.column('Full_Name', width=230, anchor=tk.CENTER)
+        self.tree.column("Phone_Number", width=230, anchor=tk.CENTER)
         self.tree.column("City", width=230, anchor=tk.CENTER)
 
         self.tree.heading('ID', text='Номер сотрудника')
-        self.tree.heading('Full Name', text='ФИО')
-        self.tree.heading("Phone Number", text="Номер телефона")
+        self.tree.heading('Full_Name', text='ФИО')
+        self.tree.heading("Phone_Number", text="Номер телефона")
         self.tree.heading("City", text="Город")
 
         self.tree.pack()
+
+    def record(self, ID, Full_Name, Phone_Number, City):
+    	self.DB.insert_data(ID, Full_Name, Phone_Number, City)
 
     def open_dialog(self):
         Child()
@@ -47,41 +51,40 @@ class Child(tk.Toplevel):
         self.geometry('300x400')
         self.resizable(False, False)
 
-        label_ID = tk.Label(self, text='ID')
+        label_ID = tk.Label(self, text='Номер сотрудника')
         label_ID.place(x=30, y=50)
 
-        label_Full_Name = tk.Label(self, text='Full Name')
+        label_Full_Name = tk.Label(self, text='ФИО')
         label_Full_Name.place(x=30, y=100)
 
-        label_Phone_Number = tk.Label(self, text="Phone Number")
+        label_Phone_Number = tk.Label(self, text="Номер телефона")
         label_Phone_Number.place(x=30, y=150)
 
-        label_City = tk.Label(self, text="City")
+        label_City = tk.Label(self, text="Город")
         label_City.place(x=30, y=200)
 
+        self.entry_ID = ttk.Entry(self)
+        self.entry_ID.place(x=150, y=50)
 
-        self.ID = ttk.Entry(self)
-        self.ID.place(x=150, y=50)
+        self.entry_Full_Name = ttk.Entry(self)
+        self.entry_Full_Name.place(x=150, y=100)
 
-        self.Full_Name = ttk.Entry(self)
-        self.Full_Name.place(x=150, y=100)
+        self.entry_Phone_Number = ttk.Entry(self)
+        self.entry_Phone_Number.place(x=150, y=150)
 
-        self.Phone_Number = ttk.Entry(self)
-        self.Phone_Number.place(x=150, y=150)
+        self.entry_City = ttk.Entry(self)
+        self.entry_City.place(x=150, y=200)
 
-        self.City = ttk.Entry(self)
-        self.City.place(x=150, y=200)
-
-		# добавить u
+        # добавить u
         #self.combobox = ttk.Combobox(self, values=["LOLO", "DADADA"])
-        #self.combobox.current(0)
+        # self.combobox.current(0)
         #self.combobox.place(x=100, y=20)
 
         btn_clear = ttk.Button(self, text="Закрыть", command=self.destroy)
-        btn_clear.place(x=300, y=80)
+        btn_clear.place(x=30, y=350)
 
         btn_add = ttk.Button(self, text="Добавить")
-        btn_add.place(x=330, y=50)
+        btn_add.place(x=150, y=350)
         btn_add.bind('<Button-1>')
 
         # Не даёт перейти в другое окно
@@ -96,17 +99,21 @@ class DB:
         self.conn = sqlite3.connect("jostko.db")
         self.c = self.conn.cursor()
         self.c.execute(
-            '''CREATE TABLE IF NOT EXIST jostko("ID" integer primary key,"Full Name" text,"Phone Number" text,"City" text)''')
+            '''CREATE TABLE IF NOT EXIST jostko(ID integer primary key,Full_Name text,Phone_Number text,City text)''')
         self.conn.commit()
 
-
-
+        def insert_data(self, ID, Full_Name, Phone_Number, City):
+            self.c.execute(
+                '''INSERT INTO jostko(ID,Full_Name,Phone_Number,City) VALUES (?,?,?,?)''',
+                (ID, Full_Name, Phone_Number, City))
+            self.conn.commit()
 
 
 if __name__ == "__main__":
     root = tk.Tk()
     app = Main(root)
     app.pack()
+    DB = DB()
     root.title("POLUAKOV ZAEBAL")
     root.geometry("1000x600")
     root.resizable(False, False)
