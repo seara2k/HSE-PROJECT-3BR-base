@@ -39,7 +39,7 @@ class Main(tk.Frame):
         self.view_records()
 
     def view_records(self):
-        self.db.c.execute('''SELECT * FROM jostko''')
+        self.db.c.execute('''SELECT * FROM database''')
         [self.tree.delete(i) for i in self.tree.get_children()]
         [self.tree.insert('', 'end', values=row)
          for row in self.db.c.fetchall()]
@@ -108,15 +108,15 @@ class DB:
 
     def __init__(self):
 
-        self.conn = sqlite3.connect("jostko.db")
+        self.conn = sqlite3.connect("database.pickle")
         self.c = self.conn.cursor()
         self.c.execute(
-            '''CREATE TABLE IF NOT EXISTS jostko(ID integer primary key,Full_Name text,Phone_Number text,City text)''')
+            '''CREATE TABLE IF NOT EXISTS database(ID integer primary key,Full_Name text,Phone_Number text,City text)''')
         self.conn.commit()
 
     def insert_data(self, ID, Full_Name, Phone_Number, City):
         self.c.execute(
-            '''INSERT INTO jostko(ID,Full_Name,Phone_Number,City) VALUES (?,?,?,?)''',
+            '''INSERT INTO database(ID,Full_Name,Phone_Number,City) VALUES (?,?,?,?)''',
             (ID, Full_Name, Phone_Number, City))
         self.conn.commit()
 
