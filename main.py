@@ -8,7 +8,8 @@ class Main(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
         self.init_main()
-        self.DB = DB
+        self.db = db
+        self.view_records()
 
     def init_main(self):
 
@@ -34,7 +35,14 @@ class Main(tk.Frame):
         self.tree.pack()
 
     def record(self, ID, Full_Name, Phone_Number, City):
-    	self.DB.insert_data(ID, Full_Name, Phone_Number, City)
+        self.db.insert_data(ID, Full_Name, Phone_Number, City)
+        self.view_records()
+
+    def view_records(self):
+        self.db.c.execute('''SELECT * FROM jostko''')
+        [self.tree.delete(i) for i in self.tree.get_children()]
+        [self.tree.insert('', 'end', values=row)
+         for row in self.db.c.fetchall()]
 
     def open_dialog(self):
         Child()
@@ -45,6 +53,7 @@ class Child(tk.Toplevel):
     def __init__(self):
         super().__init__(root)
         self.init_child()
+        self.view = app
 
     def init_child(self):
         self.title("Добавить строку")
@@ -85,7 +94,10 @@ class Child(tk.Toplevel):
 
         btn_add = ttk.Button(self, text="Добавить")
         btn_add.place(x=150, y=350)
-        btn_add.bind('<Button-1>')
+        btn_add.bind('<Button-1>', lambda event: self.view.record(self.entry_ID.get(),
+                                                                  self.entry_Full_Name.get(),
+                                                                  self.entry_Phone_Number.get(),
+                                                                  self.entry_City.get()))
 
         # Не даёт перейти в другое окно
         self.grab_set()
@@ -99,21 +111,22 @@ class DB:
         self.conn = sqlite3.connect("jostko.db")
         self.c = self.conn.cursor()
         self.c.execute(
-            '''CREATE TABLE IF NOT EXIST jostko(ID integer primary key,Full_Name text,Phone_Number text,City text)''')
+            '''CREATE TABLE IF NOT EXISTS jostko(ID integer primary key,Full_Name text,Phone_Number text,City text)''')
         self.conn.commit()
 
-        def insert_data(self, ID, Full_Name, Phone_Number, City):
-            self.c.execute(
-                '''INSERT INTO jostko(ID,Full_Name,Phone_Number,City) VALUES (?,?,?,?)''',
-                (ID, Full_Name, Phone_Number, City))
-            self.conn.commit()
+    def insert_data(self, ID, Full_Name, Phone_Number, City):
+        self.c.execute(
+            '''INSERT INTO jostko(ID,Full_Name,Phone_Number,City) VALUES (?,?,?,?)''',
+            (ID, Full_Name, Phone_Number, City))
+        self.conn.commit()
 
 
 if __name__ == "__main__":
     root = tk.Tk()
+    db = DB()
     app = Main(root)
     app.pack()
-    DB = DB()
+
     root.title("POLUAKOV ZAEBAL")
     root.geometry("1000x600")
     root.resizable(False, False)
