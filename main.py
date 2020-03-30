@@ -76,7 +76,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Main(root)
     app.pack()
-    root.title("POLUAKOV XUESOS")
+    root.title("POLUAKOV ZAEBAL")
     root.geometry("1000x600")
     root.resizable(False, False)
     root.mainloop()
