@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
+
 class Main(tk.Frame):
 
     def __init__(self, root):
@@ -10,17 +11,17 @@ class Main(tk.Frame):
     def init_main(self):
         toolbar = tk.Frame(bd=70)
         toolbar.pack(side=tk.TOP, fill=tk.X)
-        #self.add_img = tk.PhotoImage(file='add.gif')
-        # image=self.add_img
-        #bg='#d7d8e0'
+
         btn_open_dialog = tk.Button(toolbar, text='Добавить строку', command=self.open_dialog,
                                     bg='#d7d8e0', bd=15, compound=tk.TOP)
         btn_open_dialog.pack(side=tk.LEFT)
-        self.tree=ttk.Treeview(self,columns=('Номер сотрудника','ФИО',"Номер телефона","Город"),height=70,show='headings')
+        self.tree = ttk.Treeview(self, columns=(
+            'Номер сотрудника', 'ФИО', "Номер телефона", "Город"), height=70, show='headings')
+
     def open_dialog(self):
         Child()
 
-ееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееееее
+
 class Child(tk.Toplevel):
 
     def __init__(self):
