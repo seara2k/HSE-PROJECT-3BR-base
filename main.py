@@ -1,4 +1,4 @@
-import tkinter as tk
+ывфывфыimport tkinter as tk
 from tkinter import ttk
 import sqlite3
 
