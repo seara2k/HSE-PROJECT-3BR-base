@@ -127,7 +127,8 @@ if __name__ == "__main__":
     app = Main(root)
     app.pack()
 
-    root.title("POLUAKOV ZAEBAL")
+    root.title("I LOVE POLYAKOV")
     root.geometry("1000x600")
     root.resizable(False, False)
     root.mainloop()
+# Slava.stopspeaking("Gomosyatina")
