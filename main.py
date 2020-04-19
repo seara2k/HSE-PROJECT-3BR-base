@@ -3,8 +3,6 @@ from tkinter import ttk
 import sqlite3
 
 
-#sdsa788976867
-
 class Main(tk.Frame):
 
     def __init__(self, root):
