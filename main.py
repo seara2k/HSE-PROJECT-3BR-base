@@ -129,4 +129,5 @@ if __name__ == "__main__":
     root.geometry("1000x600")
     root.resizable(False, False)
     root.mainloop()
-# Slava.stopspeaking("Gomosyatina")
+
+аппваавппвапвпв
