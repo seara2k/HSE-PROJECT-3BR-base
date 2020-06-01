@@ -27,30 +27,50 @@ def deleting():  # не работает пока что
     tree.delete(item)
 
 
+def analyze1():
+    messagebox.showinfo(
+        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
+
+
+def analyze2():
+    messagebox.showinfo(
+        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
+
+
+def analyze3():
+    messagebox.showinfo(
+        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
+
+
+def analyze4():
+    messagebox.showinfo(
+        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
+
+
+def analyze5():
+    messagebox.showinfo(
+        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
+
+
+def analyze6():
+    messagebox.showinfo(
+        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
+
+
 class Main(tk.Frame):
 
     def __init__(self, root):
         super().__init__(root)
-        self.init_main()
+        self.init_GUI()
         self.db = db
         self.widgets()
-        root.title("I LOVE POLYAKOV")
-        root.geometry("1000x600")
-        root.resizable(False, False)
-        self.view_records()
-
-    # def grid(self):
 
     def widgets(self):
-
-        menubar = tk.Menu(root)
-        menubar.add_command(label="File")
-        menubar.add_command(label="Quit", command=root.quit())
-
-        root.config(menu=menubar)
-
-        # mainmenu = Menu(root)
-        # root.config(menu=mainmenu)
+        """
+        Строка меню
+        """
+        mainmenu = tk.Menu(root)
+        root.config(menu=mainmenu)
 
         filemenu = tk.Menu(mainmenu, tearoff=0)
         filemenu.add_command(label="Открыть...")
@@ -65,31 +85,10 @@ class Main(tk.Frame):
         mainmenu.add_cascade(label="Файл", menu=filemenu)
         mainmenu.add_cascade(label="Справка", menu=helpmenu)
 
-    def init_main(self):
-
-        def analyze1():
-            messagebox.showinfo(
-                'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-        def analyze2():
-            messagebox.showinfo(
-                'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-        def analyze3():
-            messagebox.showinfo(
-                'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-        def analyze4():
-            messagebox.showinfo(
-                'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-        def analyze5():
-            messagebox.showinfo(
-                'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-        def analyze6():
-            messagebox.showinfo(
-                'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
+    def init_GUI(self):
+        """
+        Инициализация интерфейса
+        """
 
         def get_analysis():
             choosen_analysis = combobox_2.get()
@@ -311,7 +310,7 @@ class Main(tk.Frame):
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
         editing_group = tk.LabelFrame(toolbar, text='Таблица')
-        editing_group.pack(side=tk.LEFT, padx=70, pady=0)
+        editing_group.pack(side=tk.LEFT, padx=0, pady=0)
         btn_open_dialog = tk.Button(
             editing_group, text='Добавить строку', command=self.open_dialog)
         btn_open_dialog.pack(side=tk.TOP, padx=10, pady=10)
@@ -354,17 +353,56 @@ class Main(tk.Frame):
                                    command=get_filtr)
         button_method2.pack(side=tk.TOP, padx=30, pady=20)
 
-        self.tree = ttk.Treeview(self, columns=(
-            'ID', 'Full_Name', "Phone_Number", "City"), height=100, show='headings')
-        self.tree.column('ID', width=230, anchor=tk.CENTER)
-        self.tree.column('Full_Name', width=230, anchor=tk.CENTER)
-        self.tree.column("Phone_Number", width=230, anchor=tk.CENTER)
-        self.tree.column("City", width=230, anchor=tk.CENTER)
+
+
+        # Разобраться со стилями надо
+        ttk.Style().configure("TNotebook.Tab", padding=('50', '5'))
+        style = ttk.Style()
+        style.layout("Tab",
+                     [('Notebook.tab', {'sticky': 'nswe', 'children':
+                                        [('Notebook.padding', {'side': 'top', 'sticky': 'nswe', 'children':
+                                                               #[('Notebook.focus', {'side': 'top', 'sticky': 'nswe', 'children':
+                                                               [('Notebook.label', {
+                                                                 'side': 'top', 'sticky': ''})],
+                                                               #})],
+                                                               })],
+                                        })]
+                     )
+
+        # Фрейм таблицы и табов
+        bottom_frame = tk.Frame(bd=10)
+        tab_parent = ttk.Notebook(bottom_frame,)
+        tab1 = ttk.Frame(tab_parent, padding=10)
+        tab2 = ttk.Frame(tab_parent, padding=10)
+        tab3 = ttk.Frame(tab_parent, padding=10)
+        tab_parent.add(tab1, text="Раз")
+        tab_parent.add(tab2, text="Два")
+        tab_parent.add(tab3, text="Три")
+        tab_parent.pack()
+        bottom_frame.pack()
+
+        # Таблица
+        self.tree = ttk.Treeview(tab1, columns=(
+            'ID', 'Full_Name', "Phone_Number", "City"), height=20, show="headings")
+
+        self.tree.column('ID', width=244, anchor=tk.CENTER)
+        self.tree.column('Full_Name', width=244, anchor=tk.CENTER)
+        self.tree.column("Phone_Number", width=244, anchor=tk.CENTER)
+        self.tree.column("City", width=244, anchor=tk.CENTER)
 
         self.tree.heading('ID', text='Номер сотрудника')
         self.tree.heading('Full_Name', text='ФИО')
         self.tree.heading("Phone_Number", text="Номер телефона")
         self.tree.heading("City", text="Город")
+        
+        # Скролл бары в таблице
+        tree_scrollbar_vertical = tk.Scrollbar(
+            tab1, orient="vertical", command=self.tree.yview)
+        tree_scrollbar_vertical.pack(side="right", fill="y")
+
+        tree_scrollbar_horizontal = tk.Scrollbar(
+            tab1, orient="horizontal", command=self.tree.xview)
+        tree_scrollbar_horizontal.pack(side="bottom", fill="x")
 
         self.tree.pack()
 
@@ -460,6 +498,7 @@ if __name__ == "__main__":
     db = DB()
     app = Main(root)
     app.pack()
+    root.title("I LOVE POLYAKOV")
+    root.geometry("1000x550")
+    root.resizable(False, False)
     root.mainloop()
-
-    
