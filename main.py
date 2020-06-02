@@ -192,9 +192,9 @@ class Main(tk.Frame):
         self.tree_1 = ttk.Treeview(tab_1, columns=(
             'ID', 'Full_Name', "Phone_Number"), height=20, show="headings")
 
-        self.tree_1.column('ID', width=325, anchor=tk.CENTER)
-        self.tree_1.column('Full_Name', width=325, anchor=tk.CENTER)
-        self.tree_1.column("Phone_Number", width=325, anchor=tk.CENTER)
+        self.tree_1.column('ID', width=315, anchor=tk.CENTER)
+        self.tree_1.column('Full_Name', width=315, anchor=tk.CENTER)
+        self.tree_1.column("Phone_Number", width=315, anchor=tk.CENTER)
 
         self.tree_1.heading("ID", text="Номер сотрудника", command=lambda:
                             self.sort(self.tree_1, "ID", False))
@@ -216,9 +216,9 @@ class Main(tk.Frame):
         self.tree_2 = ttk.Treeview(tab_2, columns=(
             "ID", "Speciality", "Time"), height=20, show="headings")
 
-        self.tree_2.column("ID", width=325, anchor=tk.CENTER)
-        self.tree_2.column("Speciality", width=325, anchor=tk.CENTER)
-        self.tree_2.column("Time", width=325, anchor=tk.CENTER)
+        self.tree_2.column("ID", width=315, anchor=tk.CENTER)
+        self.tree_2.column("Speciality", width=315, anchor=tk.CENTER)
+        self.tree_2.column("Time", width=315, anchor=tk.CENTER)
 
         self.tree_2.heading("ID", text='Номер сотрудника', command=lambda:
                             self.sort(self.tree_2, "ID", False))
@@ -239,9 +239,9 @@ class Main(tk.Frame):
 
         self.tree_3 = ttk.Treeview(tab_3, columns=(
             "City", "Speciality", "Pays_An_Hour"), height=20, show="headings")
-        self.tree_3.column("City", width=325, anchor=tk.CENTER)
-        self.tree_3.column("Speciality", width=325, anchor=tk.CENTER)
-        self.tree_3.column("Pays_An_Hour", width=325, anchor=tk.CENTER)
+        self.tree_3.column("City", width=315, anchor=tk.CENTER)
+        self.tree_3.column("Speciality", width=315, anchor=tk.CENTER)
+        self.tree_3.column("Pays_An_Hour", width=315, anchor=tk.CENTER)
 
         self.tree_3.heading("City", text="Город", command=lambda:
                             self.sort(self.tree_3, "City", False))
