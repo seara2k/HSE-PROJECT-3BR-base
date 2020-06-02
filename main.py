@@ -73,10 +73,11 @@ class Main(tk.Frame):
         root.config(menu=mainmenu)
 
         filemenu = tk.Menu(mainmenu, tearoff=0)
-        filemenu.add_command(label="Открыть...")
+        filemenu.add_command(label="Открыть")
         filemenu.add_command(label="Новый")
-        filemenu.add_command(label="Сохранить...")
-        filemenu.add_command(label="Выход")
+        filemenu.add_separator()
+        filemenu.add_command(label="Сохранить")
+        filemenu.add_command(label="Сохранить как")
 
         helpmenu = tk.Menu(mainmenu, tearoff=0)
         helpmenu.add_command(label="Помощь")
@@ -89,6 +90,21 @@ class Main(tk.Frame):
         """
         Инициализация интерфейса
         """
+
+        # design
+        # Разобраться со стилями надо
+        ttk.Style().configure("TNotebook.Tab", padding=('50', '5'))
+        style = ttk.Style()
+        style.layout("Tab",
+                     [('Notebook.tab', {'sticky': 'nswe', 'children':
+                                        [('Notebook.padding', {'side': 'top', 'sticky': 'nswe', 'children':
+                                                               #[('Notebook.focus', {'side': 'top', 'sticky': 'nswe', 'children':
+                                                               [('Notebook.label', {
+                                                                 'side': 'top', 'sticky': ''})],
+                                                               #})],
+                                                               })],
+                                        })]
+                     )
 
         def get_analysis():
             choosen_analysis = combobox_2.get()
@@ -306,68 +322,69 @@ class Main(tk.Frame):
                 dialog6.focus_set()  # захват и удержание фокуса
                 dialog6.mainloop()
 
+        # Верхняя часть программы
         toolbar = tk.Frame(bd=10)
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
+        # Фрейм добавки
         editing_group = tk.LabelFrame(toolbar, text='Таблица')
-        editing_group.pack(side=tk.LEFT, padx=0, pady=0)
-        btn_open_dialog = tk.Button(
+        editing_group.pack(side=tk.LEFT, padx=0, pady=0,
+                           anchor=tk.N, fill=tk.Y)
+
+        eg_btn_add = tk.Button(
             editing_group, text='Добавить строку', command=self.open_dialog)
-        btn_open_dialog.pack(side=tk.TOP, padx=10, pady=10)
-        button_edit = tk.Button(editing_group, text="Изменить",
-                                command=editing)
-        button_edit.pack(side=tk.TOP, padx=10, pady=10)
-        button_delete = tk.Button(editing_group, text="Удалить",
-                                  command=deleting)
-        button_delete.pack(side=tk.BOTTOM, padx=10, pady=10)
-        button_delete = tk.Button(editing_group, text="Экспорт",
-                                  command=export)
-        button_delete.pack(side=tk.BOTTOM, padx=10, pady=10)
+        eg_btn_add.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X,expand=1)
+
+        eg_btn_edit = tk.Button(
+            editing_group, text="Изменить", command=editing)
+        eg_btn_edit.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X,expand=1)
+
+        eg_btn_export = tk.Button(
+            editing_group, text="Экспорт", command=export)
+        eg_btn_export.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X,expand=1)
+
+        eg_btn_delete = tk.Button(
+            editing_group, text="Удалить", command=deleting)
+        eg_btn_delete.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X,expand=1)
+
+        # Фрейм анализов
         analysis_group = tk.LabelFrame(toolbar, text='Метод анализа')
-        analysis_group.pack(side=tk.LEFT, padx=70, pady=0)
-        combobox_2 = ttk.Combobox(analysis_group,
-                                  values=["Базовая статистика",
-                                          "Сводная таблица",
-                                          "Столбчатая диаграмма",
-                                          "Гистограмма",
-                                          "Диаграмма Бокса-Вискера",
-                                          "Диаграмма рассеивания"])
-        combobox_2.pack(side=tk.TOP, padx=30, pady=20)
-        combobox_2.current(0)
-        button_method = tk.Button(analysis_group, text="Выбрать",
-                                  command=get_analysis)
-        button_method.pack(side=tk.TOP, padx=30, pady=20)
-        button_delete = tk.Button(analysis_group, text="Экспорт",
-                                  command=export)
-        button_delete.pack(side=tk.BOTTOM, padx=30, pady=20)
+        analysis_group.pack(side=tk.LEFT, padx=10, pady=0,
+                            anchor=tk.N, fill=tk.Y)
+
+        ag_cb_analys = ttk.Combobox(analysis_group,
+                                    values=["Базовая статистика",
+                                            "Сводная таблица",
+                                            "Столбчатая диаграмма",
+                                            "Гистограмма",
+                                            "Диаграмма Бокса-Вискера",
+                                            "Диаграмма рассеивания"],width=25)
+        ag_cb_analys.pack(side=tk.TOP, padx=5, pady=5)
+        ag_cb_analys.current(0)
+
+        ag_btn_choose = tk.Button(
+            analysis_group, text="Выбрать", command=get_analysis)
+        ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X,expand=1)
+
+        ag_btn_export = tk.Button(
+            analysis_group, text="Экспорт", command=export)
+        ag_btn_export.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X,expand=1)
+
+        # Фрейм фильтров
         filtr_group = tk.LabelFrame(toolbar, text='Фильтры')
-        filtr_group.pack(side=tk.LEFT, padx=70, pady=0)
-        combobox_3 = ttk.Combobox(filtr_group,
-                                  values=["Номер сотрудника",
-                                          "ФИО",
-                                          "Номер телефона",
-                                          "Город"])
-        combobox_3.pack(side=tk.TOP, padx=30, pady=20)
-        combobox_3.current(0)
-        button_method2 = tk.Button(filtr_group, text="Отфильтровать",
-                                   command=get_filtr)
-        button_method2.pack(side=tk.TOP, padx=30, pady=20)
+        filtr_group.pack(side=tk.LEFT, padx=10, pady=0,anchor=tk.N, fill=tk.Y)
 
+        fg_cb_filter = ttk.Combobox(filtr_group,
+                                    values=["Номер сотрудника",
+                                            "ФИО",
+                                            "Номер телефона",
+                                            "Город"])
+        fg_cb_filter.pack(side=tk.TOP, padx=5, pady=5)
+        fg_cb_filter.current(0)
 
-
-        # Разобраться со стилями надо
-        ttk.Style().configure("TNotebook.Tab", padding=('50', '5'))
-        style = ttk.Style()
-        style.layout("Tab",
-                     [('Notebook.tab', {'sticky': 'nswe', 'children':
-                                        [('Notebook.padding', {'side': 'top', 'sticky': 'nswe', 'children':
-                                                               #[('Notebook.focus', {'side': 'top', 'sticky': 'nswe', 'children':
-                                                               [('Notebook.label', {
-                                                                 'side': 'top', 'sticky': ''})],
-                                                               #})],
-                                                               })],
-                                        })]
-                     )
+        fg_btn_filtr = tk.Button(
+            filtr_group, text="Отфильтровать", command=get_filtr)
+        fg_btn_filtr.pack(side=tk.TOP, padx=5, pady=5)
 
         # Фрейм таблицы и табов
         bottom_frame = tk.Frame(bd=10)
@@ -394,7 +411,7 @@ class Main(tk.Frame):
         self.tree.heading('Full_Name', text='ФИО')
         self.tree.heading("Phone_Number", text="Номер телефона")
         self.tree.heading("City", text="Город")
-        
+
         # Скролл бары в таблице
         tree_scrollbar_vertical = tk.Scrollbar(
             tab1, orient="vertical", command=self.tree.yview)
