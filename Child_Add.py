@@ -48,12 +48,12 @@ class Child_Add(tk.Toplevel):
         self.entry_City.pack(
             side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
-        Specialty_group = tk.Frame(adding_group)
-        Specialty_group.pack(side=tk.TOP, fill=tk.X)
-        lbl_Specialty = tk.Label(Specialty_group, text='Специальность')
-        lbl_Specialty.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
-        self.entry_Specialty = ttk.Entry(Specialty_group)
-        self.entry_Specialty.pack(
+        Speciality_group = tk.Frame(adding_group)
+        Speciality_group.pack(side=tk.TOP, fill=tk.X)
+        lbl_Speciality = tk.Label(Speciality_group, text='Специальность')
+        lbl_Speciality.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
+        self.entry_Speciality = ttk.Entry(Speciality_group)
+        self.entry_Speciality.pack(
             side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
         Time_group = tk.Frame(adding_group)
@@ -79,12 +79,14 @@ class Child_Add(tk.Toplevel):
         btn_accept = ttk.Button(adding_group, text="Подтвердить")
         btn_accept.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
 
-        # btn_add = ttk.Button(adding_group, text="Добавить")
-        # btn_add.place(x=150, y=350)
-        # btn_add.bind('<Button-1>', lambda event: self.view.record(self.entry_ID.get(),
-        #                                                           self.entry_Full_Name.get(),
-        #                                                           self.entry_Phone_Number.get(),
-        #                                                           self.entry_City.get()))
+
+        btn_accept.bind('<Button-1>', lambda event: self.view.record(self.entry_ID.get(),
+                                                                  self.entry_Full_Name.get(),
+                                                                  self.entry_Phone_Number.get(),
+                                                                  self.entry_City.get(),
+                                                                  self.entry_Speciality.get(),
+                                                                  self.entry_Time.get(),
+                                                                  self.entry_Pays_An_Hour.get()))
 
         # Не даёт перейти в другое окно
         self.grab_set()

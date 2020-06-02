@@ -64,7 +64,7 @@ class Main(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
         self.init_GUI()
-        self.db = db
+        # self.db = db
         self.widgets()
 
     def widgets(self):
@@ -149,7 +149,7 @@ class Main(tk.Frame):
         ag_cb_analys.current(0)
 
         ag_btn_choose = tk.Button(
-            analysis_group, text="Выбрать", command=get_analysis)
+            analysis_group, text="Выбрать")
         ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
         ag_btn_export = tk.Button(
@@ -207,14 +207,14 @@ class Main(tk.Frame):
         self.tree_1.pack()
 
         self.tree_2 = ttk.Treeview(tab_2, columns=(
-            "ID", "Specialty", "Time"), height=20, show="headings")
+            "ID", "Speciality", "Time"), height=20, show="headings")
 
         self.tree_2.column("ID", width=325, anchor=tk.CENTER)
-        self.tree_2.column("Specialty", width=325, anchor=tk.CENTER)
+        self.tree_2.column("Speciality", width=325, anchor=tk.CENTER)
         self.tree_2.column("Time", width=325, anchor=tk.CENTER)
 
         self.tree_2.heading("ID", text='Номер сотрудника')
-        self.tree_2.heading("Specialty", text="Специальность")
+        self.tree_2.heading("Speciality", text="Специальность")
         self.tree_2.heading("Time", text="Часы")
 
         tree_scrollbar_vertical_2 = tk.Scrollbar(
@@ -228,13 +228,13 @@ class Main(tk.Frame):
         self.tree_2.pack()
 
         self.tree_3 = ttk.Treeview(tab_3, columns=(
-            "City", "Specialty", "Pays_An_Hour"), height=20, show="headings")
+            "City", "Speciality", "Pays_An_Hour"), height=20, show="headings")
         self.tree_3.column("City", width=325, anchor=tk.CENTER)
-        self.tree_3.column("Specialty", width=325, anchor=tk.CENTER)
+        self.tree_3.column("Speciality", width=325, anchor=tk.CENTER)
         self.tree_3.column("Pays_An_Hour", width=325, anchor=tk.CENTER)
 
         self.tree_3.heading("City", text="Город")
-        self.tree_3.heading("Specialty", text="Специальность")
+        self.tree_3.heading("Speciality", text="Специальность")
         self.tree_3.heading("Pays_An_Hour", text="Зарплата в час")
 
         tree_scrollbar_vertical_3 = tk.Scrollbar(
@@ -247,12 +247,23 @@ class Main(tk.Frame):
 
         self.tree_3.pack()
 
-    # def record(self, ID, Full_Name, Phone_Number, City):
-    #     self.db.insert_data(ID, Full_Name, Phone_Number, City)
-    #     self.view_records()
+    def record(self, input_ID, input_Full_Name, input_Phone_Number, input_City,
+               input_Speciality, input_Time, input_Pays_An_Hour):
+
+        self.tree_1.insert("", "end", values=(
+            input_ID, input_Full_Name, input_Phone_Number))
+
+        self.tree_2.insert("", "end", values=(
+            input_ID, input_Speciality, input_Time))
+
+        self.tree_3.insert("", "end", values=(
+            input_City, input_Speciality, input_Pays_An_Hour))
+
+        #self.db.insert_data(ID, Full_Name, Phone_Number, City)
+        # self.view_records()
 
     # def view_records(self):
-    #     self.db.c.execute('''SELECT * FROM database''')
+    #     # self.db.c.execute('''SELECT * FROM database''')
     #     [self.tree_1.delete(i) for i in self.tree_1.get_children()]
     #     [self.tree_1.insert('', 'end', values=row)
     #      for row in self.db.c.fetchall()]
@@ -286,7 +297,7 @@ class Main(tk.Frame):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    db = DB()
+    # db = DB()
     app = Main(root)
     app.pack()
     root.title("I LOVE POLYAKOV")
