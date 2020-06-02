@@ -1,5 +1,8 @@
 from tkinter import Tk, ttk, messagebox
 import tkinter as tk
+
+#pylint: disable=C0103
+
 class Child_Analysis(tk.Toplevel):
 
     def __init__(self,root,app):

@@ -11,6 +11,7 @@ import sqlite3
 from Child_Analysis import Child_Analysis
 from Child_Add import Child_Add
 
+#pylint: disable=C0103
 
 def get_filtr():
     pass
@@ -130,7 +131,7 @@ class Main(tk.Frame):
         eg_btn_export.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
         eg_btn_delete = tk.Button(
-            editing_group, text="Удалить", command=deleting)
+            editing_group, text="Удалить", command=self.delete)
         eg_btn_delete.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
         # Фрейм анализов
@@ -249,7 +250,9 @@ class Main(tk.Frame):
 
     def record(self, input_ID, input_Full_Name, input_Phone_Number, input_City,
                input_Speciality, input_Time, input_Pays_An_Hour):
-
+        """
+        Запись данных в таблицы
+        """
         self.tree_1.insert("", "end", values=(
             input_ID, input_Full_Name, input_Phone_Number))
 
@@ -267,6 +270,12 @@ class Main(tk.Frame):
     #     [self.tree_1.delete(i) for i in self.tree_1.get_children()]
     #     [self.tree_1.insert('', 'end', values=row)
     #      for row in self.db.c.fetchall()]
+
+
+    def delete(self):
+        [self.tree_1.delete(row) for row in self.tree_1.selection()]
+        #selected_item = self.tree_1.selection()[i] ## get selected item
+           
 
     def get_analysis():
         pass

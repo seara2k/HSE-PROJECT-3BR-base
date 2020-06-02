@@ -1,22 +1,25 @@
 from tkinter import Tk, ttk, messagebox
 import tkinter as tk
 
+#pylint: disable=C0103
 
 class Child_Add(tk.Toplevel):
 
     def __init__(self, root, app):
         super().__init__(root)
-        self.init_child()
+        self.init_GUI()
         self.view = app
 
-    def init_child(self):
+    def init_GUI(self):
         self.title("Добавить элемент")
         self.geometry('300x290')
         self.resizable(False, False)
 
+        # Фрейм окна
         adding_group = tk.LabelFrame(self, text='Параметры')
         adding_group.pack(fill=tk.BOTH, expand=1, padx=5, pady=5)
 
+        # Надписи и лейблы с их фреймами
         ID_group = tk.Frame(adding_group)
         ID_group.pack(side=tk.TOP, fill=tk.X)
         lbl_ID = tk.Label(ID_group, text='Номер сотрудника')
@@ -74,23 +77,33 @@ class Child_Add(tk.Toplevel):
 
         btn_group = tk.Frame(adding_group)
         btn_group.pack(side=tk.TOP, fill=tk.X)
-        btn_close = ttk.Button(adding_group, text="Очистить поля")
-        btn_close.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
+        btn_clear = ttk.Button(
+            adding_group, text="Очистить поля", command=self.clear)
+        btn_clear.pack(side=tk.LEFT, padx=5, pady=5,
+                       fill=tk.X, expand=1)
         btn_accept = ttk.Button(adding_group, text="Подтвердить")
         btn_accept.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
 
-
         btn_accept.bind('<Button-1>', lambda event: self.view.record(self.entry_ID.get(),
-                                                                  self.entry_Full_Name.get(),
-                                                                  self.entry_Phone_Number.get(),
-                                                                  self.entry_City.get(),
-                                                                  self.entry_Speciality.get(),
-                                                                  self.entry_Time.get(),
-                                                                  self.entry_Pays_An_Hour.get()))
+                                                                     self.entry_Full_Name.get(),
+                                                                     self.entry_Phone_Number.get(),
+                                                                     self.entry_City.get(),
+                                                                     self.entry_Speciality.get(),
+                                                                     self.entry_Time.get(),
+                                                                     self.entry_Pays_An_Hour.get()))
 
         # Не даёт перейти в другое окно
         self.grab_set()
         self.focus_set()
+
+    def clear(self):
+        self.entry_ID.delete(0, tk.END)
+        self.entry_Full_Name.delete(0, tk.END)
+        self.entry_Phone_Number.delete(0, tk.END)
+        self.entry_City.delete(0, tk.END)
+        self.entry_Speciality.delete(0, tk.END)
+        self.entry_Time.delete(0, tk.END)
+        self.entry_Pays_An_Hour.delete(0, tk.END)
 
 if __name__ == "__main__":
     pass
