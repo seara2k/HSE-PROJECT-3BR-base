@@ -8,11 +8,16 @@ import pandas as pd
 # import firsttab
 # import secondtab
 import sqlite3
-from Child_Analysis import Child_Analysis
-from Child_Add import Child_Add
+#from Child_Analysis import Child_Analysis
+from child_add import child_add
+from child_base_stats import child_base_stats
+from child_summary_table import child_summary_table
+from child_bar_chart import child_bar_chart
+from child_histogram import child_histogram
+from child_box_visk import child_box_visk
+from child_dispersion import child_dispersion
 
 # pylint: disable=C0103
-
 
 def get_filtr():
     pass
@@ -66,7 +71,6 @@ class Main(tk.Frame):
     def __init__(self, root):
         super().__init__(root)
         self.init_GUI()
-        # self.db = db
         self.widgets()
 
     def widgets(self):
@@ -96,7 +100,6 @@ class Main(tk.Frame):
         """
 
         # design
-        # Разобраться со стилями надо
         ttk.Style().configure("TNotebook.Tab", padding=('50', '5'))
         style = ttk.Style()
         style.layout("Tab",
@@ -120,7 +123,7 @@ class Main(tk.Frame):
                            anchor=tk.N, fill=tk.Y)
 
         eg_btn_add = tk.Button(
-            editing_group, text='Добавить строку', command=self.open_Add)
+            editing_group, text='Добавить строку', command=self.open_add)
         eg_btn_add.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X, expand=1)
 
         eg_btn_edit = tk.Button(
@@ -140,20 +143,19 @@ class Main(tk.Frame):
         analysis_group.pack(side=tk.LEFT, padx=10, pady=0,
                             anchor=tk.N, fill=tk.Y)
 
-        ag_cb_analys = ttk.Combobox(analysis_group,
+        self.ag_cb_analys = ttk.Combobox(analysis_group,
                                     values=["Базовая статистика",
                                             "Сводная таблица",
                                             "Столбчатая диаграмма",
                                             "Гистограмма",
                                             "Диаграмма Бокса-Вискера",
                                             "Диаграмма рассеивания"], width=25)
-        ag_cb_analys.pack(side=tk.TOP, padx=5, pady=5)
-        ag_cb_analys.current(0)
+        self.ag_cb_analys.pack(side=tk.TOP, padx=5, pady=5)
+        self.ag_cb_analys.current(0)
 
         ag_btn_choose = tk.Button(
-            analysis_group, text="Выбрать")
+            analysis_group, text="Выбрать",command=self.choose_function)
         ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
-
         ag_btn_export = tk.Button(
             analysis_group, text="Экспорт", command=export)
         ag_btn_export.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
@@ -162,28 +164,28 @@ class Main(tk.Frame):
         filtr_group = tk.LabelFrame(toolbar, text='Фильтры')
         filtr_group.pack(side=tk.LEFT, padx=0, pady=0, anchor=tk.N, fill=tk.Y)
 
-        fg_cb_filter = ttk.Combobox(filtr_group,
+        self.fg_cb_filter = ttk.Combobox(filtr_group,
                                     values=["Номер сотрудника",
                                             "ФИО",
                                             "Номер телефона",
                                             "Город"])
-        fg_cb_filter.pack(side=tk.TOP, padx=5, pady=5)
-        fg_cb_filter.current(0)
+        self.fg_cb_filter.pack(side=tk.TOP, padx=5, pady=5)
+        self.fg_cb_filter.current(0)
 
-        fg_btn_filtr = tk.Button(
+        self.fg_btn_filtr = tk.Button(
             filtr_group, text="Отфильтровать", command=get_filtr)
-        fg_btn_filtr.pack(side=tk.TOP, padx=5, pady=5)
+        self.fg_btn_filtr.pack(side=tk.TOP, padx=5, pady=5)
 
         # Фрейм таблицы и табов
         bottom_frame = tk.Frame(bd=10)
-        tab_parent = ttk.Notebook(bottom_frame)
-        tab_1 = ttk.Frame(tab_parent, padding=10)
-        tab_2 = ttk.Frame(tab_parent, padding=10)
-        tab_3 = ttk.Frame(tab_parent, padding=10)
-        tab_parent.add(tab_1, text="Сотрудник")
-        tab_parent.add(tab_2, text="Часы")
-        tab_parent.add(tab_3, text="Работы")
-        tab_parent.pack()
+        self.tab_parent = ttk.Notebook(bottom_frame)
+        tab_1 = ttk.Frame(self.tab_parent, padding=10)
+        tab_2 = ttk.Frame(self.tab_parent, padding=10)
+        tab_3 = ttk.Frame(self.tab_parent, padding=10)
+        self.tab_parent.add(tab_1, text="Сотрудник")
+        self.tab_parent.add(tab_2, text="Часы")
+        self.tab_parent.add(tab_3, text="Работы")
+        self.tab_parent.pack()
         bottom_frame.pack()
 
         # Таблицы и скролл бары к ним
@@ -272,16 +274,10 @@ class Main(tk.Frame):
         self.tree_3.insert("", "end", values=(
             input_City, input_Speciality, input_Pays_An_Hour))
 
-        #self.db.insert_data(ID, Full_Name, Phone_Number, City)
-        # self.view_records()
-
-    # def view_records(self):
-    #     # self.db.c.execute('''SELECT * FROM database''')
-    #     [self.tree_1.delete(i) for i in self.tree_1.get_children()]
-    #     [self.tree_1.insert('', 'end', values=row)
-    #      for row in self.db.c.fetchall()]
-
     def sort(self, tv, col, reverse):
+        """
+        Сортировка при нажатии на колонку
+        """
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
         l.sort(reverse=reverse)
         
@@ -298,46 +294,58 @@ class Main(tk.Frame):
         tv.heading(col, command=lambda:
                    self.sort(tv, col, not reverse))
 
-    # columns = ("ID", "Full_Name", "Phone_Number")
-    # for col in columns:
-    #     self.tree_1.heading(col, text=col, command=lambda:
-    #                         treeview_sort_column(treeview, col, False))
 
-    # ёбнуть сюда eval
     def delete(self):
-        [self.tree_1.delete(row) for row in self.tree_1.selection()]
-        # selected_item = self.tree_1.selection()[i] ## get selected item
+        """
+        Удаление элементов таблицы
+        """
+        if (self.tab_parent.tab(self.tab_parent.select(),"text")=="Сотрудник"):
+            tree="tree_1"
+        elif (self.tab_parent.tab(self.tab_parent.select(),"text")=="Часы"):
+            tree="tree_2"
+        elif (self.tab_parent.tab(self.tab_parent.select(),"text")=="Работы"):
+            tree="tree_3"
+        [getattr(self, tree).delete(row) for row in getattr(self, tree).selection()]
 
-    def get_analysis():
-        pass
+    def choose_function(self):
+        chosen_analysis = self.ag_cb_analys.get()
+        print(chosen_analysis)
+        if (chosen_analysis == "Базовая статистика"):
+            self.open_base_stats_analysis()
+        elif (chosen_analysis == 'Сводная таблица'):
+            self.open_summary_table_analysis()
+        elif (chosen_analysis == 'Столбчатая диаграмма'):
+            self.open_bar_chart_analysis()
+        elif (chosen_analysis == 'Гистограмма'):
+            self.open_histogram_analysis()
+        elif (chosen_analysis == 'Диаграмма Бокса-Вискера'):
+            self.open_box_visk_analysis()
+        elif (chosen_analysis == 'Диаграмма рассеивания'):
+            self.open_dispersion_analysis()
 
-    def open_Add(self):
-        Child_Add(root, app)
+    def open_add(self):
+        child_add(root, app)    
 
-    def open_Analysis(self):
-        Child_Analysis(root, app)
+    def open_base_stats_analysis(self):
+        child_base_stats(root, app)
 
+    def open_summary_table_analysis(self):
+        child_summary_table(root, app)
 
-# class DB:
+    def open_bar_chart_analysis(self):
+        child_bar_chart(root, app)
 
-#     def __init__(self):
+    def open_histogram_analysis(self):
+        child_histogram(root, app)
 
-#         self.conn = sqlite3.connect("database.pickle")
-#         self.c = self.conn.cursor()
-#         self.c.execute(
-#             '''CREATE TABLE IF NOT EXISTS database(ID integer primary key,Full_Name text,Phone_Number text,City text)''')
-#         self.conn.commit()
+    def open_box_visk_analysis(self):
+        child_box_visk(root, app)
 
-#     def insert_data(self, ID, Full_Name, Phone_Number, City):
-#         self.c.execute(
-#             '''INSERT INTO database(ID,Full_Name,Phone_Number,City) VALUES (?,?,?,?)''',
-#             (ID, Full_Name, Phone_Number, City))
-#         self.conn.commit()
-
+    def open_dispersion_analysis(self):
+        child_dispersion(root, app)
 
 if __name__ == "__main__":
     root = tk.Tk()
-    # db = DB()
     app = Main(root)
     app.pack()
     root.title("I LOVE POLYAKOV")

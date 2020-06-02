@@ -3,7 +3,7 @@ import tkinter as tk
 
 #pylint: disable=C0103
 
-class Child_Add(tk.Toplevel):
+class child_add(tk.Toplevel):
 
     def __init__(self, root, app):
         super().__init__(root)
