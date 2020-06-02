@@ -11,7 +11,8 @@ import sqlite3
 from Child_Analysis import Child_Analysis
 from Child_Add import Child_Add
 
-#pylint: disable=C0103
+# pylint: disable=C0103
+
 
 def get_filtr():
     pass
@@ -193,9 +194,12 @@ class Main(tk.Frame):
         self.tree_1.column('Full_Name', width=325, anchor=tk.CENTER)
         self.tree_1.column("Phone_Number", width=325, anchor=tk.CENTER)
 
-        self.tree_1.heading("ID", text="Номер сотрудника")
-        self.tree_1.heading("Full_Name", text='ФИО')
-        self.tree_1.heading("Phone_Number", text="Номер телефона")
+        self.tree_1.heading("ID", text="Номер сотрудника", command=lambda:
+                            self.sort(self.tree_1, "ID", False))
+        self.tree_1.heading("Full_Name", text='ФИО', command=lambda:
+                            self.sort(self.tree_1, "Full_Name", False))
+        self.tree_1.heading("Phone_Number", text="Номер телефона", command=lambda:
+                            self.sort(self.tree_1, "Phone_Number", False))
 
         tree_scrollbar_vertical_1 = tk.Scrollbar(
             tab_1, orient="vertical", command=self.tree_1.yview)
@@ -214,9 +218,12 @@ class Main(tk.Frame):
         self.tree_2.column("Speciality", width=325, anchor=tk.CENTER)
         self.tree_2.column("Time", width=325, anchor=tk.CENTER)
 
-        self.tree_2.heading("ID", text='Номер сотрудника')
-        self.tree_2.heading("Speciality", text="Специальность")
-        self.tree_2.heading("Time", text="Часы")
+        self.tree_2.heading("ID", text='Номер сотрудника', command=lambda:
+                            self.sort(self.tree_2, "ID", False))
+        self.tree_2.heading("Speciality", text="Специальность", command=lambda:
+                            self.sort(self.tree_2, "Speciality", False))
+        self.tree_2.heading("Time", text="Часы", command=lambda:
+                            self.sort(self.tree_2, "Time", False))
 
         tree_scrollbar_vertical_2 = tk.Scrollbar(
             tab_2, orient="vertical", command=self.tree_2.yview)
@@ -234,9 +241,12 @@ class Main(tk.Frame):
         self.tree_3.column("Speciality", width=325, anchor=tk.CENTER)
         self.tree_3.column("Pays_An_Hour", width=325, anchor=tk.CENTER)
 
-        self.tree_3.heading("City", text="Город")
-        self.tree_3.heading("Speciality", text="Специальность")
-        self.tree_3.heading("Pays_An_Hour", text="Зарплата в час")
+        self.tree_3.heading("City", text="Город", command=lambda:
+                            self.sort(self.tree_3, "City", False))
+        self.tree_3.heading("Speciality", text="Специальность", command=lambda:
+                            self.sort(self.tree_3, "Speciality", False))
+        self.tree_3.heading("Pays_An_Hour", text="Зарплата в час", command=lambda:
+                            self.sort(self.tree_3, "Pays_An_Hour", False))
 
         tree_scrollbar_vertical_3 = tk.Scrollbar(
             tab_3, orient="vertical", command=self.tree_3.yview)
@@ -271,11 +281,32 @@ class Main(tk.Frame):
     #     [self.tree_1.insert('', 'end', values=row)
     #      for row in self.db.c.fetchall()]
 
+    def sort(self, tv, col, reverse):
+        l = [(tv.set(k, col), k) for k in tv.get_children('')]
+        l.sort(reverse=reverse)
+        
+        # rearrange items in sorted positions
+        for index, (val, k) in enumerate(l):
+            tv.move(k, '', index)
+        self.add_img_up = tk.PhotoImage(file="arrow_up.gif")
+        self.add_img_down = tk.PhotoImage(file="arrow_down.gif")
+        if (reverse==True):
+            tv.heading(col, image=self.add_img_up)
+        else:
+            tv.heading(col, image=self.add_img_down)
+        # reverse sort next time
+        tv.heading(col, command=lambda:
+                   self.sort(tv, col, not reverse))
 
+    # columns = ("ID", "Full_Name", "Phone_Number")
+    # for col in columns:
+    #     self.tree_1.heading(col, text=col, command=lambda:
+    #                         treeview_sort_column(treeview, col, False))
+
+    # ёбнуть сюда eval
     def delete(self):
         [self.tree_1.delete(row) for row in self.tree_1.selection()]
-        #selected_item = self.tree_1.selection()[i] ## get selected item
-           
+        # selected_item = self.tree_1.selection()[i] ## get selected item
 
     def get_analysis():
         pass
