@@ -107,27 +107,25 @@ class Main(tk.Frame):
                      )
 
         def get_analysis():
-            choosen_analysis = combobox_2.get()
+            choosen_analysis = fg_cb_filter.get()
             if (choosen_analysis == "Базовая статистика"):
                 dialog1 = Tk()
                 dialog1.title('Параметры базовой статистики')
                 dialog1.geometry('300x300+400+300')
                 dialog1.resizable(False, False)
-                dialog1.title = ttk.Checkbutton(dialog1, text='Название')
+                dialog1.title = ttk.Checkbutton(
+                    dialog1, text='Номер сотрудника')
                 dialog1.title.place(x=50, y=30)
-                dialog1.city = ttk.Checkbutton(dialog1, text='Город')
+                dialog1.city = ttk.Checkbutton(dialog1, text='ФИО')
                 dialog1.city.place(x=50, y=60)
-                dialog1.region = ttk.Checkbutton(dialog1, text='Регион')
+                dialog1.region = ttk.Checkbutton(dialog1, text='Телефон')
                 dialog1.region.place(x=50, y=90)
-                dialog1.contacts = ttk.Checkbutton(dialog1, text='Контакты')
+                dialog1.contacts = ttk.Checkbutton(dialog1, text='Город')
                 dialog1.contacts.place(x=50, y=120)
-                dialog1.additional_information = ttk.Checkbutton(
-                    dialog1, text='Дополнительная информация')
-                dialog1.additional_information.place(x=50, y=150)
                 dialog1.numerical1 = ttk.Checkbutton(dialog1, text='Пустая1')
-                dialog1.numerical1.place(x=50, y=180)
+                dialog1.numerical1.place(x=50, y=150)
                 dialog1.numerical2 = ttk.Checkbutton(dialog1, text='Пустая2')
-                dialog1.numerical2.place(x=50, y=210)
+                dialog1.numerical2.place(x=50, y=180)
 
                 dialog1.btn_ok = ttk.Button(
                     dialog1, text='Начать анализ', command=analyze1)
@@ -153,17 +151,17 @@ class Main(tk.Frame):
                 label_quality2.place(x=50, y=80)
                 label_numerical = tk.Label(dialog2, text='Численный столбец')
                 label_numerical.place(x=50, y=110)
-                dialog2.entry_quality1 = ttk.Combobox(dialog2, values=[
-                                                      u'Название', u'Город', u'Регион', u'Контакты', u'Дополнительная информация'])
+                dialog2.entry_quality1 = ttk.Combobox(
+                    dialog2, values=[u'ФИО', u'Город'])
                 dialog2.entry_quality1.current(0)
                 dialog2.entry_quality1.place(x=200, y=50)
-                dialog2.entry_quality2 = ttk.Combobox(dialog2, values=[
-                                                      u'Название', u'Город', u'Регион', u'Контакты', u'Дополнительная информация'])
+                dialog2.entry_quality2 = ttk.Combobox(
+                    dialog2, values=[u'ФИО', u'Город'])
                 dialog2.entry_quality2.current(0)
                 dialog2.entry_quality2.place(x=200, y=80)
 
                 dialog2.entry_numerical = ttk.Combobox(
-                    dialog2, values=[u'', u''])
+                    dialog2, values=[u'Номер сотрудника', u'Телефон'])
                 dialog2.entry_numerical.current(0)
                 dialog2.entry_numerical.place(x=200, y=110)
 
@@ -193,12 +191,12 @@ class Main(tk.Frame):
                 label_quality2 = tk.Label(
                     dialog3, text='Качественный столбец 2')
                 label_quality2.place(x=50, y=100)
-                dialog3.entry_quality1 = ttk.Combobox(dialog3, values=[
-                                                      u'Название', u'Город', u'Регион', u'Контакты', u'Дополнительная информация'])
+                dialog3.entry_quality1 = ttk.Combobox(
+                    dialog3, values=[u'ФИО', u'Город'])
                 dialog3.entry_quality1.current(0)
                 dialog3.entry_quality1.place(x=200, y=50)
-                dialog3.entry_quality2 = ttk.Combobox(dialog3, values=[
-                                                      u'Название', u'Город', u'Регион', u'Контакты', u'Дополнительная информация'])
+                dialog3.entry_quality2 = ttk.Combobox(
+                    dialog3, values=[u'ФИО', u'Город'])
                 dialog3.entry_quality2.current(0)
                 dialog3.entry_quality2.place(x=200, y=100)
 
@@ -226,12 +224,12 @@ class Main(tk.Frame):
                 label_quality1.place(x=50, y=50)
                 label_numerical = tk.Label(dialog4, text='Численный столбец')
                 label_numerical.place(x=50, y=100)
-                dialog4.entry_quality1 = ttk.Combobox(dialog4, values=[
-                                                      u'Название', u'Город', u'Регион', u'Контакты', u'Дополнительная информация'])
+                dialog4.entry_quality1 = ttk.Combobox(
+                    dialog4, values=[u'ФИО', u'Город'])
                 dialog4.entry_quality1.current(0)
                 dialog4.entry_quality1.place(x=200, y=50)
                 dialog4.entry_numerical = ttk.Combobox(
-                    dialog4, values=[u'', u''])
+                    dialog4, values=[u'Номер сотрудника', u'Телефон'])
                 dialog4.entry_numerical.current(0)
                 dialog4.entry_numerical.place(x=200, y=100)
 
@@ -258,12 +256,12 @@ class Main(tk.Frame):
                 label_quality1.place(x=50, y=50)
                 label_numerical = tk.Label(dialog5, text='Численный столбец')
                 label_numerical.place(x=50, y=100)
-                dialog5.entry_quality1 = ttk.Combobox(dialog5, values=[
-                                                      u'Название', u'Город', u'Регион', u'Контакты', u'Дополнительная информация'])
+                dialog5.entry_quality1 = ttk.Combobox(
+                    dialog5, values=[u'ФИО', u'Город'])
                 dialog5.entry_quality1.current(0)
                 dialog5.entry_quality1.place(x=200, y=50)
                 dialog5.entry_numerical = ttk.Combobox(
-                    dialog5, values=[u'', u''])
+                    dialog5, values=[u'Номер сотрудника', u'Телефон'])
                 dialog5.entry_numerical.current(0)
                 dialog5.entry_numerical.place(x=200, y=100)
 
@@ -294,16 +292,16 @@ class Main(tk.Frame):
                 label_numerical2 = tk.Label(
                     dialog6, text='Численный столбец 2')
                 label_numerical2.place(x=50, y=110)
-                dialog6.entry_quality1 = ttk.Combobox(dialog6, values=[
-                                                      u'Название', u'Город', u'Регион', u'Контакты', u'Дополнительная информация'])
+                dialog6.entry_quality1 = ttk.Combobox(
+                    dialog6, values=[u'ФИО', u'Город'])
                 dialog6.entry_quality1.current(0)
                 dialog6.entry_quality1.place(x=200, y=50)
                 dialog6.entry_numerical1 = ttk.Combobox(
-                    dialog6, values=[u'', u''])
+                    dialog6, values=[u'Номер сотрудника', u'Телефон'])
                 dialog6.entry_numerical1.current(0)
                 dialog6.entry_numerical1.place(x=200, y=80)
                 dialog6.entry_numerical2 = ttk.Combobox(
-                    dialog6, values=[u'', u''])
+                    dialog6, values=[u'Номер сотрудника', u'Телефон'])
                 dialog6.entry_numerical2.current(0)
                 dialog6.entry_numerical2.place(x=200, y=110)
 
@@ -333,19 +331,19 @@ class Main(tk.Frame):
 
         eg_btn_add = tk.Button(
             editing_group, text='Добавить строку', command=self.open_dialog)
-        eg_btn_add.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X,expand=1)
+        eg_btn_add.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X, expand=1)
 
         eg_btn_edit = tk.Button(
             editing_group, text="Изменить", command=editing)
-        eg_btn_edit.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X,expand=1)
+        eg_btn_edit.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
         eg_btn_export = tk.Button(
             editing_group, text="Экспорт", command=export)
-        eg_btn_export.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X,expand=1)
+        eg_btn_export.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
         eg_btn_delete = tk.Button(
             editing_group, text="Удалить", command=deleting)
-        eg_btn_delete.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X,expand=1)
+        eg_btn_delete.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
         # Фрейм анализов
         analysis_group = tk.LabelFrame(toolbar, text='Метод анализа')
@@ -358,21 +356,21 @@ class Main(tk.Frame):
                                             "Столбчатая диаграмма",
                                             "Гистограмма",
                                             "Диаграмма Бокса-Вискера",
-                                            "Диаграмма рассеивания"],width=25)
+                                            "Диаграмма рассеивания"], width=25)
         ag_cb_analys.pack(side=tk.TOP, padx=5, pady=5)
         ag_cb_analys.current(0)
 
         ag_btn_choose = tk.Button(
             analysis_group, text="Выбрать", command=get_analysis)
-        ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X,expand=1)
+        ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
         ag_btn_export = tk.Button(
             analysis_group, text="Экспорт", command=export)
-        ag_btn_export.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X,expand=1)
+        ag_btn_export.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
 
         # Фрейм фильтров
         filtr_group = tk.LabelFrame(toolbar, text='Фильтры')
-        filtr_group.pack(side=tk.LEFT, padx=10, pady=0,anchor=tk.N, fill=tk.Y)
+        filtr_group.pack(side=tk.LEFT, padx=0, pady=0, anchor=tk.N, fill=tk.Y)
 
         fg_cb_filter = ttk.Combobox(filtr_group,
                                     values=["Номер сотрудника",
@@ -388,40 +386,78 @@ class Main(tk.Frame):
 
         # Фрейм таблицы и табов
         bottom_frame = tk.Frame(bd=10)
-        tab_parent = ttk.Notebook(bottom_frame,)
-        tab1 = ttk.Frame(tab_parent, padding=10)
-        tab2 = ttk.Frame(tab_parent, padding=10)
-        tab3 = ttk.Frame(tab_parent, padding=10)
-        tab_parent.add(tab1, text="Раз")
-        tab_parent.add(tab2, text="Два")
-        tab_parent.add(tab3, text="Три")
+        tab_parent = ttk.Notebook(bottom_frame)
+        tab_1 = ttk.Frame(tab_parent, padding=10)
+        tab_2 = ttk.Frame(tab_parent, padding=10)
+        tab_3 = ttk.Frame(tab_parent, padding=10)
+        tab_parent.add(tab_1, text="Сотрудник")
+        tab_parent.add(tab_2, text="Часы")
+        tab_parent.add(tab_3, text="Работы")
         tab_parent.pack()
         bottom_frame.pack()
 
-        # Таблица
-        self.tree = ttk.Treeview(tab1, columns=(
-            'ID', 'Full_Name', "Phone_Number", "City"), height=20, show="headings")
+        # Таблицы и скролл бары к ним
+        self.tree_1 = ttk.Treeview(tab_1, columns=(
+            'ID', 'Full_Name', "Phone_Number"), height=20, show="headings")
 
-        self.tree.column('ID', width=244, anchor=tk.CENTER)
-        self.tree.column('Full_Name', width=244, anchor=tk.CENTER)
-        self.tree.column("Phone_Number", width=244, anchor=tk.CENTER)
-        self.tree.column("City", width=244, anchor=tk.CENTER)
+        self.tree_1.column('ID', width=325, anchor=tk.CENTER)
+        self.tree_1.column('Full_Name', width=325, anchor=tk.CENTER)
+        self.tree_1.column("Phone_Number", width=325, anchor=tk.CENTER)
 
-        self.tree.heading('ID', text='Номер сотрудника')
-        self.tree.heading('Full_Name', text='ФИО')
-        self.tree.heading("Phone_Number", text="Номер телефона")
-        self.tree.heading("City", text="Город")
+        self.tree_1.heading("ID", text="Номер сотрудника")
+        self.tree_1.heading("Full_Name", text='ФИО')
+        self.tree_1.heading("Phone_Number", text="Номер телефона")
 
-        # Скролл бары в таблице
-        tree_scrollbar_vertical = tk.Scrollbar(
-            tab1, orient="vertical", command=self.tree.yview)
-        tree_scrollbar_vertical.pack(side="right", fill="y")
+        tree_scrollbar_vertical_1 = tk.Scrollbar(
+            tab_1, orient="vertical", command=self.tree_1.yview)
+        tree_scrollbar_vertical_1.pack(side="right", fill="y")
 
-        tree_scrollbar_horizontal = tk.Scrollbar(
-            tab1, orient="horizontal", command=self.tree.xview)
-        tree_scrollbar_horizontal.pack(side="bottom", fill="x")
+        tree_scrollbar_horizontal_1 = tk.Scrollbar(
+            tab_1, orient="horizontal", command=self.tree_1.xview)
+        tree_scrollbar_horizontal_1.pack(side="bottom", fill="x")
 
-        self.tree.pack()
+        self.tree_1.pack()
+
+        self.tree_2 = ttk.Treeview(tab_2, columns=(
+            "ID", "Specialty", "Time"), height=20, show="headings")
+
+        self.tree_2.column("ID", width=325, anchor=tk.CENTER)
+        self.tree_2.column("Specialty", width=325, anchor=tk.CENTER)
+        self.tree_2.column("Time", width=325, anchor=tk.CENTER)
+
+        self.tree_2.heading("ID", text='Номер сотрудника')
+        self.tree_2.heading("Specialty", text="Специальность")
+        self.tree_2.heading("Time", text="Часы")
+
+        tree_scrollbar_vertical_2 = tk.Scrollbar(
+            tab_2, orient="vertical", command=self.tree_2.yview)
+        tree_scrollbar_vertical_2.pack(side="right", fill="y")
+
+        tree_scrollbar_horizontal_2 = tk.Scrollbar(
+            tab_2, orient="horizontal", command=self.tree_2.xview)
+        tree_scrollbar_horizontal_2.pack(side="bottom", fill="x")
+
+        self.tree_2.pack()
+
+        self.tree_3 = ttk.Treeview(tab_3, columns=(
+            "City", "Specialty", "Pays_An_Hour"), height=20, show="headings")
+        self.tree_3.column("City", width=325, anchor=tk.CENTER)
+        self.tree_3.column("Specialty", width=325, anchor=tk.CENTER)
+        self.tree_3.column("Pays_An_Hour", width=325, anchor=tk.CENTER)
+
+        self.tree_3.heading("City", text="Город")
+        self.tree_3.heading("Specialty", text="Специальность")
+        self.tree_3.heading("Pays_An_Hour", text="Зарплата в час")
+
+        tree_scrollbar_vertical_3 = tk.Scrollbar(
+            tab_3, orient="vertical", command=self.tree_3.yview)
+        tree_scrollbar_vertical_3.pack(side="right", fill="y")
+
+        tree_scrollbar_horizontal_3 = tk.Scrollbar(
+            tab_3, orient="horizontal", command=self.tree_3.xview)
+        tree_scrollbar_horizontal_3.pack(side="bottom", fill="x")
+
+        self.tree_3.pack()
 
     def record(self, ID, Full_Name, Phone_Number, City):
         self.db.insert_data(ID, Full_Name, Phone_Number, City)
