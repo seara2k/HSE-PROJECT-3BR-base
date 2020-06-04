@@ -11,8 +11,8 @@ from child_bar_chart import child_bar_chart
 from child_histogram import child_histogram
 from child_box_visk import child_box_visk
 from child_dispersion import child_dispersion
-
 # pylint: disable=C0103
+
 
 class Main(tk.Frame):
 
@@ -102,7 +102,7 @@ class Main(tk.Frame):
         self.ag_cb_analys.current(0)
 
         ag_btn_choose = ttk.Button(
-            analysis_group, text="Выбрать",command=self.choose_function)
+            analysis_group, text="Выбрать", command=self.choose_function)
         ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
         ag_btn_export = ttk.Button(
             analysis_group, text="Экспорт")
@@ -130,9 +130,11 @@ class Main(tk.Frame):
         tab_1 = ttk.Frame(self.tab_parent, padding=10)
         tab_2 = ttk.Frame(self.tab_parent, padding=10)
         tab_3 = ttk.Frame(self.tab_parent, padding=10)
+        tab_all = ttk.Frame(self.tab_parent, padding=10)
         self.tab_parent.add(tab_1, text="Сотрудник")
         self.tab_parent.add(tab_2, text="Часы")
         self.tab_parent.add(tab_3, text="Работы")
+        self.tab_parent.add(tab_all, text="Полная таблица")
         self.tab_parent.pack()
         bottom_frame.pack()
 
@@ -208,6 +210,42 @@ class Main(tk.Frame):
 
         self.tree_3.pack()
 
+        self.tree_all = ttk.Treeview(tab_all, columns=(
+            "ID", "Full_Name", "City", "Phone_Number", "Speciality", "Time", "Pays_An_Hour"),
+                                     height=20, show="headings")
+        self.tree_all.column('ID', width=135, anchor=tk.CENTER)
+        self.tree_all.column('Full_Name', width=135, anchor=tk.CENTER)
+        self.tree_all.column('City', width=135, anchor=tk.CENTER)
+        self.tree_all.column("Phone_Number", width=135, anchor=tk.CENTER)
+        self.tree_all.column("Speciality", width=135, anchor=tk.CENTER)
+        self.tree_all.column("Time", width=135, anchor=tk.CENTER)
+        self.tree_all.column("Pays_An_Hour", width=135, anchor=tk.CENTER)
+
+        self.tree_all.heading("ID", text="Номер сотрудника", command=lambda:
+                              self.sort(self.tree_all, "ID", False))
+        self.tree_all.heading("Full_Name", text='ФИО', command=lambda:
+                              self.sort(self.tree_all, "Full_Name", False))
+        self.tree_all.heading("City", text="Город", command=lambda:
+                              self.sort(self.tree_all, "City", False))
+        self.tree_all.heading("Phone_Number", text="Номер телефона", command=lambda:
+                              self.sort(self.tree_all, "Phone_Number", False))
+        self.tree_all.heading("Speciality", text="Специальность", command=lambda:
+                              self.sort(self.tree_all, "Speciality", False))
+        self.tree_all.heading("Time", text="Часы", command=lambda:
+                              self.sort(self.tree_all, "Time", False))
+        self.tree_all.heading("Pays_An_Hour", text="Зарплата в час", command=lambda:
+                              self.sort(self.tree_all, "Pays_An_Hour", False))
+
+        tree_scrollbar_vertical_all = tk.Scrollbar(
+            tab_all, orient="vertical", command=self.tree_all.yview)
+        tree_scrollbar_vertical_all.pack(side="right", fill="y")
+
+        tree_scrollbar_horizontal_all = tk.Scrollbar(
+            tab_all, orient="horizontal", command=self.tree_all.xview)
+        tree_scrollbar_horizontal_all.pack(side="bottom", fill="x")
+
+        self.tree_all.pack()
+
     def record(self, input_ID, input_Full_Name, input_Phone_Number, input_City,
                input_Speciality, input_Time, input_Pays_An_Hour):
         """
@@ -222,19 +260,23 @@ class Main(tk.Frame):
         self.tree_3.insert("", "end", values=(
             input_City, input_Speciality, input_Pays_An_Hour))
 
+        self.tree_all.insert("", "end", values=(
+            input_ID, input_Full_Name, input_City, input_Phone_Number, input_Speciality, input_Time,
+            input_Pays_An_Hour))
+
     def sort(self, tv, col, reverse):
         """
         Сортировка при нажатии на колонку
         """
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
         l.sort(reverse=reverse)
-        
+
         # rearrange items in sorted positions
         for index, (val, k) in enumerate(l):
             tv.move(k, '', index)
         self.add_img_up = tk.PhotoImage(file="arrow_up.gif")
         self.add_img_down = tk.PhotoImage(file="arrow_down.gif")
-        if (reverse==True):
+        if reverse:
             tv.heading(col, image=self.add_img_up)
         else:
             tv.heading(col, image=self.add_img_down)
@@ -242,37 +284,36 @@ class Main(tk.Frame):
         tv.heading(col, command=lambda:
                    self.sort(tv, col, not reverse))
 
-
     def delete(self):
         """
         Удаление элементов таблицы
         """
-        if (self.tab_parent.tab(self.tab_parent.select(),"text")=="Сотрудник"):
-            tree="tree_1"
-        elif (self.tab_parent.tab(self.tab_parent.select(),"text")=="Часы"):
-            tree="tree_2"
-        elif (self.tab_parent.tab(self.tab_parent.select(),"text")=="Работы"):
-            tree="tree_3"
+        if self.tab_parent.tab(self.tab_parent.select(), "text") == "Сотрудник":
+            tree = "tree_1"
+        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Часы":
+            tree = "tree_2"
+        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Работы":
+            tree = "tree_3"
         [getattr(self, tree).delete(row) for row in getattr(self, tree).selection()]
 
     def choose_function(self):
         chosen_analysis = self.ag_cb_analys.get()
         print(chosen_analysis)
-        if (chosen_analysis == "Базовая статистика"):
+        if chosen_analysis == "Базовая статистика":
             self.open_base_stats_analysis()
-        elif (chosen_analysis == 'Сводная таблица'):
+        elif chosen_analysis == 'Сводная таблица':
             self.open_summary_table_analysis()
-        elif (chosen_analysis == 'Столбчатая диаграмма'):
+        elif chosen_analysis == 'Столбчатая диаграмма':
             self.open_bar_chart_analysis()
-        elif (chosen_analysis == 'Гистограмма'):
+        elif chosen_analysis == 'Гистограмма':
             self.open_histogram_analysis()
-        elif (chosen_analysis == 'Диаграмма Бокса-Вискера'):
+        elif chosen_analysis == 'Диаграмма Бокса-Вискера':
             self.open_box_visk_analysis()
-        elif (chosen_analysis == 'Диаграмма рассеивания'):
+        elif chosen_analysis == 'Диаграмма рассеивания':
             self.open_dispersion_analysis()
 
     def open_add(self):
-        child_add(root, app)    
+        child_add(root, app)
 
     def open_base_stats_analysis(self):
         child_base_stats(root, app)
@@ -292,11 +333,12 @@ class Main(tk.Frame):
     def open_dispersion_analysis(self):
         child_dispersion(root, app)
 
+
 if __name__ == "__main__":
     root = tk.Tk()
     app = Main(root)
     app.pack()
-    root.title("I LOVE POLYAKOV")
+    root.title("DataBase")
     root.geometry("1000x550")
     root.resizable(False, False)
     root.mainloop()
