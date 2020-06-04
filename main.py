@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
-from tkinter import Tk, ttk, messagebox
 import tkinter as tk
-from tkinter.ttk import Checkbutton
+from tkinter import ttk
 import numpy as np
 import pandas as pd
-# import get_data
-# import firsttab
-# import secondtab
-import sqlite3
-#from Child_Analysis import Child_Analysis
+
 from child_add import child_add
 from child_base_stats import child_base_stats
 from child_summary_table import child_summary_table
@@ -18,53 +13,6 @@ from child_box_visk import child_box_visk
 from child_dispersion import child_dispersion
 
 # pylint: disable=C0103
-
-def get_filtr():
-    pass
-
-
-def export():
-    pass
-
-
-def editing():
-    pass
-
-
-def deleting():  # не работает пока что
-    item = tree.selection()[0]
-    tree.delete(item)
-
-
-def analyze1():
-    messagebox.showinfo(
-        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-
-def analyze2():
-    messagebox.showinfo(
-        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-
-def analyze3():
-    messagebox.showinfo(
-        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-
-def analyze4():
-    messagebox.showinfo(
-        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-
-def analyze5():
-    messagebox.showinfo(
-        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
-
-def analyze6():
-    messagebox.showinfo(
-        'Предупреждение', 'Невозможно произвести анализ с данными параметрами')
-
 
 class Main(tk.Frame):
 
@@ -122,19 +70,19 @@ class Main(tk.Frame):
         editing_group.pack(side=tk.LEFT, padx=0, pady=0,
                            anchor=tk.N, fill=tk.Y)
 
-        eg_btn_add = tk.Button(
+        eg_btn_add = ttk.Button(
             editing_group, text='Добавить строку', command=self.open_add)
         eg_btn_add.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X, expand=1)
 
-        eg_btn_edit = tk.Button(
-            editing_group, text="Изменить", command=editing)
+        eg_btn_edit = ttk.Button(
+            editing_group, text="Изменить")
         eg_btn_edit.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
-        eg_btn_export = tk.Button(
-            editing_group, text="Экспорт", command=export)
+        eg_btn_export = ttk.Button(
+            editing_group, text="Экспорт")
         eg_btn_export.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
-        eg_btn_delete = tk.Button(
+        eg_btn_delete = ttk.Button(
             editing_group, text="Удалить", command=self.delete)
         eg_btn_delete.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
 
@@ -153,11 +101,11 @@ class Main(tk.Frame):
         self.ag_cb_analys.pack(side=tk.TOP, padx=5, pady=5)
         self.ag_cb_analys.current(0)
 
-        ag_btn_choose = tk.Button(
+        ag_btn_choose = ttk.Button(
             analysis_group, text="Выбрать",command=self.choose_function)
         ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
-        ag_btn_export = tk.Button(
-            analysis_group, text="Экспорт", command=export)
+        ag_btn_export = ttk.Button(
+            analysis_group, text="Экспорт")
         ag_btn_export.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
 
         # Фрейм фильтров
@@ -172,8 +120,8 @@ class Main(tk.Frame):
         self.fg_cb_filter.pack(side=tk.TOP, padx=5, pady=5)
         self.fg_cb_filter.current(0)
 
-        self.fg_btn_filtr = tk.Button(
-            filtr_group, text="Отфильтровать", command=get_filtr)
+        self.fg_btn_filtr = ttk.Button(
+            filtr_group, text="Отфильтровать")
         self.fg_btn_filtr.pack(side=tk.TOP, padx=5, pady=5)
 
         # Фрейм таблицы и табов

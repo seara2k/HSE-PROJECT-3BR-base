@@ -1,6 +1,7 @@
-from tkinter import Tk, ttk, messagebox
 import tkinter as tk
-
+from tkinter import ttk
+import numpy as np
+import pandas as pd
 #pylint: disable=C0103
 
 class child_histogram(tk.Toplevel):
