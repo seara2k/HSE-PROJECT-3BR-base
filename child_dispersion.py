@@ -16,7 +16,7 @@ class child_dispersion(tk.Toplevel):
 
     def init_GUI(self):
         self.title("Анализ")
-        self.geometry('340x150')
+        self.geometry('340x160')
         self.resizable(False, False)
 
         # Фрейм окна
