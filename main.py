@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import tkinter as tk
 from tkinter import ttk
-import numpy as np
-import pandas as pd
+# import numpy as np
+# import pandas as pd
 
 from child_add import child_add
 from child_base_stats import child_base_stats
@@ -92,17 +92,17 @@ class Main(tk.Frame):
                             anchor=tk.N, fill=tk.Y)
 
         self.ag_cb_analys = ttk.Combobox(analysis_group,
-                                    values=["Базовая статистика",
-                                            "Сводная таблица",
-                                            "Столбчатая диаграмма",
-                                            "Гистограмма",
-                                            "Диаграмма Бокса-Вискера",
-                                            "Диаграмма рассеивания"], width=25)
+                                         values=["Базовая статистика",
+                                                 "Сводная таблица",
+                                                 "Столбчатая диаграмма",
+                                                 "Гистограмма",
+                                                 "Диаграмма Бокса-Вискера",
+                                                 "Диаграмма рассеивания"], width=25)
         self.ag_cb_analys.pack(side=tk.TOP, padx=5, pady=5)
         self.ag_cb_analys.current(0)
 
         ag_btn_choose = ttk.Button(
-            analysis_group, text="Выбрать", command=self.choose_function)
+            analysis_group, text="Выбрать", command=self.choose_analysis_function)
         ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
         ag_btn_export = ttk.Button(
             analysis_group, text="Экспорт")
@@ -113,10 +113,10 @@ class Main(tk.Frame):
         filtr_group.pack(side=tk.LEFT, padx=0, pady=0, anchor=tk.N, fill=tk.Y)
 
         self.fg_cb_filter = ttk.Combobox(filtr_group,
-                                    values=["Номер сотрудника",
-                                            "ФИО",
-                                            "Номер телефона",
-                                            "Город"])
+                                         values=["Номер сотрудника",
+                                                 "ФИО",
+                                                 "Номер телефона",
+                                                 "Город"])
         self.fg_cb_filter.pack(side=tk.TOP, padx=5, pady=5)
         self.fg_cb_filter.current(0)
 
@@ -127,18 +127,54 @@ class Main(tk.Frame):
         # Фрейм таблицы и табов
         bottom_frame = tk.Frame(bd=10)
         self.tab_parent = ttk.Notebook(bottom_frame)
+        tab_all = ttk.Frame(self.tab_parent, padding=10)
         tab_1 = ttk.Frame(self.tab_parent, padding=10)
         tab_2 = ttk.Frame(self.tab_parent, padding=10)
         tab_3 = ttk.Frame(self.tab_parent, padding=10)
-        tab_all = ttk.Frame(self.tab_parent, padding=10)
+        self.tab_parent.add(tab_all, text="Полная таблица")
         self.tab_parent.add(tab_1, text="Сотрудник")
         self.tab_parent.add(tab_2, text="Часы")
         self.tab_parent.add(tab_3, text="Работы")
-        self.tab_parent.add(tab_all, text="Полная таблица")
         self.tab_parent.pack()
         bottom_frame.pack()
 
         # Таблицы и скролл бары к ним
+        self.tree_all = ttk.Treeview(tab_all, columns=(
+            "ID", "Full_Name", "City", "Phone_Number", "Speciality", "Time", "Pays_An_Hour"),
+            height=20, show="headings")
+
+        self.tree_all.column('ID', width=135, anchor=tk.CENTER)
+        self.tree_all.column('Full_Name', width=135, anchor=tk.CENTER)
+        self.tree_all.column('City', width=135, anchor=tk.CENTER)
+        self.tree_all.column("Phone_Number", width=135, anchor=tk.CENTER)
+        self.tree_all.column("Speciality", width=135, anchor=tk.CENTER)
+        self.tree_all.column("Time", width=135, anchor=tk.CENTER)
+        self.tree_all.column("Pays_An_Hour", width=135, anchor=tk.CENTER)
+
+        self.tree_all.heading("ID", text="Номер сотрудника", command=lambda:
+                              self.sort(self.tree_all, "ID", False))
+        self.tree_all.heading("Full_Name", text='ФИО', command=lambda:
+                              self.sort(self.tree_all, "Full_Name", False))
+        self.tree_all.heading("City", text="Город", command=lambda:
+                              self.sort(self.tree_all, "City", False))
+        self.tree_all.heading("Phone_Number", text="Номер телефона", command=lambda:
+                              self.sort(self.tree_all, "Phone_Number", False))
+        self.tree_all.heading("Speciality", text="Специальность", command=lambda:
+                              self.sort(self.tree_all, "Speciality", False))
+        self.tree_all.heading("Time", text="Часы", command=lambda:
+                              self.sort(self.tree_all, "Time", False))
+        self.tree_all.heading("Pays_An_Hour", text="Зарплата в час", command=lambda:
+                              self.sort(self.tree_all, "Pays_An_Hour", False))
+
+        tree_scrollbar_vertical_all = tk.Scrollbar(
+            tab_all, orient="vertical", command=self.tree_all.yview)
+        tree_scrollbar_vertical_all.pack(side="right", fill="y")
+        tree_scrollbar_horizontal_all = tk.Scrollbar(
+            tab_all, orient="horizontal", command=self.tree_all.xview)
+        tree_scrollbar_horizontal_all.pack(side="bottom", fill="x")
+
+        self.tree_all.pack()
+
         self.tree_1 = ttk.Treeview(tab_1, columns=(
             'ID', 'Full_Name', "Phone_Number"), height=20, show="headings")
 
@@ -210,47 +246,14 @@ class Main(tk.Frame):
 
         self.tree_3.pack()
 
-        self.tree_all = ttk.Treeview(tab_all, columns=(
-            "ID", "Full_Name", "City", "Phone_Number", "Speciality", "Time", "Pays_An_Hour"),
-                                     height=20, show="headings")
-        self.tree_all.column('ID', width=135, anchor=tk.CENTER)
-        self.tree_all.column('Full_Name', width=135, anchor=tk.CENTER)
-        self.tree_all.column('City', width=135, anchor=tk.CENTER)
-        self.tree_all.column("Phone_Number", width=135, anchor=tk.CENTER)
-        self.tree_all.column("Speciality", width=135, anchor=tk.CENTER)
-        self.tree_all.column("Time", width=135, anchor=tk.CENTER)
-        self.tree_all.column("Pays_An_Hour", width=135, anchor=tk.CENTER)
-
-        self.tree_all.heading("ID", text="Номер сотрудника", command=lambda:
-                              self.sort(self.tree_all, "ID", False))
-        self.tree_all.heading("Full_Name", text='ФИО', command=lambda:
-                              self.sort(self.tree_all, "Full_Name", False))
-        self.tree_all.heading("City", text="Город", command=lambda:
-                              self.sort(self.tree_all, "City", False))
-        self.tree_all.heading("Phone_Number", text="Номер телефона", command=lambda:
-                              self.sort(self.tree_all, "Phone_Number", False))
-        self.tree_all.heading("Speciality", text="Специальность", command=lambda:
-                              self.sort(self.tree_all, "Speciality", False))
-        self.tree_all.heading("Time", text="Часы", command=lambda:
-                              self.sort(self.tree_all, "Time", False))
-        self.tree_all.heading("Pays_An_Hour", text="Зарплата в час", command=lambda:
-                              self.sort(self.tree_all, "Pays_An_Hour", False))
-
-        tree_scrollbar_vertical_all = tk.Scrollbar(
-            tab_all, orient="vertical", command=self.tree_all.yview)
-        tree_scrollbar_vertical_all.pack(side="right", fill="y")
-
-        tree_scrollbar_horizontal_all = tk.Scrollbar(
-            tab_all, orient="horizontal", command=self.tree_all.xview)
-        tree_scrollbar_horizontal_all.pack(side="bottom", fill="x")
-
-        self.tree_all.pack()
-
     def record(self, input_ID, input_Full_Name, input_Phone_Number, input_City,
                input_Speciality, input_Time, input_Pays_An_Hour):
         """
         Запись данных в таблицы
         """
+        self.tree_all.insert("", "end", values=(
+            input_ID, input_Full_Name, input_City, input_Phone_Number, input_Speciality, input_Time,
+            input_Pays_An_Hour))
         self.tree_1.insert("", "end", values=(
             input_ID, input_Full_Name, input_Phone_Number))
 
@@ -259,10 +262,6 @@ class Main(tk.Frame):
 
         self.tree_3.insert("", "end", values=(
             input_City, input_Speciality, input_Pays_An_Hour))
-
-        self.tree_all.insert("", "end", values=(
-            input_ID, input_Full_Name, input_City, input_Phone_Number, input_Speciality, input_Time,
-            input_Pays_An_Hour))
 
     def sort(self, tv, col, reverse):
         """
@@ -288,15 +287,18 @@ class Main(tk.Frame):
         """
         Удаление элементов таблицы
         """
-        if self.tab_parent.tab(self.tab_parent.select(), "text") == "Сотрудник":
+        if self.tab_parent.tab(self.tab_parent.select(), "text") == "Полная таблица":
+            tree = "tree_1"
+        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Сотрудник":
             tree = "tree_1"
         elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Часы":
             tree = "tree_2"
         elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Работы":
             tree = "tree_3"
-        [getattr(self, tree).delete(row) for row in getattr(self, tree).selection()]
+        [getattr(self, tree).delete(row)
+         for row in getattr(self, tree).selection()]
 
-    def choose_function(self):
+    def choose_analysis_function(self):
         chosen_analysis = self.ag_cb_analys.get()
         print(chosen_analysis)
         if chosen_analysis == "Базовая статистика":
@@ -312,14 +314,17 @@ class Main(tk.Frame):
         elif chosen_analysis == 'Диаграмма рассеивания':
             self.open_dispersion_analysis()
 
-    def get_values(self,column_name):
-        self.column_name_values=[]
+    def get_values(self, column_name):
+        """
+        Получает данные из колонки
+        """
+        self.column_name_values = []
         for line in self.tree_all.get_children():
-
-            self.column_name_values.append(self.tree_all.set(line, column_name))
+            self.column_name_values.append(
+                self.tree_all.set(line, column_name))
             # print(self.tree_1.item(line)['values'])
         #     for value in self.tree_1.item(line)['values']:
-        #         print(value)
+
         return self.column_name_values
 
     def open_add(self):
@@ -342,7 +347,6 @@ class Main(tk.Frame):
 
     def open_dispersion_analysis(self):
         child_dispersion(root, app)
-
 
 if __name__ == "__main__":
     root = tk.Tk()

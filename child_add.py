@@ -3,7 +3,8 @@ from tkinter import ttk
 import numpy as np
 import pandas as pd
 
-#pylint: disable=C0103
+# pylint: disable=C0103
+
 
 class child_add(tk.Toplevel):
 
@@ -14,7 +15,7 @@ class child_add(tk.Toplevel):
 
     def init_GUI(self):
         self.title("Добавить элемент")
-        self.geometry('300x290')
+        self.geometry('300x295')
         self.resizable(False, False)
 
         # Фрейм окна

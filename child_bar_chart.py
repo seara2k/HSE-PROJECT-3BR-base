@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-import numpy as np
-import pandas as pd
+# import numpy as np
+# import pandas as pd
 import graph_lib
 
 # pylint: disable=C0103
@@ -15,8 +15,8 @@ class child_bar_chart(tk.Toplevel):
         self.view = app
 
     def init_GUI(self):
-        self.title("Параметры столбчатой диаграммы")
-        self.geometry('340x160')
+        self.title("Анализ")
+        self.geometry('340x135')
         self.resizable(False, False)
 
         # Фрейм окна
@@ -32,7 +32,10 @@ class child_bar_chart(tk.Toplevel):
             kach_col_1_group, text="Качественный столбец 1")
         lbl_kach_col_1.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
-        self.cb_kach_col_1 = ttk.Combobox(kach_col_1_group, values=["ФИО", "Город"])
+        self.cb_kach_col_1 = ttk.Combobox(
+            kach_col_1_group, values=["Номер сотрудника", "ФИО", "Город",
+                                      "Номер телефона", "Специальность",
+                                      "Часы", "Зарплата в час"])
         self.cb_kach_col_1.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_kach_col_1.current(0)
 
@@ -43,27 +46,31 @@ class child_bar_chart(tk.Toplevel):
             kach_col_2_group, text="Качественный столбец 2")
         lbl_kach_col_2.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
-        self.cb_kach_col_2 = ttk.Combobox(kach_col_2_group, values=["ФИО", "Город"])
+        self.cb_kach_col_2 = ttk.Combobox(
+            kach_col_2_group, values=["Номер сотрудника", "ФИО", "Город",
+                                      "Номер телефона", "Специальность",
+                                      "Часы", "Зарплата в час"])
         self.cb_kach_col_2.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_kach_col_2.current(0)
 
         btn_start = ttk.Button(
             summary_table_group, text='Начать анализ', command=self.bar_chart_analyze)
         btn_start.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X)
-        # btn_start.bind('<Button-1>', lambda event: dialog2.view.records(dialog2.entry_quality1.get(),
-        #                                                                     dialog2.entry_quality1.get(),
-        # dialog2.entry_numerical.get()))
 
-        # Не даёт перейти в другое окно
         self.grab_set()
         self.focus_set()
 
     def bar_chart_analyze(self):
-        test1 = graph_lib.translate_to_eng(self.cb_kach_col_1.get())
-        test2 = graph_lib.translate_to_eng(self.cb_kach_col_2.get())
-        var1 = self.view.get_values(test1)
-        var2 = self.view.get_values(test2)
-        graph_lib.bar(var1, var2)
+        """
+        Функция вызывает анализ данных с помощью столбцатой диаграммы
+        """
+        column_name_1_ru = self.cb_kach_col_1.get()
+        column_name_2_ru = self.cb_kach_col_2.get()
+        column_name_1_eng = graph_lib.translate_to_eng(column_name_1_ru)
+        column_name_2_eng = graph_lib.translate_to_eng(column_name_2_ru)
+        var_1 = self.view.get_values(column_name_1_eng)
+        var_2 = self.view.get_values(column_name_2_eng)
+        graph_lib.bar_chart(column_name_1_ru, column_name_2_ru, var_1, var_2)
 
 if __name__ == "__main__":
     pass
