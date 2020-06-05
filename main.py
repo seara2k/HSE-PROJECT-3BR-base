@@ -312,6 +312,16 @@ class Main(tk.Frame):
         elif chosen_analysis == 'Диаграмма рассеивания':
             self.open_dispersion_analysis()
 
+    def get_values(self,column_name):
+        self.column_name_values=[]
+        for line in self.tree_all.get_children():
+
+            self.column_name_values.append(self.tree_all.set(line, column_name))
+            # print(self.tree_1.item(line)['values'])
+        #     for value in self.tree_1.item(line)['values']:
+        #         print(value)
+        return self.column_name_values
+
     def open_add(self):
         child_add(root, app)
 
