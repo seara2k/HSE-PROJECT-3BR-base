@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-import graph_lib
+import lib
 # import numpy as np
 # import pandas as pd
 # pylint: disable=C0103

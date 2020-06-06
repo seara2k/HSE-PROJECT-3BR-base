@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 # import numpy as np
 # import pandas as pd
-import graph_lib
+import lib
 
 # pylint: disable=C0103
 
