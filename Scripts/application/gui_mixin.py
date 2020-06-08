@@ -8,7 +8,6 @@ class main_gui:
         """
         Инициализация интерфейса
         """
-
         # design
         ttk.Style().configure("TNotebook.Tab", padding=('50', '5'))
         style = ttk.Style()

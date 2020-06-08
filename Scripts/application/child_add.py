@@ -1,17 +1,15 @@
 import tkinter as tk
 from tkinter import ttk
-import numpy as np
-import pandas as pd
 
 # pylint: disable=C0103
 
 
 class child_add(tk.Toplevel):
 
-    def __init__(self, root, app):
-        super().__init__(root)
+    def __init__(self, parent):
+        super().__init__()
+        self.parent = parent
         self.init_GUI()
-        self.view = app
 
     def init_GUI(self):
         self.title("Добавить элемент")
@@ -87,13 +85,13 @@ class child_add(tk.Toplevel):
         btn_accept = ttk.Button(adding_group, text="Подтвердить")
         btn_accept.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
 
-        btn_accept.bind('<Button-1>', lambda event: self.view.record(self.entry_ID.get(),
-                                                                     self.entry_Full_Name.get(),
-                                                                     self.entry_Phone_Number.get(),
-                                                                     self.entry_City.get(),
-                                                                     self.entry_Speciality.get(),
-                                                                     self.entry_Time.get(),
-                                                                     self.entry_Pays_An_Hour.get()))
+        btn_accept.bind('<Button-1>', lambda event: self.parent.record(self.entry_ID.get(),
+                                                                       self.entry_Full_Name.get(),
+                                                                       self.entry_Phone_Number.get(),
+                                                                       self.entry_City.get(),
+                                                                       self.entry_Speciality.get(),
+                                                                       self.entry_Time.get(),
+                                                                       self.entry_Pays_An_Hour.get()))
 
         # Не даёт перейти в другое окно
         self.grab_set()
@@ -107,6 +105,3 @@ class child_add(tk.Toplevel):
         self.entry_Speciality.delete(0, tk.END)
         self.entry_Time.delete(0, tk.END)
         self.entry_Pays_An_Hour.delete(0, tk.END)
-
-if __name__ == "__main__":
-    pass

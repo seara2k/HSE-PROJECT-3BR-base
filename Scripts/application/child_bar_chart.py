@@ -1,7 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-# import numpy as np
-# import pandas as pd
 import lib
 
 # pylint: disable=C0103
@@ -9,15 +7,15 @@ import lib
 
 class child_bar_chart(tk.Toplevel):
 
-    def __init__(self, root, app):
-        super().__init__(root)
-        self.init_GUI()
-        self.view = app
-
-    def init_GUI(self):
+    def __init__(self, parent):
+        super().__init__()
+        self.parent = parent
         self.title("Анализ")
         self.geometry('340x135')
         self.resizable(False, False)
+        self.init_GUI()
+
+    def init_GUI(self):
 
         # Фрейм окна
         summary_table_group = tk.LabelFrame(
@@ -66,11 +64,8 @@ class child_bar_chart(tk.Toplevel):
         """
         column_name_1_ru = self.cb_kach_col_1.get()
         column_name_2_ru = self.cb_kach_col_2.get()
-        column_name_1_eng = graph_lib.translate_to_eng(column_name_1_ru)
-        column_name_2_eng = graph_lib.translate_to_eng(column_name_2_ru)
-        var_1 = self.view.get_values(column_name_1_eng)
-        var_2 = self.view.get_values(column_name_2_eng)
-        graph_lib.bar_chart(column_name_1_ru, column_name_2_ru, var_1, var_2)
-
-if __name__ == "__main__":
-    pass
+        column_name_1_eng = lib.translate_to_eng(column_name_1_ru)
+        column_name_2_eng = lib.translate_to_eng(column_name_2_ru)
+        var_1 = self.parent.get_values(column_name_1_eng)
+        var_2 = self.parent.get_values(column_name_2_eng)
+        lib.bar_chart(column_name_1_ru, column_name_2_ru, var_1, var_2)
