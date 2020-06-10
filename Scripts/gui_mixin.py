@@ -1,14 +1,64 @@
 import tkinter as tk
 from tkinter import ttk
+from . import child_add as child_add
+# from . import child_base_stats as child_base_stats
+# from . import child_summary_table as child_summary_table
+# from . import child_bar_chart as child_bar_chart
+# from . import child_histogram as child_histogram
+# from . import child_box_visk as child_box_visk
+# from . import child_dispersion as child_dispersion
 
 
 class main_gui:
+
+    def open_add(self):
+        child_add.child_add(self)
+
+    # def open_base_stats_analysis(self):
+    #     child_base_stats.child_base_stats(self)
+
+    # def open_summary_table_analysis(self):
+    #     child_summary_table.child_summary_table(self)
+
+    # def open_bar_chart_analysis(self):
+    #     child_bar_chart.child_bar_chart(self)
+
+    # def open_histogram_analysis(self):
+    #     child_histogram.child_histogram(self)
+
+    # def open_box_visk_analysis(self):
+    #     child_box_visk.child_box_visk(self)
+
+    # def open_dispersion_analysis(self):
+    #     child_dispersion.child_dispersion(self)
+
+    def widgets(self):
+        """
+        Верхнее меню программы
+        """
+        mainmenu = tk.Menu(self)
+
+        filemenu = tk.Menu(mainmenu, tearoff=0)
+        filemenu.add_command(label="Открыть", command=self.import_from_excel)
+        filemenu.add_command(label="Новый")
+        filemenu.add_separator()
+        filemenu.add_command(label="Сохранить", command=self.save_to_pickle)
+        filemenu.add_command(label="Сохранить в .xlsx",
+                             command=self.export_to_excel)
+
+        helpmenu = tk.Menu(mainmenu, tearoff=0)
+        helpmenu.add_command(label="Помощь")
+        helpmenu.add_command(label="О программе")
+
+        mainmenu.add_cascade(label="Файл", menu=filemenu)
+        mainmenu.add_cascade(label="Справка", menu=helpmenu)
+        self.config(menu=mainmenu)
 
     def init_GUI(self):
         """
         Инициализация интерфейса
         """
-        # design
+        # design and mats
         ttk.Style().configure("TNotebook.Tab", padding=('50', '5'))
         style = ttk.Style()
         style.layout("Tab",
@@ -21,7 +71,8 @@ class main_gui:
                                                                })],
                                         })]
                      )
-
+        self.add_img_up = tk.PhotoImage(file=".\\Materials\\arrow_up.gif")
+        self.add_img_down = tk.PhotoImage(file=".\\Materials\\arrow_down.gif")
         # Верхняя часть программы
         toolbar = tk.Frame(bd=10)
         toolbar.pack(side=tk.TOP, fill=tk.X)
@@ -82,7 +133,7 @@ class main_gui:
         self.fg_cb_filter.current(0)
 
         self.fg_btn_filtr = ttk.Button(
-            filtr_group, text="Отфильтровать")
+            filtr_group, text="Рефреш таблицы", command=self.refresh_from_database)
         self.fg_btn_filtr.pack(side=tk.TOP, padx=5, pady=5)
 
         # Фрейм таблицы и табов
@@ -100,9 +151,10 @@ class main_gui:
         bottom_frame.pack()
 
         # Таблицы и скролл бары к ним
-        self.tree_all = ttk.Treeview(tab_all, columns=(
-            "ID", "Full_Name", "City", "Phone_Number", "Speciality", "Time", "Pays_An_Hour"),
-            height=20, show="headings")
+        self.tree_all_columns = ["ID", "Full_Name", "City",
+                                 "Phone_Number", "Speciality", "Time", "Pays_An_Hour"]
+        self.tree_all = ttk.Treeview(
+            tab_all, columns=self.tree_all_columns, height=20, show="headings")
 
         self.tree_all.column('ID', width=135, anchor=tk.CENTER)
         self.tree_all.column('Full_Name', width=135, anchor=tk.CENTER)
@@ -113,19 +165,19 @@ class main_gui:
         self.tree_all.column("Pays_An_Hour", width=135, anchor=tk.CENTER)
 
         self.tree_all.heading("ID", text="Номер сотрудника", command=lambda:
-                              self.sort(self.tree_all, "ID", False))
+                              self.sort(self.tree_all, "ID", False, "tree_all"))
         self.tree_all.heading("Full_Name", text='ФИО', command=lambda:
-                              self.sort(self.tree_all, "Full_Name", False))
+                              self.sort(self.tree_all, "Full_Name", False, "tree_all"))
         self.tree_all.heading("City", text="Город", command=lambda:
-                              self.sort(self.tree_all, "City", False))
+                              self.sort(self.tree_all, "City", False, "tree_all"))
         self.tree_all.heading("Phone_Number", text="Номер телефона", command=lambda:
-                              self.sort(self.tree_all, "Phone_Number", False))
+                              self.sort(self.tree_all, "Phone_Number", False, "tree_all"))
         self.tree_all.heading("Speciality", text="Специальность", command=lambda:
-                              self.sort(self.tree_all, "Speciality", False))
+                              self.sort(self.tree_all, "Speciality", False, "tree_all"))
         self.tree_all.heading("Time", text="Часы", command=lambda:
-                              self.sort(self.tree_all, "Time", False))
+                              self.sort(self.tree_all, "Time", False, "tree_all"))
         self.tree_all.heading("Pays_An_Hour", text="Зарплата в час", command=lambda:
-                              self.sort(self.tree_all, "Pays_An_Hour", False))
+                              self.sort(self.tree_all, "Pays_An_Hour", False, "tree_all"))
 
         tree_scrollbar_vertical_all = tk.Scrollbar(
             tab_all, orient="vertical", command=self.tree_all.yview)
@@ -136,19 +188,20 @@ class main_gui:
 
         self.tree_all.pack()
 
-        self.tree_1 = ttk.Treeview(tab_1, columns=(
-            'ID', 'Full_Name', "Phone_Number"), height=20, show="headings")
+        self.tree_1_columns = ['ID', 'Full_Name', "Phone_Number"]
+        self.tree_1 = ttk.Treeview(
+            tab_1, columns=self.tree_1_columns, height=20, show="headings")
 
         self.tree_1.column('ID', width=315, anchor=tk.CENTER)
         self.tree_1.column('Full_Name', width=315, anchor=tk.CENTER)
         self.tree_1.column("Phone_Number", width=315, anchor=tk.CENTER)
 
         self.tree_1.heading("ID", text="Номер сотрудника", command=lambda:
-                            self.sort(self.tree_1, "ID", False))
+                            self.sort(self.tree_1, "ID", False, "tree_1"))
         self.tree_1.heading("Full_Name", text='ФИО', command=lambda:
-                            self.sort(self.tree_1, "Full_Name", False))
+                            self.sort(self.tree_1, "Full_Name", False, "tree_1"))
         self.tree_1.heading("Phone_Number", text="Номер телефона", command=lambda:
-                            self.sort(self.tree_1, "Phone_Number", False))
+                            self.sort(self.tree_1, "Phone_Number", False, "tree_1"))
 
         tree_scrollbar_vertical_1 = tk.Scrollbar(
             tab_1, orient="vertical", command=self.tree_1.yview)
@@ -160,48 +213,49 @@ class main_gui:
 
         self.tree_1.pack()
 
-        self.tree_2 = ttk.Treeview(tab_2, columns=(
-            "ID", "Speciality", "Time"), height=20, show="headings")
+        self.tree_2_columns = ["ID", "Speciality", "Time"]
+        self.tree_2 = ttk.Treeview(tab_2, columns=self.tree_2_columns, height=20, show="headings")
 
         self.tree_2.column("ID", width=315, anchor=tk.CENTER)
         self.tree_2.column("Speciality", width=315, anchor=tk.CENTER)
         self.tree_2.column("Time", width=315, anchor=tk.CENTER)
 
         self.tree_2.heading("ID", text='Номер сотрудника', command=lambda:
-                            self.sort(self.tree_2, "ID", False))
+                            self.sort(self.tree_2, "ID", False, "tree_2"))
         self.tree_2.heading("Speciality", text="Специальность", command=lambda:
-                            self.sort(self.tree_2, "Speciality", False))
+                            self.sort(self.tree_2, "Speciality", False, "tree_2"))
         self.tree_2.heading("Time", text="Часы", command=lambda:
-                            self.sort(self.tree_2, "Time", False))
+                            self.sort(self.tree_2, "Time", False, "tree_2"))
 
-        tree_scrollbar_vertical_2 = tk.Scrollbar(
+        tree_scrollbar_vertical_2=tk.Scrollbar(
             tab_2, orient="vertical", command=self.tree_2.yview)
         tree_scrollbar_vertical_2.pack(side="right", fill="y")
 
-        tree_scrollbar_horizontal_2 = tk.Scrollbar(
+        tree_scrollbar_horizontal_2=tk.Scrollbar(
             tab_2, orient="horizontal", command=self.tree_2.xview)
         tree_scrollbar_horizontal_2.pack(side="bottom", fill="x")
 
         self.tree_2.pack()
 
-        self.tree_3 = ttk.Treeview(tab_3, columns=(
-            "City", "Speciality", "Pays_An_Hour"), height=20, show="headings")
+        self.tree_3_columns=["City", "Speciality", "Pays_An_Hour"]
+        self.tree_3=ttk.Treeview(
+            tab_3, columns=self.tree_3_columns, height=20, show="headings")
         self.tree_3.column("City", width=315, anchor=tk.CENTER)
         self.tree_3.column("Speciality", width=315, anchor=tk.CENTER)
         self.tree_3.column("Pays_An_Hour", width=315, anchor=tk.CENTER)
 
         self.tree_3.heading("City", text="Город", command=lambda:
-                            self.sort(self.tree_3, "City", False))
+                            self.sort(self.tree_3, "City", False, "tree_3"))
         self.tree_3.heading("Speciality", text="Специальность", command=lambda:
-                            self.sort(self.tree_3, "Speciality", False))
+                            self.sort(self.tree_3, "Speciality", False, "tree_3"))
         self.tree_3.heading("Pays_An_Hour", text="Зарплата в час", command=lambda:
-                            self.sort(self.tree_3, "Pays_An_Hour", False))
+                            self.sort(self.tree_3, "Pays_An_Hour", False, "tree_3"))
 
-        tree_scrollbar_vertical_3 = tk.Scrollbar(
+        tree_scrollbar_vertical_3=tk.Scrollbar(
             tab_3, orient="vertical", command=self.tree_3.yview)
         tree_scrollbar_vertical_3.pack(side="right", fill="y")
 
-        tree_scrollbar_horizontal_3 = tk.Scrollbar(
+        tree_scrollbar_horizontal_3=tk.Scrollbar(
             tab_3, orient="horizontal", command=self.tree_3.xview)
         tree_scrollbar_horizontal_3.pack(side="bottom", fill="x")
 

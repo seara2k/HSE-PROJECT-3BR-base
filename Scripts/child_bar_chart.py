@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 import lib
-
 # pylint: disable=C0103
 
 

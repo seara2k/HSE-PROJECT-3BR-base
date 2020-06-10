@@ -85,13 +85,13 @@ class child_add(tk.Toplevel):
         btn_accept = ttk.Button(adding_group, text="Подтвердить")
         btn_accept.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
 
-        btn_accept.bind('<Button-1>', lambda event: self.parent.record(self.entry_ID.get(),
+        btn_accept.bind('<Button-1>', lambda event: self.parent.add([self.entry_ID.get(),
                                                                        self.entry_Full_Name.get(),
                                                                        self.entry_Phone_Number.get(),
                                                                        self.entry_City.get(),
                                                                        self.entry_Speciality.get(),
                                                                        self.entry_Time.get(),
-                                                                       self.entry_Pays_An_Hour.get()))
+                                                                       self.entry_Pays_An_Hour.get()]))
 
         # Не даёт перейти в другое окно
         self.grab_set()
