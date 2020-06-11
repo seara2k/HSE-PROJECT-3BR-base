@@ -37,20 +37,20 @@ class child_add(tk.Toplevel):
         self.entry_Full_Name.pack(
             side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
-        Phone_Number_group = tk.Frame(adding_group)
-        Phone_Number_group.pack(side=tk.TOP, fill=tk.X)
-        lbl_Phone_Number = tk.Label(Phone_Number_group, text='Номер телефона')
-        lbl_Phone_Number.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
-        self.entry_Phone_Number = ttk.Entry(Phone_Number_group)
-        self.entry_Phone_Number.pack(
-            side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
-
         City_group = tk.Frame(adding_group)
         City_group.pack(side=tk.TOP, fill=tk.X)
         lbl_City = tk.Label(City_group, text='Город')
         lbl_City.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         self.entry_City = ttk.Entry(City_group)
         self.entry_City.pack(
+            side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
+
+        Phone_Number_group = tk.Frame(adding_group)
+        Phone_Number_group.pack(side=tk.TOP, fill=tk.X)
+        lbl_Phone_Number = tk.Label(Phone_Number_group, text='Номер телефона')
+        lbl_Phone_Number.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
+        self.entry_Phone_Number = ttk.Entry(Phone_Number_group)
+        self.entry_Phone_Number.pack(
             side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
         Speciality_group = tk.Frame(adding_group)
@@ -88,8 +88,8 @@ class child_add(tk.Toplevel):
         if self.fate == "add":
             btn_accept.bind('<Button-1>', lambda event: self.parent.add([self.entry_ID.get(),
                                                                          self.entry_Full_Name.get(),
-                                                                         self.entry_Phone_Number.get(),
                                                                          self.entry_City.get(),
+                                                                         self.entry_Phone_Number.get(),
                                                                          self.entry_Speciality.get(),
                                                                          self.entry_Time.get(),
                                                                          self.entry_Pays_An_Hour.get()]))
@@ -106,8 +106,8 @@ class child_add(tk.Toplevel):
             self.entry_Pays_An_Hour.insert(0, row[6])
             btn_accept.bind('<Button-1>', lambda event: (self.parent.change_row(row[0], [self.entry_ID.get(),
                                                                                          self.entry_Full_Name.get(),
-                                                                                         self.entry_Phone_Number.get(),
                                                                                          self.entry_City.get(),
+                                                                                         self.entry_Phone_Number.get(),
                                                                                          self.entry_Speciality.get(),
                                                                                          self.entry_Time.get(),
                                                                                          self.entry_Pays_An_Hour.get()]), self.destroy()))
