@@ -11,7 +11,7 @@ class child_box_visk(tk.Toplevel):
         super().__init__()
         self.parent = parent
         self.title("Анализ")
-        self.geometry('340x135')
+        self.geometry('340x133')
         self.resizable(False, False)
         self.init_GUI()
 
@@ -30,8 +30,7 @@ class child_box_visk(tk.Toplevel):
         lbl_kach_col.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
         self.cb_kach_col = ttk.Combobox(kach_col_group, values=["Номер сотрудника", "ФИО", "Город",
-                                                                "Номер телефона", "Специальность",
-                                                                "Часы", "Зарплата в час"])
+                                                                "Номер телефона", "Специальность"])
         self.cb_kach_col.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_kach_col.current(0)
 
@@ -41,9 +40,8 @@ class child_box_visk(tk.Toplevel):
         lbl_numeral = tk.Label(numeral_group, text="Численный столбец")
         lbl_numeral.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
-        self.cb_numeral = ttk.Combobox(numeral_group, values=["Номер сотрудника", "ФИО", "Город",
-                                                              "Номер телефона", "Специальность",
-                                                              "Часы", "Зарплата в час"])
+        self.cb_numeral = ttk.Combobox(
+            numeral_group, values=["Часы", "Зарплата в час"])
         self.cb_numeral.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_numeral.current(0)
 

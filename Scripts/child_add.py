@@ -6,8 +6,9 @@ from tkinter import ttk
 
 class child_add(tk.Toplevel):
 
-    def __init__(self, parent):
+    def __init__(self, parent, fate):
         super().__init__()
+        self.fate = fate
         self.parent = parent
         self.init_GUI()
 
@@ -84,15 +85,33 @@ class child_add(tk.Toplevel):
                        fill=tk.X, expand=1)
         btn_accept = ttk.Button(adding_group, text="Подтвердить")
         btn_accept.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
-
-        btn_accept.bind('<Button-1>', lambda event: self.parent.add([self.entry_ID.get(),
-                                                                       self.entry_Full_Name.get(),
-                                                                       self.entry_Phone_Number.get(),
-                                                                       self.entry_City.get(),
-                                                                       self.entry_Speciality.get(),
-                                                                       self.entry_Time.get(),
-                                                                       self.entry_Pays_An_Hour.get()]))
-
+        if self.fate == "add":
+            btn_accept.bind('<Button-1>', lambda event: self.parent.add([self.entry_ID.get(),
+                                                                         self.entry_Full_Name.get(),
+                                                                         self.entry_Phone_Number.get(),
+                                                                         self.entry_City.get(),
+                                                                         self.entry_Speciality.get(),
+                                                                         self.entry_Time.get(),
+                                                                         self.entry_Pays_An_Hour.get()]))
+        if self.fate == "change":
+            tree = self.parent.chosen_tree()
+            row = getattr(self.parent, tree).item(
+                getattr(self.parent, tree).selection())["values"]
+            self.entry_ID.insert(0, row[0])
+            self.entry_Full_Name.insert(0, row[1])
+            self.entry_Phone_Number.insert(0, row[2])
+            self.entry_City.insert(0, row[3])
+            self.entry_Speciality.insert(0, row[4])
+            self.entry_Time.insert(0, row[5])
+            self.entry_Pays_An_Hour.insert(0, row[6])
+            btn_accept.bind('<Button-1>', lambda event: (self.parent.change_row(row[0], [self.entry_ID.get(),
+                                                                                         self.entry_Full_Name.get(),
+                                                                                         self.entry_Phone_Number.get(),
+                                                                                         self.entry_City.get(),
+                                                                                         self.entry_Speciality.get(),
+                                                                                         self.entry_Time.get(),
+                                                                                         self.entry_Pays_An_Hour.get()]), self.destroy()))
+            self.parent.eg_btn_edit.config(state="disabled")
         # Не даёт перейти в другое окно
         self.grab_set()
         self.focus_set()

@@ -30,8 +30,7 @@ class child_dispersion(tk.Toplevel):
 
         self.cb_kach_col = ttk.Combobox(
             kach_col_group, values=["Номер сотрудника", "ФИО", "Город",
-                                    "Номер телефона", "Специальность",
-                                    "Часы", "Зарплата в час"])
+                                    "Номер телефона", "Специальность"])
         self.cb_kach_col.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_kach_col.current(0)
 
@@ -41,9 +40,8 @@ class child_dispersion(tk.Toplevel):
         lbl_numeral_1 = tk.Label(numeral_group_1, text="Численный столбец 1")
         lbl_numeral_1.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
-        self.cb_numeral_1 = ttk.Combobox(numeral_group_1, values=["Номер сотрудника", "ФИО", "Город",
-                                                                  "Номер телефона", "Специальность",
-                                                                  "Часы", "Зарплата в час"])
+        self.cb_numeral_1 = ttk.Combobox(numeral_group_1, values=[
+                                         "Часы", "Зарплата в час"])
         self.cb_numeral_1.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_numeral_1.current(0)
 
@@ -53,9 +51,8 @@ class child_dispersion(tk.Toplevel):
         lbl_numeral_2 = tk.Label(numeral_group_2, text="Численный столбец 2")
         lbl_numeral_2.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
-        self.cb_numeral_2 = ttk.Combobox(numeral_group_2, values=["Номер сотрудника", "ФИО", "Город",
-                                                                  "Номер телефона", "Специальность",
-                                                                  "Часы", "Зарплата в час"])
+        self.cb_numeral_2 = ttk.Combobox(numeral_group_2, values=[
+                                         "Часы", "Зарплата в час"])
         self.cb_numeral_2.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_numeral_2.current(0)
 

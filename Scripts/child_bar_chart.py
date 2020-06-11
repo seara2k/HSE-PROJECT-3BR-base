@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import lib
+
 # pylint: disable=C0103
 
 
@@ -10,7 +11,7 @@ class child_bar_chart(tk.Toplevel):
         super().__init__()
         self.parent = parent
         self.title("Анализ")
-        self.geometry('340x135')
+        self.geometry('340x133')
         self.resizable(False, False)
         self.init_GUI()
 
@@ -31,8 +32,7 @@ class child_bar_chart(tk.Toplevel):
 
         self.cb_kach_col_1 = ttk.Combobox(
             kach_col_1_group, values=["Номер сотрудника", "ФИО", "Город",
-                                      "Номер телефона", "Специальность",
-                                      "Часы", "Зарплата в час"])
+                                      "Номер телефона", "Специальность"])
         self.cb_kach_col_1.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_kach_col_1.current(0)
 
@@ -45,8 +45,7 @@ class child_bar_chart(tk.Toplevel):
 
         self.cb_kach_col_2 = ttk.Combobox(
             kach_col_2_group, values=["Номер сотрудника", "ФИО", "Город",
-                                      "Номер телефона", "Специальность",
-                                      "Часы", "Зарплата в час"])
+                                      "Номер телефона", "Специальность"])
         self.cb_kach_col_2.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_kach_col_2.current(0)
 

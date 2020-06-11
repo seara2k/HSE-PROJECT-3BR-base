@@ -1,6 +1,7 @@
 import tkinter as tk
+import os
 from tkinter import filedialog
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import pandas as pd
 import pickle
 
@@ -13,10 +14,12 @@ class main_funcs:
         ---------
         Библиотеки: pandas
         """
-        self.tree_all.delete(*self.tree_all.get_children())
-        self.tree_1.delete(*self.tree_1.get_children())
-        self.tree_2.delete(*self.tree_2.get_children())
-        self.tree_3.delete(*self.tree_3.get_children())
+        for tree in self.tree_names:
+            getattr(self, tree).delete(*getattr(self, tree).get_children())
+
+            for column in getattr(self, tree + "_columns"):
+                getattr(self, tree).heading(column, image="")
+
         for i in range(len(self.database.dataframe.index)):
             row = sum(self.database.dataframe.iloc[[i]].values.tolist(), [])
             self.add_row_to_table(row)
@@ -25,6 +28,7 @@ class main_funcs:
         """
         Запись данных в таблицы
         """
+
         self.tree_all.insert("", "end", values=(
             row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
         self.tree_1.insert("", "end", values=(
@@ -39,7 +43,36 @@ class main_funcs:
     def add(self, add_array):
         self.database.add(add_array)
         self.refresh_from_database()
-    # def delete_from_table(self):
+
+    def delete(self):
+        """
+        Удаление строки из датафрейма
+        ---------
+        Библиотеки: pandas(pd)
+        """
+        tree = self.chosen_tree()
+        for row in getattr(self, tree).selection():
+            row_id = getattr(self, tree).item(row)["values"][0]
+            self.database.delete(row_id)
+        self.refresh_from_database()
+
+    def chosen_tree(self):
+        if self.tab_parent.tab(self.tab_parent.select(), "text") == "Полная таблица":
+            tree = "tree_all"
+        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Сотрудник":
+            tree = "tree_1"
+        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Часы":
+            tree = "tree_2"
+        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Работы":
+            tree = "tree_3"
+        return tree
+
+    def change_row(self, ID, array):
+        self.database.change(ID, array)
+        self.refresh_from_database()
+
+
+# def delete_from_table(self):
     #     """
     #     Удаление элементов таблицы
     #     """
@@ -103,50 +136,97 @@ class main_funcs:
 
         return self.column_name_values
 
-    def delete(self):
-        """
-        Удаление строки из датафрейма
-        ---------
-        Библиотеки: pandas(pd)
-        """
-        if self.tab_parent.tab(self.tab_parent.select(), "text") == "Полная таблица":
-            tree = "tree_all"
-        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Сотрудник":
-            tree = "tree_1"
-        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Часы":
-            tree = "tree_2"
-        elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Работы":
-            tree = "tree_3"
-        for row in getattr(self, tree).selection():
-            row_id = getattr(self, tree).item(row)["values"][0]
-            self.database.delete(str(row_id))
-        self.refresh_from_database()
+    def edit_button_check(self, event):
+        tree = self.chosen_tree()
+        if ((len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0)):
+            self.eg_btn_edit.config(state="disabled")
 
-    def save_to_pickle(self):
-        """
-        сохраняет датафрейм в .pickle файл
-        """
+        else:
+            self.eg_btn_edit.config(state="normal")
 
-        with open(".\\Database\\database.pickle", 'wb') as f:
+    def deselect_rows(self, event):
+        for tree in self.tree_names:
+            if len(getattr(self, tree).selection()) > 0:
+                getattr(self, tree).selection_remove(
+                    getattr(self, tree).selection())
+
+    def launch_pickle(self):
+        """
+        Запускает pickle при старте программы
+        """
+        try:
+            f = open(".\\Database\\database.pickle", 'rb')
+        except:
+            messagebox.showerror(title='Ошибка!',
+                                 message="Не обнаружено database.pickle файла в .\\Database, программа автоматически создаст его")
+            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
+            self.save()
+        else:
+            self.database = pickle.load(f)
+            f.close()
+            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
+        finally:
+            self.refresh_from_database()
+
+    def true_load(self):
+        opening_path = filedialog.askopenfilename(title="Открыть pickle", initialdir=".\\Database", filetypes=[
+                                                  ("Pickle file", ".pickle")], defaultextension=".pickle")
+        if opening_path == "":
+            return
+        self.pickle_position = opening_path
+        self.title(self.pickle_position)
+        with open(self.pickle_position, 'rb') as f:
+            self.database = pickle.load(f)
+            f.close()
+            self.refresh_from_database()
+
+    def save(self):
+        with open(self.pickle_position, 'wb') as f:
             pickle.dump(self.database, f)
             f.close()
 
-    def open_pickle(self, path=".\\Database\\database.pickle"):
+    def new(self):
         """
-        создает датафрейм из .pickle файла
 
         """
-        try:
-            f = open(path, 'rb')
-        except:
-            mb.showerror(title='Ошибка!',
-                         message="Файл по такому пути отсутствует")
+        action = messagebox.askyesnocancel(title="Сохранить изменения?",
+                                           message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
+
+        if action == True:
+            self.save()
+            self.database.re_init()
+            self.refresh_from_database()
+            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
+            self.title(self.pickle_position)
+            self.save()
+        elif action == False:
+            self.database.re_init()
+            self.refresh_from_database()
+            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
+            self.title(self.pickle_position)
+            self.save()
+
+    def open(self):
+        action = messagebox.askyesnocancel(title="Сохранить изменения?",
+                                           message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
+        if action == True:
+            self.save()
+            self.true_load()
+        elif action == False:
+            self.true_load()
+
+    def save_to_pickle(self):
+        """
+        сохраняет датафрейм в выбранный .pickle файл
+        """
+        saving_path = filedialog.asksaveasfilename(
+            title="Сохранить как", initialdir=".\\Database", filetypes=[("Pickle file", ".pickle")], defaultextension=".pickle")
+        if saving_path == "":
+            return
         else:
-            self.database = pickle.load(f)
-        finally:
-            f.close()
-        self.refresh_from_database()
-    # def export_to_excel(self, pickle_base, path, name):
+            self.pickle_position = saving_path
+            self.title(self.pickle_position)
+            self.save()
 
     def export_to_excel(self):
         """
@@ -166,10 +246,19 @@ class main_funcs:
         if saving_path == "":
             return
         else:
-            self.database.dataframe.to_excel(saving_path)
+            self.database.dataframe.to_excel(saving_path, index=False)
 
     def import_from_excel(self):
+        action = messagebox.askyesnocancel(title="Сохранить изменения?",
+                                           message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
 
+        if action == True:
+            self.save()
+            self.get_excel()
+        elif action == False:
+            self.get_excel()
+
+    def get_excel(self):
         opening_path = filedialog.askopenfilename(title="Открыть xlsx", initialdir=".\\Database", filetypes=[
                                                   ("Excel file", ".xlsx")], defaultextension=".xlsx")
 
@@ -177,69 +266,10 @@ class main_funcs:
             return
         else:
             self.database.dataframe = pd.read_excel(opening_path)
-            self.refresh_from_database()     
-    # def import_file(self, path):
-    #     """
-    #     Импорт базы из excel файла в .pickle
-    #     ----------
-    #     path : пусть загружаемого файла
-    #     ----------
-    #     Возвращает : .pickle файл
-    #     ----------
-    #     Автор: убейся головой об стену
-    #     """
-    #     try:
-    #         excel_base = pd.read_excel(path)
-    #         with open(".\\Database\\database.pickle", 'wb') as f:
-    #             pickle.dump(excel_base, f)
-    #     except:
-    #         mb.showerror(title='Ошибка!',
-    #                      message="Файл по такому пути отсутствует")
-    #     # else:
-    #     #     with open(".\\Database\\database.pickle", "rb") as f:
-    #     #         pickle_base = pickle.load(f)
-    #     # return pickle_base
+            self.refresh_from_database()
+            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
+            self.title(self.pickle_position)
+            self.save()
 
-    # def export_file(self, pickle_base, path, name):
-    #     """
-    #     Экспорт базы в pickle в excel файл
-    #     ----------
-    #     pickle : .pickle файл
-    #     path : путь сохранения файла
-    #     name : название файла
-    #     ----------
-    #     Возвращает: -
-    #     ----------
-    #     Автор: loh
-    #     """
-    #     full_path = path + name + '.xlsx'
-    #     if os.path.exists(full_path):
-    #         ans = mb.askyesno(title='Примечание',
-    #                           message='''Файл с таким путём уже существует и будет
-    #                     перезаписан. Продолжить?''')
-    #         if ans:
-    #             pickle_base.to_excel(full_path)
-    #     else:
-    # #         pickle_base.to_excel(full_path)
-
-    # def refresh_file(pickle_base):
-    #     """
-    #     Обновление .pickle файла
-    #     --------
-    #     pickle_base : изменённый .pickle файл
-    #     -------
-    #     Возвращает : нихуя
-    #     -------
-    #     Автор : прекращай писать докстринги
-    #     """
-    #     with open('database.pickle', 'wb') as f:
-    #         pickle.dump(pickle_base, f)
-    #         f.close()
-    #     with open('database.pickle', 'rb') as f:
-    #         pickle.load(f)
-    #         f.close()
-
-    # def clear_images_tree_all(self):
-    #     temp=str(getattr(tree_name,""))
-    #     for column in temp:
-    #         getattr(self, tree_name).heading(column, image="")
+    def get_help(self):
+        os.system("start " + (os.getcwd() + "\\Notes\\govno.docx"))
