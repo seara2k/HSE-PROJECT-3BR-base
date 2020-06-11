@@ -86,7 +86,7 @@ class child_add(tk.Toplevel):
         btn_accept = ttk.Button(adding_group, text="Подтвердить")
         btn_accept.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
         if self.fate == "add":
-            btn_accept.bind('<Button-1>', lambda event: self.parent.add([self.entry_ID.get(),
+            btn_accept.bind('<Button-1>', lambda event: self.parent.add([int(self.entry_ID.get()),
                                                                          self.entry_Full_Name.get(),
                                                                          self.entry_City.get(),
                                                                          self.entry_Phone_Number.get(),
