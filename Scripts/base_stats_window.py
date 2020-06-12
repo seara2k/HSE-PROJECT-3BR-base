@@ -89,8 +89,10 @@ class base_stats_window(tk.Toplevel):
         # rearrange items in sorted positions
         for index, (val, k) in enumerate(l):
             tv.move(k, '', index)
-        self.add_img_up = tk.PhotoImage(file=".\\Mats\\arrow_up.gif")
-        self.add_img_down = tk.PhotoImage(file=".\\Mats\\arrow_down.gif")
+        self.add_img_up = tk.PhotoImage(
+            file=".\\Graphics\\Materials\\arrow_up.gif")
+        self.add_img_down = tk.PhotoImage(
+            file=".\\Graphics\\Materials\\arrow_down.gif")
         if reverse:
             tv.heading(col, image=self.add_img_up)
         else:

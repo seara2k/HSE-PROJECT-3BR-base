@@ -32,8 +32,8 @@ class Main(tk.Tk, gm.main_gui, fm.main_funcs):
         self.title("DataBase")
         self.geometry("1000x550")
         self.resizable(False, False)
-        self.add_img_up = tk.PhotoImage(file=".\\Materials\\arrow_up.gif")
-        self.add_img_down = tk.PhotoImage(file=".\\Materials\\arrow_down.gif")
+        self.add_img_up = tk.PhotoImage(file=".\\Graphics\\Materials\\arrow_up.gif")
+        self.add_img_down = tk.PhotoImage(file=".\\Graphics\\Materials\\arrow_down.gif")
         with open(os.getcwd() + "\\Scripts\\settings.py", "r") as f:
             temp = f.read()
             temp = temp.replace('"', '')

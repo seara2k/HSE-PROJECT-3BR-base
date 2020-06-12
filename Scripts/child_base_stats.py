@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import lib
 from . import base_stats_window as base_stats_window
 # pylint: disable=C0103
@@ -110,6 +110,18 @@ class child_base_stats(tk.Toplevel):
             column_names_ru.append("Часы")
         if self.cb_pays_an_hour_CheckVar.get() == 1:
             column_names_ru.append("Зарплата в час")
-        self.destroy()    
-        base_stats_window.base_stats_window(self.parent, column_names_ru)
-        
+
+        if len(column_names_ru) == 1:
+            messagebox.showerror(
+                title="Ошибка ввода",
+                message="Ничего не выбрано",
+                parent=self)
+
+        elif len(self.parent.tree_all.get_children()) == 0:
+            messagebox.showerror(
+                title="Ошибка ввода",
+                message="Нету элементов в базе данных",
+                parent=self)
+        else:
+            self.destroy()
+            base_stats_window.base_stats_window(self.parent, column_names_ru)
