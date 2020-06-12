@@ -301,14 +301,14 @@ class main_funcs:
                 self.pickle_position = ""
                 # self.save_to_settings()
                 self.title("untitled")
-                self.if_changed == 0
+                self.if_changed = 0
         elif action == False:
             self.database.re_init()
             self.refresh_from_database()
             self.pickle_position = ""
             # self.save_to_settings()
             self.title("untitled")
-            self.if_changed == 0
+            self.if_changed = 0
 
     def open(self):
         """
@@ -323,11 +323,11 @@ class main_funcs:
         if action == True:
             if self.save() == True:
                 self.true_load()
-                self.if_changed == 0
+                self.if_changed = 0
 
         elif action == False:
             self.true_load()
-            self.if_changed == 0
+            self.if_changed = 0
 
     def save_to_pickle(self):
         """
@@ -382,10 +382,10 @@ class main_funcs:
         if action == True:
             if self.save() == True:
                 self.get_excel()
-                self.if_changed == 0
+                self.if_changed = 0
         elif action == False:
             self.get_excel()
-            self.if_changed == 0
+            self.if_changed = 0
 
     def get_excel(self):
         """
