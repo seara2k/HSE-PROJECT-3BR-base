@@ -53,8 +53,7 @@ class base_stats_window(tk.Toplevel):
         for i in range(len(self.column_names_eng)):
             self.tree.column(self.column_names_eng[i],
                              width=self.width, anchor=tk.CENTER)
-            self.tree.heading(self.column_names_eng[i], text=self.column_names_ru[i], command=lambda:
-                              self.sort(self.tree, self.column_names_eng[i], False))
+            self.tree.heading(self.column_names_eng[i], text=self.column_names_ru[i])
 
         tree_scrollbar_vertical = tk.Scrollbar(
             base_stats_window, orient="vertical", command=self.tree.yview)
@@ -70,36 +69,36 @@ class base_stats_window(tk.Toplevel):
         self.grab_set()
         self.focus_set()
 
-    def sort(self, tv, col, reverse):
-        """
-        Сортировка колонок в обратном порядке
-        ----------
-        Параметры:
-                tv - иконка стрелки
-                col - столбцы из таблицы интерфейса
-                reverse - индикатор смены порядка
-        ----------
-        Возвращает: -
-        ----------
-        Автор: Литвинов В.С.
-        """
-        l = [(tv.set(k, col), k) for k in tv.get_children('')]
-        l.sort(reverse=reverse)
+    # def sort(self, tv, col, reverse):
+    #     """
+    #     Сортировка колонок в обратном порядке
+    #     ----------
+    #     Параметры:
+    #             tv - иконка стрелки
+    #             col - столбцы из таблицы интерфейса
+    #             reverse - индикатор смены порядка
+    #     ----------
+    #     Возвращает: -
+    #     ----------
+    #     Автор: Литвинов В.С.
+    #     """
+    #     l = [(tv.set(k, col), k) for k in tv.get_children('')]
+    #     l.sort(reverse=reverse)
 
-        # rearrange items in sorted positions
-        for index, (val, k) in enumerate(l):
-            tv.move(k, '', index)
-        self.add_img_up = tk.PhotoImage(
-            file=".\\Graphics\\Materials\\arrow_up.gif")
-        self.add_img_down = tk.PhotoImage(
-            file=".\\Graphics\\Materials\\arrow_down.gif")
-        if reverse:
-            tv.heading(col, image=self.add_img_up)
-        else:
-            tv.heading(col, image=self.add_img_down)
-        # reverse sort next time
-        tv.heading(col, command=lambda:
-                   self.sort(tv, col, not reverse))
+    #     # rearrange items in sorted positions
+    #     for index, (val, k) in enumerate(l):
+    #         tv.move(k, '', index)
+    #     self.add_img_up = tk.PhotoImage(
+    #         file=".\\Graphics\\Materials\\arrow_up.gif")
+    #     self.add_img_down = tk.PhotoImage(
+    #         file=".\\Graphics\\Materials\\arrow_down.gif")
+    #     if reverse:
+    #         tv.heading(col, image=self.add_img_up)
+    #     else:
+    #         tv.heading(col, image=self.add_img_down)
+    #     # reverse sort next time
+    #     tv.heading(col, command=lambda:
+    #                self.sort(tv, col, not reverse))
 
     def clever_insert_values(self):
         """
