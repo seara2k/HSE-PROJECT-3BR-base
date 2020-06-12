@@ -2,6 +2,7 @@ import sys
 import os
 import tkinter as tk
 from tkinter import ttk
+
 os.chdir(os.getcwd())
 sys.path.append(os.path.abspath(".\\Library"))
 from . import gui_mixin as gm
@@ -16,7 +17,7 @@ class Main(tk.Tk, gm.main_gui, fm.main_funcs):
 
     def __init__(self):
         """
-        Конструктор окна интерфейса
+        Конструктор интерфейса приложения
         Параметры: -
         Возвращает: -
         Автор: Литвинов В.С.

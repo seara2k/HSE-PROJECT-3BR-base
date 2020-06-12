@@ -10,7 +10,7 @@ class base_stats_window(tk.Toplevel):
     def __init__(self, parent, column_names_ru):
         """
         Конструктор окна вывода базовой статистики
-        Параметры: parent -
+        Параметры: parent - класс родителя
                    column_names_ru - названия колонок на русском языке
         Возвращает: -
         Автор: Литвинов В.С.

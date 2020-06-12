@@ -10,9 +10,13 @@ class main_funcs:
 
     def refresh_from_database(self):
         """
-        Создает их фрейма построчно массивы + вывод
-        ---------
-        Библиотеки: pandas
+        Вывод базы данных в таблицу интерфейса
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         for tree in self.tree_names:
             getattr(self, tree).delete(*getattr(self, tree).get_children())
@@ -26,9 +30,13 @@ class main_funcs:
 
     def add_row_to_table(self, row):
         """
-        Запись добавленных данных в таблицу
-        Параметры: row - список введённых данных
+        Запись добавленной строки в таблицу интерфейса
+        ----------
+        Параметры:
+                row - список введённых данных
+        ----------
         Возвращает: -
+        ----------
         Автор: Литвинов В.С.
         """
         self.tree_all.insert("", "end", values=(
@@ -43,16 +51,29 @@ class main_funcs:
             row[2], row[4], row[6]))
 
     def add(self, add_array):
+        """
+        Добавление строки в таблицу интерфейса
+        ----------
+        Параметры:
+                add_array - список добавляемой строки
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         self.database.add(add_array)
         self.refresh_from_database()
         self.if_changed = 1
 
     def delete(self):
         """
-        Удаление строки из датафрейма
+        Удаление строки из таблицы интерфейса
+        ----------
         Параметры: -
+        ----------
         Возвращает: -
-        Авторы: Литвинов В.С и Никоненко А.Р.
+        ----------
+        Автор: Литвинов В.С
         """
         tree = self.chosen_tree()
         for row in getattr(self, tree).selection():
@@ -63,10 +84,13 @@ class main_funcs:
 
     def chosen_tree(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Смена активной таблицы в главном окне
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С
         """
         if self.tab_parent.tab(self.tab_parent.select(), "text") == "Полная таблица":
             tree = "tree_all"
@@ -80,39 +104,34 @@ class main_funcs:
 
     def change_row(self, ID, array):
         """
-
+        Изменение строк в таблице интерфейса
+        ----------
         Параметры:
-        Возвращает:
-        Автор:
+                ID - номер сотрудника
+                array - список новой строки
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         self.database.change(ID, array)
         self.refresh_from_database()
         self.if_changed = 1
 
 
-# def delete_from_table(self):
-    #     """
-    #     Удаление элементов таблицы
-    #     """
-    #     if self.tab_parent.tab(self.tab_parent.select(), "text") == "Полная таблица":
-    #         tree = "tree_1"
-    #     elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Сотрудник":
-    #         tree = "tree_1"
-    #     elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Часы":
-    #         tree = "tree_2"
-    #     elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Работы":
-    #         tree = "tree_3"
-    #     [getattr(self, tree).delete(row)
-    #      for row in getattr(self, tree).selection()]
-
     def sort(self, tv, col, reverse, tv_name):
         """
-        Параметры: tv -
-                   col -
-                   reverse -
-                   tv_name -
-        Возвращает:
-        Автор:
+        Смена направления вывода элементов в таблцце интерфейса
+        ----------
+        Параметры:
+                tv -
+                col -
+                reverse -
+                tv_name -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
         l.sort(reverse=reverse)
@@ -132,10 +151,13 @@ class main_funcs:
 
     def choose_analysis_function(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Выбор метода анализа
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         chosen_analysis = self.ag_cb_analys.get()
         if chosen_analysis == "Базовая статистика":
@@ -153,12 +175,15 @@ class main_funcs:
 
     def get_values(self, column_name):
         """
-
-        Параметры: column name -
-        Возвращает:
-        Автор:
+        Извлекает значения из колонок таблицы
+        ----------
+        Параметры:
+                column name - название колонки в таблице
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
-
         self.column_name_values = []
         for line in self.tree_all.get_children():
             self.column_name_values.append(
@@ -167,10 +192,13 @@ class main_funcs:
 
     def edit_button_check(self, event):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Состояние кнопки "Изменить"
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         tree = self.chosen_tree()
         if ((len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0)):
@@ -183,8 +211,10 @@ class main_funcs:
         """
 
         Параметры:
+        ----------
         Возвращает:
-        Автор:
+        ----------
+        Автор: Литвинов В.С.
         """
         for tree in self.tree_names:
             if len(getattr(self, tree).selection()) > 0:
@@ -193,7 +223,7 @@ class main_funcs:
 
     def launch_pickle(self):
         """
-
+        Загрузка .pickle файла
         Параметры:
         Возвращает:
         Автор:
@@ -306,9 +336,9 @@ class main_funcs:
     def export_to_excel(self):
         """
 
-        Параметры:
-        Возвращает:
-        Автор:
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С.
         """
         saving_path = filedialog.asksaveasfilename(
             title="Сохранить в xlsx", initialdir=".\\Database", filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx")
