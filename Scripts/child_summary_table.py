@@ -9,6 +9,12 @@ import pandas as pd
 class child_summary_table(tk.Toplevel):
 
     def __init__(self, parent):
+        """
+        Конструктор окна параметров сводной таблицы
+        Параметры: parent - класс родителя
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.parent = parent
         self.title("Параметры сводной таблицы")
@@ -17,6 +23,12 @@ class child_summary_table(tk.Toplevel):
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна параметров сводной таблицы
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
 
         # Фрейм окна
         summary_table_group = tk.LabelFrame(

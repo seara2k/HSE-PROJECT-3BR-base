@@ -8,6 +8,12 @@ import lib
 class child_histogram(tk.Toplevel):
 
     def __init__(self, parent):
+        """
+        Конструктор окна выбора элементов гистограммы
+        Параметры: parent - класс родителя
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.parent = parent
         self.title("Анализ")
@@ -16,6 +22,12 @@ class child_histogram(tk.Toplevel):
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна выбора элементов гистограммы
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
 
         # Фрейм окна
         summary_table_group = tk.LabelFrame(self, text='Параметры гистограммы')

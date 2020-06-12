@@ -8,7 +8,7 @@ class child_about_program(tk.Toplevel):
     def __init__(self, parent):
         """
         Конструктор окна "О программе"
-        Параметры: parent -
+        Параметры: parent - класс родителя
         Возвращает: -
         Автор: Литвинов В.С.
         """
