@@ -8,6 +8,16 @@ import lib
 class child_box_visk(tk.Toplevel):
 
     def __init__(self, parent):
+        """
+        Конструктор окна выбора элементов диаграммы Бокса-Вискера
+        ----------
+        Параметры:
+                parent - класс родителя
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.parent = parent
         self.title("Анализ")
@@ -16,6 +26,15 @@ class child_box_visk(tk.Toplevel):
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна выбора элементов диаграммы Бокса-Вискера
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
 
         # Фрейм окна
         summary_table_group = tk.LabelFrame(
@@ -54,6 +73,15 @@ class child_box_visk(tk.Toplevel):
         self.focus_set()
 
     def box_visk_analyze(self):
+        """
+        Построение диаграммы Бокса-Вискера
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         column_name_1_ru = self.cb_kach_col.get()
         column_name_2_ru = self.cb_numeral.get()
         column_name_1_eng = lib.translate_to_eng(column_name_1_ru)

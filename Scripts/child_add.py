@@ -9,9 +9,13 @@ class child_add(tk.Toplevel):
     def __init__(self, parent, fate):
         """
         Конструктор окна добавления элемента
-        Параметры: parent -
-                   fate -
+        ----------
+        Параметры:
+                parent - класс радителя
+                fate -
+        ----------
         Возвращает: -
+        ----------
         Автор: Литвинов В.С.
         """
         super().__init__()
@@ -22,8 +26,11 @@ class child_add(tk.Toplevel):
     def init_GUI(self):
         """
         Конструктор интерфейса окна добавления элемента
+        ----------
         Параметры: -
+        ----------
         Возвращает: -
+        ----------
         Автор: Литвинов В.С.
         """
         self.title("Добавить элемент")
@@ -115,6 +122,15 @@ class child_add(tk.Toplevel):
         self.focus_set()
 
     def go(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         if self.fate == "add":
             if self.check_input():
                 self.parent.add([int(self.entry_ID.get()),
@@ -162,7 +178,13 @@ class child_add(tk.Toplevel):
 
     def check_input(self):
         """
-        Проваерка на ввод
+        Проверка на ввод в окне добавления элемента
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         true_value_output = ["int", "str", "str", "str", "int", "int"]
         value_array = [self.entry_ID.get(),
@@ -186,8 +208,11 @@ class child_add(tk.Toplevel):
     def clear(self):
         """
         Очиста значений, введённых в окно добавления элемента
+        ----------
         Параметры: -
+        ----------
         Возвращает: -
+        ----------
         Автор: Литвинов В.С.
         """
         self.entry_ID.delete(0, tk.END)

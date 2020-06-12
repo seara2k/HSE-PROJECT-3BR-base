@@ -8,8 +8,12 @@ import matplotlib.pyplot as plt
 def amount_of_elements(var):
     """
     Подсчет элементов в списке
-    Параметры: var - список элементов
+    ----------
+    Параметры:
+            var - список элементов
+    ----------
     Возвращает: количество элементов
+    ----------
     Автор: Никоненко А.Р.
     """
     return len(var)
@@ -18,8 +22,12 @@ def amount_of_elements(var):
 def unique_elements(var):
     """
     Подсчет уникальных элементов в списке
-    Параметры: var - список элементов
+    ----------
+    Параметры:
+            var - список элементов
+    ----------
     Возвращает: количество уникальных элементов
+    ----------
     Автор: Никоненко А.Р.
     """
     return len(set(var))
@@ -28,8 +36,12 @@ def unique_elements(var):
 def most_frequent(var):
     """
     Поиск самого частого элемента в списке
-    Параметры: var - список элементов
+    ----------
+    Параметры:
+            var - список элементов
+    ----------
     Возвращает: первый самый частый элемент
+    ----------
     Автор: Никоненко А.Р.
     """
     var_set = set(var)
@@ -46,8 +58,12 @@ def most_frequent(var):
 def most_frequent_count(var):
     """
     Подсчет повторений самого частого элемента в списке
-    Параметры: var - список элементов
+    ----------
+    Параметры:
+            var - список элементов
+    ----------
     Возвращает: количество повторений первого самого частого элемента
+    ----------
     Автор: Никоненко А.Р.
     """
     var_set = set(var)
@@ -62,8 +78,12 @@ def most_frequent_count(var):
 def average(var):
     """
     Подсчет среднего значения в списке элементов
-    Параметры: var - список элементов
+    ----------
+    Параметры:
+            var - список элементов
+    ----------
     Возвращает: среднее значение (прочерк, если подсчитать значение нельзя)
+    ----------
     Автор: Никоненко А.Р.
     """
     elem_sum = 0
@@ -75,13 +95,19 @@ def average(var):
         return '-'
     except TypeError:
         return '-'
+    except ZeroDivisionError:
+        return '-'
 
 
 def standard_deviation(var):
     """
     Подсчет среднеквадратического отклонения
-    Параметры: var - список элементов
+    ----------
+    Параметры:
+            var - список элементов
+    ----------
     Возвращает: среднеквадратическое отклонение (прочерк, если подсчитать значение нельзя)
+    ----------
     Автор: Никоненко А.Р.
     """
     try:
@@ -94,8 +120,12 @@ def standard_deviation(var):
 def maximum(var):
     """
     Поиск максимального элемента в списке
-    Параметры: var - список элементов
+    ----------
+    Параметры:
+            var - список элементов
+    ----------
     Возвращает: максимальный элемент (прочерк, если поиск невозможен)
+    ----------
     Автор: Никоненко А.Р.
     """
     try:
@@ -106,13 +136,19 @@ def maximum(var):
         return maxi
     except ValueError:
         return '-'
+    except IndexError:
+        return '-'
 
 
 def minimum(var):
     """
     Поиск минимального элемента в списке
-    Параметры: var - список элементов
+    ----------
+    Параметры:
+            var - список элементов
+    ----------
     Возвращает: минимальный элемент (прочерк, если поиск невозможен)
+    ----------
     Автор: Никоненко А.Р.
     """
     try:
@@ -123,6 +159,9 @@ def minimum(var):
         return mini
     except ValueError:
         return '-'
+    except IndexError:
+        return '-'
+
 
 base_stats_rows = {"Количество элементов": amount_of_elements, "Уникальные элементы": unique_elements,
                    "Самый частый элемент": most_frequent, "Количество повторений": most_frequent_count,
@@ -131,11 +170,30 @@ base_stats_rows = {"Количество элементов": amount_of_elements
 
 
 def open_file(path):
+    """
+    Преобразование таблицы .xlsx в базу данных
+    ----------
+    Параметры:
+    ----------
+    Возвращает:
+    ----------
+    Автор: Никоненко А.Р.
+    """
     w = pd.read_excel(path)
     return w
 
 
 def append(w):
+    """
+    Добавление строки в базе данных
+    ----------
+    Параметры:
+            w - база данных
+    ----------
+    Возвращает: изменённая база данных
+    ----------
+    Автор: Никоненко А.Р.
+    """
     w1 = pd.DataFrame([], index=[0], columns=['Н_СОТР', 'ФИО', 'ГОР', 'Н_ТЕЛ',
                                               'СПЕЦ', 'ЗП_ЧАС', 'ЧАС'])
     w1.loc[0, 'Н_СОТР'] = input()
@@ -149,31 +207,53 @@ def append(w):
 
 
 def export(w):
+    """
+    Экспорт таблицы в .xlsx
+    ----------
+    Параметры: -
+    ----------
+    Возвращает: -
+    ----------
+    Автор: Никоненко А.Р.
+    """
     w.to_excel("output.xlsx")
-
-
-# Базовая Статистика
-def stats():
-    pass
 
 
 # Сводная Таблица
 def summary():
+    """
+    Сводная диаграмма
+    ----------
+    Параметры: -
+    ----------
+    Возвращает: -
+    ----------
+    Автор: -
+    """
     pass
 
 
 # Столбчатая Диаграмма
-def bar_chart(kach_st_1, kach_st_2):  # количественный (численный) столбец 1 и 2
+def bar_chart(kach_st_1, kach_st_2):
+    """
+    Построение столбчатой диаграммы
+    ----------
+    Параметры:
+            kach_st_1 - качественный столбец 1
+            kach_st_2 - качетсвенный столбец 2
+    ----------
+    Возвращает: -
+    ----------
+    Автор: Чихватова А.А.
+    """
     position = np.arange(len(kach_st_1))
 
     fig, ax = plt.subplots()
 
     ax.bar(position, kach_st_2,  color=np.random.rand(7, 3))
 
-    # Устанавливаем позиции тиков:
     ax.set_xticks(position)
 
-    # Устанавливаем подписи тиков
     labels = ax.set_xticklabels(kach_st_1)
 
     fig.set_figwidth(10)
@@ -184,6 +264,17 @@ def bar_chart(kach_st_1, kach_st_2):  # количественный (числе
 
 # Гистограмма
 def histogramm(kach_st, kol_st):
+    """
+    Построение гистограммы
+    ----------
+    Параметры:
+            kach_st - качественный столбец
+            kol_st - численный столбец
+    ----------
+    Возвращает: -
+    ----------
+    Автор: Чихватова А.А.
+    """
     position = np.arange(len(kach_st))
     for i in range(len(kach_st)):
         kach_st[i] = kach_st[i].replace(' ', '\n')
@@ -191,35 +282,57 @@ def histogramm(kach_st, kol_st):
 
     ax.bar(position, kol_st, color=np.random.rand(7, 3))
 
-    # Устанавливаем позиции тиков:
     ax.set_xticks(position)
 
-    # Устанавливаем подписи тиков
     labels = ax.set_xticklabels(kach_st,
-                                verticalalignment='top')  # Вертикальное выравнивание
+                                verticalalignment='top')
 
     fig.set_figwidth(10)
     fig.set_figheight(6)
 
     plt.show()
 
+
 # Диаграмма Бокса-Вискера
-
-
-def boxplot(kach_st, kol_st):  # качественный и количественный столбцы
+def boxplot(kach_st, kol_st):
+    """
+    Построение диаграммы Бокса-Вискера
+    ----------
+    Параметры:
+            kach_st - качественный столбец
+            kol_st - численный столбец
+    ----------
+    Возвращает: -
+    ----------
+    Автор: Чихватова А.А.
+    """
     fig = plt.figure()
     fig.suptitle('Диаграмма Бокса-Висскера')
     ax = fig.add_subplot(111)
-    ax.boxplot(kol_st  # patch_artist must be True to control box fill
-               # Properties of whisker caps
-               , patch_artist=True, medianprops={'color': "#297083"}, boxprops={'color': "#539caf", 'facecolor': "#539caf"}, whiskerprops={'color': "#539caf"}, capprops={'color': "#539caf"})
+    ax.boxplot(kol_st,
+               patch_artist=True,
+               medianprops={'color': "#297083"},
+               boxprops={'color': "#539caf", 'facecolor': "#539caf"},
+               whiskerprops={'color': "#539caf"},
+               capprops={'color': "#539caf"})
     ax.set_xticklabels(kach_st)
     plt.show()
 
+
 # Диаграмма Рассеивания
-
-
 def scatter(kach_st, kol_st_1, kol_st_2):
+    """
+    Построение диаграммы рассеяния
+    ----------
+    Параметры:
+            kach_st - качественный столбец
+            kol_st_1 - численный столбец 1
+            kol_st_2 - численный столбец 2
+    ----------
+    Возвращает: -
+    ----------
+    Автор: Чихватова А.А.
+    """
     data = {'Name': kach_st,
             'Hours': kol_st_1,
             'Salary': kol_st_2}
@@ -242,6 +355,16 @@ def scatter(kach_st, kol_st_1, kol_st_2):
 
 
 def good_looking_columns(number_of_columns):
+    """
+    Выбор ширины столбца в зависимости от количества столбцов
+    ----------
+    Параметры:
+            number_of_columns - количество столбцов
+    ----------
+    Возвращает: Оптимальная ширина столбца
+    ----------
+    Автор: Литвинов В.С.
+    """
     if number_of_columns == 2:
         return 472
     if number_of_columns == 3:
@@ -261,8 +384,12 @@ def good_looking_columns(number_of_columns):
 def translate_to_eng(input_column):
     """
     Перевод названий столбцов с русского на английский язык
-    Параметры: input_column - название колонки на русском языке
+    ----------
+    Параметры:
+            input_column - название колонки на русском языке
+    ----------
     Возвращает: название колонки на английском языке
+    ----------
     Автор: Литвинов В.С.
     """
     if input_column == "Номер сотрудника":

@@ -8,6 +8,16 @@ import lib
 class child_bar_chart(tk.Toplevel):
 
     def __init__(self, parent):
+        """
+        Конструктор окна выбора элементов для столбчатой диаграммы
+        ----------
+        Параметры:
+            parent - класс родителя
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.parent = parent
         self.title("Анализ")
@@ -16,6 +26,15 @@ class child_bar_chart(tk.Toplevel):
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна выбора элементов столбчатой диаграммы
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
 
         # Фрейм окна
         summary_table_group = tk.LabelFrame(
@@ -58,7 +77,13 @@ class child_bar_chart(tk.Toplevel):
 
     def bar_chart_analyze(self):
         """
-        Функция вызывает анализ данных с помощью столбцатой диаграммы
+        Построение столбчатой диаграммы
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         column_name_1_ru = self.cb_kach_col_1.get()
         column_name_2_ru = self.cb_kach_col_2.get()

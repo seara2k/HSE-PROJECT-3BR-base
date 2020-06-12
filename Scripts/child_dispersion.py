@@ -8,6 +8,16 @@ import lib
 class child_dispersion(tk.Toplevel):
 
     def __init__(self, parent):
+        """
+        Конструктор окна выборов элементов диаграммы рассеияния
+        ----------
+        Параметры:
+                parent - класс родителя
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.parent = parent
         self.title("Анализ")
@@ -16,6 +26,15 @@ class child_dispersion(tk.Toplevel):
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна выбора элементов диаграммы рассеяния
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
 
         # Фрейм окна
         summary_table_group = tk.LabelFrame(self, text='Диаграмма рассеивания')
@@ -65,6 +84,15 @@ class child_dispersion(tk.Toplevel):
         self.focus_set()
 
     def dispersion_analyze(self):
+        """
+        Построение диаграммы рассеяния
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         column_name_1_ru = self.cb_kach_col.get()
         column_name_2_ru = self.cb_numeral_1.get()
         column_name_3_ru = self.cb_numeral_2.get()

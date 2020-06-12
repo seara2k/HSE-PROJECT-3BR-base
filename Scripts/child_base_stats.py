@@ -8,6 +8,16 @@ from . import base_stats_window as base_stats_window
 class child_base_stats(tk.Toplevel):
 
     def __init__(self, parent):
+        """
+        Конструктор окна выбора элементов базовой статистики
+        ----------
+        Параметры:
+                parent - класс родителя
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.parent = parent
         self.title("Параметры базовой статистики")
@@ -16,6 +26,15 @@ class child_base_stats(tk.Toplevel):
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна выбора элементов базовой статистики
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
 
         # Фрейм окна
         base_stats_group = tk.LabelFrame(
@@ -67,6 +86,15 @@ class child_base_stats(tk.Toplevel):
         self.focus_set()
 
     def base_stats_analyze(self):
+        """
+        Построение диаграммы базовой статистики
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         column_names_ru = ["Свойства"]
         if self.cb_id_CheckVar.get() == 1:
             column_names_ru.append("Номер сотрудника")
