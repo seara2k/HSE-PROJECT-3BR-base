@@ -131,6 +131,10 @@ class main_funcs:
         """
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
         l.sort(reverse=reverse)
+        try:
+            l.sort(key=lambda t: int(t[0]), reverse=reverse)
+        except ValueError:
+            l.sort(reverse=reverse)
 
         # rearrange items in sorted positions
         for index, (val, k) in enumerate(l):
