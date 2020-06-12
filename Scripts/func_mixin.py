@@ -92,12 +92,17 @@ class main_funcs:
 
     def sort(self, tv, col, reverse, tv_name):
         """
-        Параметры: tv -
-                   col -
-                   reverse -
-                   tv_name -
-        Возвращает:
-        Автор:
+        Смена направления вывода элементов в таблцце интерфейса
+        ----------
+        Параметры:
+                tv - заголовки колонок таблиц
+                col - колонки таблицы
+                reverse - состояние сортировки
+                tv_name - название колонки таблицы
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
         l.sort(reverse=reverse)
@@ -166,10 +171,13 @@ class main_funcs:
 
     def deselect_rows(self, event):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Отмена выбора строк таблицы
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         for tree in self.tree_names:
             if len(getattr(self, tree).selection()) > 0:
@@ -178,10 +186,13 @@ class main_funcs:
 
     def launch_pickle(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Загрузка .pickle файла при старте программы
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Никоненко А.Р.
         """
         try:
             f = open(self.pickle_position, 'rb')
@@ -197,10 +208,13 @@ class main_funcs:
 
     def true_load(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Окно открытия .pickle файла
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         opening_path = filedialog.askopenfilename(title="Открыть pickle", initialdir=".\\Database", filetypes=[
                                                   ("Pickle file", ".pickle")], defaultextension=".pickle")
@@ -216,10 +230,13 @@ class main_funcs:
 
     def save(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Сохранение активной базы данных
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Никоненко А.Р.
         """
         if self.pickle_position == "":
             result = self.save_to_pickle()
@@ -232,10 +249,13 @@ class main_funcs:
 
     def new(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Создание новой базы данных
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         action = self.check_if_changed()
 
@@ -257,10 +277,12 @@ class main_funcs:
 
     def open(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Открытие .pickle файла
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
         """
         action = self.check_if_changed()
         if action == True:
@@ -274,10 +296,13 @@ class main_funcs:
 
     def save_to_pickle(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Сохранение базы данных в .pickle файл
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Никоненко А.Р.
         """
         saving_path = filedialog.asksaveasfilename(
             title="Сохранить как", initialdir=".\\Database", filetypes=[("Pickle file", ".pickle")], defaultextension=".pickle")
@@ -292,10 +317,13 @@ class main_funcs:
 
     def export_to_excel(self):
         """
-
-        Параметры:
-        Возвращает:
-        Автор:
+        Экспорт базы данных в .xlsx файл
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Никоненко А.Р.
         """
         saving_path = filedialog.asksaveasfilename(
             title="Сохранить в xlsx", initialdir=".\\Database", filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx")
@@ -305,6 +333,15 @@ class main_funcs:
             self.database.dataframe.to_excel(saving_path, index=False)
 
     def import_from_excel(self):
+        """
+        Импорт из .xlsx в базу данных
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Никоненко А.Р.
+        """
         action = self.check_if_changed()
 
         if action == True:
@@ -316,6 +353,15 @@ class main_funcs:
             self.if_changed == 0
 
     def get_excel(self):
+        """
+        Окно импорта из .xlsx файла
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         opening_path = filedialog.askopenfilename(title="Открыть xlsx", initialdir=".\\Database", filetypes=[
                                                   ("Excel file", ".xlsx")], defaultextension=".xlsx")
 
@@ -329,9 +375,27 @@ class main_funcs:
             self.title("untitled")
 
     def get_help(self):
+        """
+        Вывод окна "Помощь"
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Никоненко А.Р.
+        """
         os.system("start " + (os.getcwd() + "\\Notes\\govno.docx"))
 
     def check_if_changed(self):
+        """
+        Окно предупреждения о сохранении изменений
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         if self.if_changed == 1:
             action = messagebox.askyesnocancel(title="Сохранить изменения?",
                                                message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
@@ -340,6 +404,15 @@ class main_funcs:
             return False
 
     def save_to_settings(self):
+        """
+        Изменение файла settings.py
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         with open(".\\Scripts\\settings.py", 'w') as f:
             f.write('last_opened_pickle="' + self.pickle_position + '"')
             f.close()
