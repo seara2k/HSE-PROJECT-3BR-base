@@ -40,7 +40,7 @@ class child_base_stats(tk.Toplevel):
 
         self.cb_phone_number_CheckVar = tk.IntVar(value=0)
         self.cb_phone_number = ttk.Checkbutton(
-            base_stats_group, text="Телефон", variable=self.cb_phone_number_CheckVar)
+            base_stats_group, text="Номер телефона", variable=self.cb_phone_number_CheckVar)
         self.cb_phone_number.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X)
 
         self.cb_speciality_CheckVar = tk.IntVar(value=0)
@@ -75,7 +75,7 @@ class child_base_stats(tk.Toplevel):
         if self.cb_city_CheckVar.get() == 1:
             column_names_ru.append("Город")
         if self.cb_phone_number_CheckVar.get() == 1:
-            column_names_ru.append("Телефон")
+            column_names_ru.append("Номер телефона")
         if self.cb_speciality_CheckVar.get() == 1:
             column_names_ru.append("Специальность")
         if self.cb_time_CheckVar.get() == 1:

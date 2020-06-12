@@ -60,4 +60,5 @@ class child_box_visk(tk.Toplevel):
         column_name_2_eng = lib.translate_to_eng(column_name_2_ru)
         var_1 = self.parent.get_values(column_name_1_eng)
         var_2 = self.parent.get_values(column_name_2_eng)
-        lib.box_whiskers(column_name_1_ru, column_name_2_ru, var_2)
+        fixed_var_2 = results = [int(i) for i in var_2]
+        lib.boxplot(var_1, fixed_var_2)

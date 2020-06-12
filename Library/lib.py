@@ -2,7 +2,6 @@
 
 import pandas as pd
 import numpy as np
-# import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 
@@ -164,41 +163,81 @@ def summary():
 
 
 # Столбчатая Диаграмма
-# def bar(w,var1, var2):
-def bar_chart(x_name, y_name, var1, var2):
-    plt.title("Столбчатая Диаграмма")
-    plt.bar(var1, var2)
-    # plt.bar(w[var1][0:],w[var2][0:])
-    plt.xlabel(x_name)
-    plt.ylabel(y_name)
+def bar_chart(kach_st_1, kach_st_2):  # количественный (численный) столбец 1 и 2
+    position = np.arange(len(kach_st_1))
+
+    fig, ax = plt.subplots()
+
+    ax.bar(position, kach_st_2,  color=np.random.rand(7, 3))
+
+    # Устанавливаем позиции тиков:
+    ax.set_xticks(position)
+
+    # Устанавливаем подписи тиков
+    labels = ax.set_xticklabels(kach_st_1)
+
+    fig.set_figwidth(10)
+    fig.set_figheight(6)
+
     plt.show()
 
 
 # Гистограмма
-def histogram(x_name, y_name, var1):
-    plt.title("Гистограмма")
-    plt.hist(var1)
-    plt.xlabel(x_name)
-    plt.ylabel(y_name)
+def histogramm(kach_st, kol_st):
+    position = np.arange(len(kach_st))
+    for i in range(len(kach_st)):
+        kach_st[i] = kach_st[i].replace(' ', '\n')
+    fig, ax = plt.subplots()
+
+    ax.bar(position, kol_st, color=np.random.rand(7, 3))
+
+    # Устанавливаем позиции тиков:
+    ax.set_xticks(position)
+
+    # Устанавливаем подписи тиков
+    labels = ax.set_xticklabels(kach_st,
+                                verticalalignment='top')  # Вертикальное выравнивание
+
+    fig.set_figwidth(10)
+    fig.set_figheight(6)
+
     plt.show()
 
 # Диаграмма Бокса-Вискера
 
 
-def box_whiskers(x_name, y_name, var1):
-    plt.title("Диаграмма Бокса-Вискера")
-    plt.boxplot(var1, showmeans=True)
-    plt.xlabel(x_name)
-    plt.ylabel(y_name)
+def boxplot(kach_st, kol_st):  # качественный и количественный столбцы
+    fig = plt.figure()
+    fig.suptitle('Диаграмма Бокса-Висскера')
+    ax = fig.add_subplot(111)
+    ax.boxplot(kol_st  # patch_artist must be True to control box fill
+               # Properties of whisker caps
+               , patch_artist=True, medianprops={'color': "#297083"}, boxprops={'color': "#539caf", 'facecolor': "#539caf"}, whiskerprops={'color': "#539caf"}, capprops={'color': "#539caf"})
+    ax.set_xticklabels(kach_st)
     plt.show()
 
-
 # Диаграмма Рассеивания
-def dispersion(w, var1, var2):
-    plt.title("Диаграмма Рассеивания")
-    plt.scatter(w[var1][0:], w[var2][0:])
-    plt.xlabel(var1)
-    plt.ylabel(var2)
+
+
+def scatter(kach_st, kol_st_1, kol_st_2):
+    data = {'Name': kach_st,
+            'Hours': kol_st_1,
+            'Salary': kol_st_2}
+    midwest = pd.DataFrame(data)
+
+    categories = np.unique(midwest['Name'])
+    colors = [plt.cm.tab10(i / float(len(categories) - 1))
+              for i in range(len(categories))]
+    plt.figure(figsize=(16, 10), dpi=80, facecolor='w', edgecolor='k')
+    for i, Name in enumerate(categories):
+        plt.scatter('Hours', 'Salary',
+                    data=midwest.loc[midwest.Name == Name, :],
+                    s=20, c=np.array([colors[i]]), label=str(Name))
+
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.title("Диаграмма Рассеивания", fontsize=22)
+    plt.legend(fontsize=12)
     plt.show()
 
 
@@ -232,7 +271,7 @@ def translate_to_eng(input_column):
         return "Full_Name"
     if input_column == "Город":
         return "City"
-    if input_column == "Телефон":
+    if input_column == "Номер телефона":
         return "Phone_Number"
     if input_column == "Специальность":
         return "Speciality"

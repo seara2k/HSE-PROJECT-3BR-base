@@ -36,5 +36,5 @@ class Main(tk.Tk, gm.main_gui, fm.main_funcs):
             f.close()
         self.pickle_position = temp[19:]
         self.if_changed = 0
-        self.launch_pickle()
         self.title(self.pickle_position)
+        self.launch_pickle()

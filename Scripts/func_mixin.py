@@ -31,7 +31,6 @@ class main_funcs:
         Возвращает: -
         Автор: Литвинов В.С.
         """
-
         self.tree_all.insert("", "end", values=(
             row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
         self.tree_1.insert("", "end", values=(
@@ -164,9 +163,6 @@ class main_funcs:
         for line in self.tree_all.get_children():
             self.column_name_values.append(
                 self.tree_all.set(line, column_name))
-            # print(self.tree_1.item(line)['values'])
-        #     for value in self.tree_1.item(line)['values']:
-
         return self.column_name_values
 
     def edit_button_check(self, event):
@@ -206,7 +202,7 @@ class main_funcs:
             f = open(self.pickle_position, 'rb')
         except:
             messagebox.showerror(title='Ошибка!',
-                                 message="Не обнаружено database.pickle файла в" + self.pickle_position)
+                                 message="Не обнаружено .pickle файла " + self.pickle_position)
             self.new()
         else:
             self.database = pickle.load(f)
