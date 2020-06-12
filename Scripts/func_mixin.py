@@ -275,12 +275,16 @@ class main_funcs:
         """
         if self.pickle_position == "":
             result = self.save_to_pickle()
+            if result == True:
+                self.if_changed = 0
             return result
 
         else:
             with open(self.pickle_position, 'wb') as f:
                 pickle.dump(self.database, f)
                 f.close()
+            self.if_changed = 0
+            return True
 
     def new(self):
         """
@@ -382,10 +386,10 @@ class main_funcs:
         if action == True:
             if self.save() == True:
                 self.get_excel()
-                self.if_changed = 0
+                self.if_changed = 1
         elif action == False:
             self.get_excel()
-            self.if_changed = 0
+            self.if_changed = 1
 
     def get_excel(self):
         """
@@ -419,7 +423,8 @@ class main_funcs:
         ----------
         Автор: Никоненко А.Р.
         """
-        os.system("start " + (os.getcwd() + "\\Notes\\rukovodstvo_polzovatelua.docx"))
+        os.system("start " + (os.getcwd() +
+                              "\\Notes\\rukovodstvo_polzovatelua.docx"))
 
     def check_if_changed(self):
         """
