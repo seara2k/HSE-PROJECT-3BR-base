@@ -419,7 +419,7 @@ class main_funcs:
         ----------
         Автор: Никоненко А.Р.
         """
-        os.system("start " + (os.getcwd() + "\\Notes\\rukovodstvo_polzovatelua.docx"))
+        os.system("start " + (os.getcwd() + "\\Notes\\help.pdf"))
 
     def check_if_changed(self):
         """
