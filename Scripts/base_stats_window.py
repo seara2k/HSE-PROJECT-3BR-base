@@ -101,6 +101,5 @@ class base_stats_window(tk.Toplevel):
             row = [row_name[0]]
             for name in self.column_names_eng:
                 column = self.parent.get_values(name)
-                print(column)
                 row.append(row_name[1](column))
             self.tree.insert("", "end", values=row)

@@ -23,6 +23,7 @@ class main_funcs:
         for i in range(len(self.database.dataframe.index)):
             row = sum(self.database.dataframe.iloc[[i]].values.tolist(), [])
             self.add_row_to_table(row)
+        self.eg_btn_edit.config(state="disabled")
 
     def add_row_to_table(self, row):
         """
@@ -88,22 +89,6 @@ class main_funcs:
         self.database.change(ID, array)
         self.refresh_from_database()
         self.if_changed = 1
-
-
-# def delete_from_table(self):
-    #     """
-    #     Удаление элементов таблицы
-    #     """
-    #     if self.tab_parent.tab(self.tab_parent.select(), "text") == "Полная таблица":
-    #         tree = "tree_1"
-    #     elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Сотрудник":
-    #         tree = "tree_1"
-    #     elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Часы":
-    #         tree = "tree_2"
-    #     elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Работы":
-    #         tree = "tree_3"
-    #     [getattr(self, tree).delete(row)
-    #      for row in getattr(self, tree).selection()]
 
     def sort(self, tv, col, reverse, tv_name):
         """
@@ -237,7 +222,8 @@ class main_funcs:
         Автор:
         """
         if self.pickle_position == "":
-            self.save_to_pickle()
+            result = self.save_to_pickle()
+            return result
 
         else:
             with open(self.pickle_position, 'wb') as f:
@@ -254,18 +240,18 @@ class main_funcs:
         action = self.check_if_changed()
 
         if action == True:
-            self.save()
-            self.database.re_init()
-            self.refresh_from_database()
-            self.pickle_position = ""
-            self.save_to_settings()
-            self.title("untitled")
-            self.if_changed == 0
+            if self.save() == True:
+                self.database.re_init()
+                self.refresh_from_database()
+                self.pickle_position = ""
+                # self.save_to_settings()
+                self.title("untitled")
+                self.if_changed == 0
         elif action == False:
             self.database.re_init()
             self.refresh_from_database()
             self.pickle_position = ""
-            self.save_to_settings()
+            # self.save_to_settings()
             self.title("untitled")
             self.if_changed == 0
 
@@ -278,9 +264,9 @@ class main_funcs:
         """
         action = self.check_if_changed()
         if action == True:
-            self.save()
-            self.true_load()
-            self.if_changed == 0
+            if self.save() == True:
+                self.true_load()
+                self.if_changed == 0
 
         elif action == False:
             self.true_load()
@@ -296,12 +282,13 @@ class main_funcs:
         saving_path = filedialog.asksaveasfilename(
             title="Сохранить как", initialdir=".\\Database", filetypes=[("Pickle file", ".pickle")], defaultextension=".pickle")
         if saving_path == "":
-            return
+            return False
         else:
             self.pickle_position = saving_path
             self.save_to_settings()
             self.title(self.pickle_position)
             self.save()
+            return True
 
     def export_to_excel(self):
         """
@@ -321,9 +308,9 @@ class main_funcs:
         action = self.check_if_changed()
 
         if action == True:
-            self.save()
-            self.get_excel()
-            self.if_changed == 0
+            if self.save() == True:
+                self.get_excel()
+                self.if_changed == 0
         elif action == False:
             self.get_excel()
             self.if_changed == 0
@@ -338,9 +325,8 @@ class main_funcs:
             self.database.dataframe = pd.read_excel(opening_path)
             self.refresh_from_database()
             self.pickle_position = ""
-            self.save_to_settings()
+            # self.save_to_settings()
             self.title("untitled")
-            self.save()
 
     def get_help(self):
         os.system("start " + (os.getcwd() + "\\Notes\\govno.docx"))

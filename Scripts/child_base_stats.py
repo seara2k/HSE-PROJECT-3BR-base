@@ -82,4 +82,6 @@ class child_base_stats(tk.Toplevel):
             column_names_ru.append("Часы")
         if self.cb_pays_an_hour_CheckVar.get() == 1:
             column_names_ru.append("Зарплата в час")
+        self.destroy()    
         base_stats_window.base_stats_window(self.parent, column_names_ru)
+        

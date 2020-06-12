@@ -101,15 +101,15 @@ class child_add(tk.Toplevel):
         btn_accept.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
         if self.fate == "change":
             tree = self.parent.chosen_tree()
-            row = getattr(self.parent, tree).item(
+            self.row = getattr(self.parent, tree).item(
                 getattr(self.parent, tree).selection())["values"]
-            self.entry_ID.insert(0, row[0])
-            self.entry_Full_Name.insert(0, row[1])
-            self.entry_Phone_Number.insert(0, row[2])
-            self.entry_City.insert(0, row[3])
-            self.entry_Speciality.insert(0, row[4])
-            self.entry_Time.insert(0, row[5])
-            self.entry_Pays_An_Hour.insert(0, row[6])
+            self.entry_ID.insert(0, self.row[0])
+            self.entry_Full_Name.insert(0, self.row[1])
+            self.entry_Phone_Number.insert(0, self.row[2])
+            self.entry_City.insert(0, self.row[3])
+            self.entry_Speciality.insert(0, self.row[4])
+            self.entry_Time.insert(0, self.row[5])
+            self.entry_Pays_An_Hour.insert(0, self.row[6])
         # Не даёт перейти в другое окно
         self.grab_set()
         self.focus_set()
@@ -138,7 +138,7 @@ class child_add(tk.Toplevel):
                 self.focus_set()
         if self.fate == "change":
             if self.check_input():
-                self.parent.change_row(row[0], [int(self.entry_ID.get()),
+                self.parent.change_row(self.row[0], [int(self.entry_ID.get()),
                                                 str(self.entry_Full_Name.get(
                                                 )),
                                                 str(self.entry_City.get(
