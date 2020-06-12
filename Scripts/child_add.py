@@ -7,12 +7,25 @@ from tkinter import ttk
 class child_add(tk.Toplevel):
 
     def __init__(self, parent, fate):
+        """
+        Конструктор окна добавления элемента
+        Параметры: parent -
+                   fate -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.fate = fate
         self.parent = parent
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна добавления элемента
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         self.title("Добавить элемент")
         self.geometry('300x295')
         self.resizable(False, False)
@@ -117,6 +130,12 @@ class child_add(tk.Toplevel):
         self.focus_set()
 
     def clear(self):
+        """
+        Очиста значений, введённых в окно добавления элемента
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         self.entry_ID.delete(0, tk.END)
         self.entry_Full_Name.delete(0, tk.END)
         self.entry_Phone_Number.delete(0, tk.END)

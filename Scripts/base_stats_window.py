@@ -8,6 +8,13 @@ import lib
 class base_stats_window(tk.Toplevel):
 
     def __init__(self, parent, column_names_ru):
+        """
+        Конструктор окна вывода базовой статистики
+        Параметры: parent -
+                   column_names_ru - названия колонок на русском языке
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.column_names_ru = column_names_ru
         self.parent = parent
@@ -17,6 +24,12 @@ class base_stats_window(tk.Toplevel):
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна базовой статистики
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
 
         # Фрейм окна
         base_stats_window = tk.LabelFrame(
@@ -52,7 +65,12 @@ class base_stats_window(tk.Toplevel):
 
     def sort(self, tv, col, reverse):
         """
-        Сортировка при нажатии на колонку
+        Сортировка колонок в обратном порядке
+        Параметры: tv -
+                   col -
+                   reverse - индикатор порядка
+        Возвращает: -
+        Автор: Литвинов В.С.
         """
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
         l.sort(reverse=reverse)
@@ -71,6 +89,12 @@ class base_stats_window(tk.Toplevel):
                    self.sort(tv, col, not reverse))
 
     def clever_insert_values(self):
+        """
+
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         self.column_names_eng.remove("Properties")
 
         for row_name in lib.base_stats_rows.items():

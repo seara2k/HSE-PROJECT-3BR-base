@@ -14,6 +14,12 @@ from . import class_database as df
 class Main(tk.Tk, gm.main_gui, fm.main_funcs):
 
     def __init__(self):
+        """
+        Конструктор окна интерфейса
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.database = df.df()
         self.init_GUI()

@@ -5,21 +5,34 @@ import numpy as np
 # import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-# C:\Users\Sonan\Desktop\BD.xlsx
 
-
-# Всего элементов
 def amount_of_elements(var):
+    """
+    Подсчет элементов в списке
+    Параметры: var - список элементов
+    Возвращает: количество элементов
+    Автор: Никоненко А.Р.
+    """
     return len(var)
 
 
-# Уникальных элементов
 def unique_elements(var):
-    return(len(set(var)))
+    """
+    Подсчет уникальных элементов в списке
+    Параметры: var - список элементов
+    Возвращает: количество уникальных элементов
+    Автор: Никоненко А.Р.
+    """
+    return len(set(var))
 
 
-# Самый частый элемент
 def most_frequent(var):
+    """
+    Поиск самого частого элемента в списке
+    Параметры: var - список элементов
+    Возвращает: первый самый частый элемент
+    Автор: Никоненко А.Р.
+    """
     var_set = set(var)
     count = 0
     most_frequent_element = None
@@ -31,8 +44,13 @@ def most_frequent(var):
     return most_frequent_element
 
 
-# Повторения самого частого элемента
 def most_frequent_count(var):
+    """
+    Подсчет повторений самого частого элемента в списке
+    Параметры: var - список элементов
+    Возвращает: количество повторений первого самого частого элемента
+    Автор: Никоненко А.Р.
+    """
     var_set = set(var)
     count = 0
     for i in var_set:
@@ -42,21 +60,31 @@ def most_frequent_count(var):
     return count
 
 
-#  Среднее
 def average(var):
-    average = 0
+    """
+    Подсчет среднего значения в списке элементов
+    Параметры: var - список элементов
+    Возвращает: среднее значение (прочерк, если подсчитать значение нельзя)
+    Автор: Никоненко А.Р.
+    """
+    elem_sum = 0
     try:
         for i in range(len(var)):
-            average += float(var[i])
-        return f'{(average / len(var)):.{3}f}'
+            elem_sum += float(var[i])
+        return f'{(elem_sum / len(var)):.{3}f}'
     except ValueError:
         return '-'
     except TypeError:
         return '-'
 
 
-#  Среднеквадратическое отклонение
 def standard_deviation(var):
+    """
+    Подсчет среднеквадратического отклонения
+    Параметры: var - список элементов
+    Возвращает: среднеквадратическое отклонение (прочерк, если подсчитать значение нельзя)
+    Автор: Никоненко А.Р.
+    """
     try:
         result = [int(item) for item in var]
         return f'{np.std(result):.{3}f}'
@@ -64,8 +92,13 @@ def standard_deviation(var):
         return '-'
 
 
-# Максимальный элемент
 def maximum(var):
+    """
+    Поиск максимального элемента в списке
+    Параметры: var - список элементов
+    Возвращает: максимальный элемент (прочерк, если поиск невозможен)
+    Автор: Никоненко А.Р.
+    """
     try:
         maxi = float(var[0])
         for i in var:
@@ -76,8 +109,13 @@ def maximum(var):
         return '-'
 
 
-# Минимальный элемент
 def minimum(var):
+    """
+    Поиск минимального элемента в списке
+    Параметры: var - список элементов
+    Возвращает: минимальный элемент (прочерк, если поиск невозможен)
+    Автор: Никоненко А.Р.
+    """
     try:
         mini = float(var[0])
         for i in var:
@@ -182,6 +220,12 @@ def good_looking_columns(number_of_columns):
 
 
 def translate_to_eng(input_column):
+    """
+    Перевод названий столбцов с русского на английский язык
+    Параметры: input_column - название колонки на русском языке
+    Возвращает: название колонки на английском языке
+    Автор: Литвинов В.С.
+    """
     if input_column == "Номер сотрудника":
         return "ID"
     if input_column == "ФИО":

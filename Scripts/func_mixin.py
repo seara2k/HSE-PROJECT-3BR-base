@@ -26,7 +26,10 @@ class main_funcs:
 
     def add_row_to_table(self, row):
         """
-        Запись данных в таблицы
+        Запись добавленных данных в таблицу
+        Параметры: row - список введённых данных
+        Возвращает: -
+        Автор: Литвинов В.С.
         """
 
         self.tree_all.insert("", "end", values=(
@@ -47,8 +50,9 @@ class main_funcs:
     def delete(self):
         """
         Удаление строки из датафрейма
-        ---------
-        Библиотеки: pandas(pd)
+        Параметры: -
+        Возвращает: -
+        Авторы: Литвинов В.С и Никоненко А.Р.
         """
         tree = self.chosen_tree()
         for row in getattr(self, tree).selection():
@@ -57,6 +61,12 @@ class main_funcs:
         self.refresh_from_database()
 
     def chosen_tree(self):
+        """
+
+        Параметры:
+        Возвращает:
+        Автор:
+        """
         if self.tab_parent.tab(self.tab_parent.select(), "text") == "Полная таблица":
             tree = "tree_all"
         elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Сотрудник":
@@ -68,6 +78,12 @@ class main_funcs:
         return tree
 
     def change_row(self, ID, array):
+        """
+
+        Параметры:
+        Возвращает:
+        Автор:
+        """
         self.database.change(ID, array)
         self.refresh_from_database()
 
@@ -89,7 +105,13 @@ class main_funcs:
 
     def sort(self, tv, col, reverse, tv_name):
         """
-        Сортировка при нажатии на колонку
+
+        Параметры: tv -
+                   col -
+                   reverse -
+                   tv_name -
+        Возвращает:
+        Автор:
         """
         l = [(tv.set(k, col), k) for k in tv.get_children('')]
         l.sort(reverse=reverse)
@@ -108,6 +130,12 @@ class main_funcs:
                    self.sort(tv, col, not reverse, tv_name))
 
     def choose_analysis_function(self):
+        """
+
+        Параметры:
+        Возвращает:
+        Автор:
+        """
         chosen_analysis = self.ag_cb_analys.get()
         if chosen_analysis == "Базовая статистика":
             self.open_base_stats_analysis()
@@ -124,7 +152,10 @@ class main_funcs:
 
     def get_values(self, column_name):
         """
-        Получает данные из колонки
+
+        Параметры: column name -
+        Возвращает:
+        Автор:
         """
 
         self.column_name_values = []
@@ -137,6 +168,12 @@ class main_funcs:
         return self.column_name_values
 
     def edit_button_check(self, event):
+        """
+
+        Параметры:
+        Возвращает:
+        Автор:
+        """
         tree = self.chosen_tree()
         if ((len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0)):
             self.eg_btn_edit.config(state="disabled")
@@ -145,6 +182,12 @@ class main_funcs:
             self.eg_btn_edit.config(state="normal")
 
     def deselect_rows(self, event):
+        """
+
+        Параметры:
+        Возвращает:
+        Автор:
+        """
         for tree in self.tree_names:
             if len(getattr(self, tree).selection()) > 0:
                 getattr(self, tree).selection_remove(
@@ -152,7 +195,10 @@ class main_funcs:
 
     def launch_pickle(self):
         """
-        Запускает pickle при старте программы
+
+        Параметры:
+        Возвращает:
+        Автор:
         """
         try:
             f = open(".\\Database\\database.pickle", 'rb')
@@ -169,6 +215,12 @@ class main_funcs:
             self.refresh_from_database()
 
     def true_load(self):
+        """
+
+        Параметры:
+        Возвращает:
+        Автор:
+        """
         opening_path = filedialog.askopenfilename(title="Открыть pickle", initialdir=".\\Database", filetypes=[
                                                   ("Pickle file", ".pickle")], defaultextension=".pickle")
         if opening_path == "":
@@ -181,6 +233,12 @@ class main_funcs:
             self.refresh_from_database()
 
     def save(self):
+        """
+
+        Параметры:
+        Возвращает:
+        Автор:
+        """
         with open(self.pickle_position, 'wb') as f:
             pickle.dump(self.database, f)
             f.close()
@@ -188,6 +246,9 @@ class main_funcs:
     def new(self):
         """
 
+        Параметры:
+        Возвращает:
+        Автор:
         """
         action = messagebox.askyesnocancel(title="Сохранить изменения?",
                                            message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
@@ -207,6 +268,12 @@ class main_funcs:
             self.save()
 
     def open(self):
+        """
+
+        Параметры:
+        Возвращает:
+        Автор:
+        """
         action = messagebox.askyesnocancel(title="Сохранить изменения?",
                                            message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
         if action == True:
@@ -217,7 +284,10 @@ class main_funcs:
 
     def save_to_pickle(self):
         """
-        сохраняет датафрейм в выбранный .pickle файл
+
+        Параметры:
+        Возвращает:
+        Автор:
         """
         saving_path = filedialog.asksaveasfilename(
             title="Сохранить как", initialdir=".\\Database", filetypes=[("Pickle file", ".pickle")], defaultextension=".pickle")
@@ -230,15 +300,10 @@ class main_funcs:
 
     def export_to_excel(self):
         """
-        Экспорт базы в pickle в excel файл
-        ----------
-        pickle : .pickle файл
-        path : путь сохранения файла
-        name : название файла
-        ----------
-        Возвращает: -
-        ----------
-        Автор: loh
+
+        Параметры:
+        Возвращает:
+        Автор:
         """
         # saving_path=''
         saving_path = filedialog.asksaveasfilename(

@@ -6,6 +6,12 @@ from tkinter import ttk
 class child_about_program(tk.Toplevel):
 
     def __init__(self, parent):
+        """
+        Конструктор окна "О программе"
+        Параметры: parent -
+        Возвращает: -
+        Автор: Литвинов В.С.
+        """
         super().__init__()
         self.parent = parent
         self.title("О программе")
@@ -14,6 +20,12 @@ class child_about_program(tk.Toplevel):
         self.init_GUI()
 
     def init_GUI(self):
+        """
+        Конструктор интерфейса окна "О программе"
+        Параметры: -
+        Возвращает: -
+        Автор: Литвинов В.С
+        """
 
         # Фрейм окна
         lbl_name = tk.Label(self, text='База данных сотрудники')
@@ -22,7 +34,7 @@ class child_about_program(tk.Toplevel):
 
         lbl_author = tk.Label(self, text='Авторы')
         lbl_author.pack(side=tk.TOP, fill=tk.X)
-        lbl_author.config(font=(8))
+        lbl_author.config(font=8)
 
         lbl_slava = tk.Label(self, text='Вячеслав Литвинов')
         lbl_slava.pack(side=tk.TOP, fill=tk.X)
@@ -35,7 +47,7 @@ class child_about_program(tk.Toplevel):
 
         lbl_year = tk.Label(self, text='2019-2020')
         lbl_year.pack(side=tk.TOP,  fill=tk.X)
-        lbl_year.config(font=(10))
+        lbl_year.config(font=10)
 
         # Не даёт перейти в другое окно
         self.grab_set()
