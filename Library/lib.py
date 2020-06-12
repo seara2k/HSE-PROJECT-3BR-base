@@ -46,9 +46,11 @@ def most_frequent_count(var):
 def average(var):
     average = 0
     try:
-        for i in var:
-            average += i
-        return average / len(var)
+        for i in range(len(var)):
+            average += float(var[i])
+        return f'{(average / len(var)):.{3}f}'
+    except ValueError:
+        return '-'
     except TypeError:
         return '-'
 
@@ -56,8 +58,9 @@ def average(var):
 #  Среднеквадратическое отклонение
 def standard_deviation(var):
     try:
-        return np.std(var)
-    except TypeError:
+        result = [int(item) for item in var]
+        return f'{np.std(result):.{3}f}'
+    except ValueError:
         return '-'
 
 
@@ -66,8 +69,8 @@ def maximum(var):
     try:
         maxi = float(var[0])
         for i in var:
-            if i > maxi:
-                maxi = i
+            if float(i) > maxi:
+                maxi = float(i)
         return maxi
     except ValueError:
         return '-'
@@ -78,8 +81,8 @@ def minimum(var):
     try:
         mini = float(var[0])
         for i in var:
-            if i < mini:
-                mini = i
+            if float(i) < mini:
+                mini = float(i)
         return mini
     except ValueError:
         return '-'
