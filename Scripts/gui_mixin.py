@@ -13,30 +13,111 @@ from . import child_about_program as child_about_program
 class main_gui:
 
     def change(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_add.child_add(self, "change")
 
     def open_add(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_add.child_add(self, "add")
 
     def open_base_stats_analysis(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_base_stats.child_base_stats(self)
 
     def open_summary_table_analysis(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_summary_table.child_summary_table(self)
 
     def open_bar_chart_analysis(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_bar_chart.child_bar_chart(self)
 
     def open_histogram_analysis(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_histogram.child_histogram(self)
 
     def open_box_visk_analysis(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_box_visk.child_box_visk(self)
 
     def open_dispersion_analysis(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_dispersion.child_dispersion(self)
 
     def open_about_program(self):
+        """
+
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_about_program.child_about_program(self)
 
     def widgets(self):
