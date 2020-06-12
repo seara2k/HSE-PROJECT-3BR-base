@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 # pylint: disable=C0103
 
@@ -96,16 +96,9 @@ class child_add(tk.Toplevel):
             adding_group, text="Очистить поля", command=self.clear)
         btn_clear.pack(side=tk.LEFT, padx=5, pady=5,
                        fill=tk.X, expand=1)
-        btn_accept = ttk.Button(adding_group, text="Подтвердить")
+        btn_accept = ttk.Button(
+            adding_group, text="Подтвердить", command=self.go)
         btn_accept.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
-        if self.fate == "add":
-            btn_accept.bind('<Button-1>', lambda event: self.parent.add([int(self.entry_ID.get()),
-                                                                         self.entry_Full_Name.get(),
-                                                                         self.entry_City.get(),
-                                                                         self.entry_Phone_Number.get(),
-                                                                         self.entry_Speciality.get(),
-                                                                         self.entry_Time.get(),
-                                                                         self.entry_Pays_An_Hour.get()]))
         if self.fate == "change":
             tree = self.parent.chosen_tree()
             row = getattr(self.parent, tree).item(
@@ -117,17 +110,78 @@ class child_add(tk.Toplevel):
             self.entry_Speciality.insert(0, row[4])
             self.entry_Time.insert(0, row[5])
             self.entry_Pays_An_Hour.insert(0, row[6])
-            btn_accept.bind('<Button-1>', lambda event: (self.parent.change_row(row[0], [self.entry_ID.get(),
-                                                                                         self.entry_Full_Name.get(),
-                                                                                         self.entry_City.get(),
-                                                                                         self.entry_Phone_Number.get(),
-                                                                                         self.entry_Speciality.get(),
-                                                                                         self.entry_Time.get(),
-                                                                                         self.entry_Pays_An_Hour.get()]), self.destroy()))
-            self.parent.eg_btn_edit.config(state="disabled")
         # Не даёт перейти в другое окно
         self.grab_set()
         self.focus_set()
+
+    def go(self):
+        if self.fate == "add":
+            if self.check_input():
+                self.parent.add([int(self.entry_ID.get()),
+                                 str(self.entry_Full_Name.get(
+                                 )),
+                                 str(self.entry_City.get(
+                                 )),
+                                 str(self.entry_Phone_Number.get(
+                                 )),
+                                 str(self.entry_Speciality.get(
+                                 )),
+                                 int(self.entry_Time.get(
+                                 )),
+                                 int(self.entry_Pays_An_Hour.get())])
+            else:
+                messagebox.showerror(
+                    title="Ошибка ввода",
+                    message="Ввод должен быть в формате:\nчисло\nстрока\nстрока\nстрока или число\nстрока\nчисло\nчисло,\nТакже недопускается пустой ввод.",
+                    parent=self)
+                self.grab_set()
+                self.focus_set()
+        if self.fate == "change":
+            if self.check_input():
+                self.parent.change_row(row[0], [int(self.entry_ID.get()),
+                                                str(self.entry_Full_Name.get(
+                                                )),
+                                                str(self.entry_City.get(
+                                                )),
+                                                str(self.entry_Phone_Number.get(
+                                                )),
+                                                str(self.entry_Speciality.get(
+                                                )),
+                                                int(self.entry_Time.get(
+                                                )),
+                                                int(self.entry_Pays_An_Hour.get())])
+                self.destroy()
+            else:
+                messagebox.showerror(
+                    title="Ошибка ввода",
+                    message="Ввод должен быть в формате:\nчисло\nстрока\nстрока\nстрока или число\nстрока\nчисло\nчисло,\nТакже недопускается пустой ввод.",
+                    parent=self)
+                self.grab_set()
+                self.focus_set()
+            self.parent.eg_btn_edit.config(state="disabled")
+
+    def check_input(self):
+        """
+        Проваерка на ввод
+        """
+        true_value_output = ["int", "str", "str", "str", "int", "int"]
+        value_array = [self.entry_ID.get(),
+                       self.entry_Full_Name.get(),
+                       self.entry_City.get(),
+                       self.entry_Speciality.get(),
+                       self.entry_Time.get(),
+                       self.entry_Pays_An_Hour.get()]
+        value_output = []
+        for value in value_array:
+            try:
+                temp = int(value)
+                value_output.append("int")
+            except ValueError:
+                temp = str(value)
+                value_output.append("str")
+        if value_array.count("") == 7:
+            return False
+        return true_value_output == value_output
 
     def clear(self):
         """

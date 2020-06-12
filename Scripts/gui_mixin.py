@@ -94,7 +94,7 @@ class main_gui:
                            anchor=tk.N, fill=tk.Y)
 
         eg_btn_add = ttk.Button(
-            editing_group, text='Добавить строку', command=self.open_add)
+            editing_group, text='Добавить строку', width=30, command=self.open_add)
         eg_btn_add.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X, expand=1)
 
         self.eg_btn_edit = ttk.Button(
@@ -125,9 +125,6 @@ class main_gui:
         ag_btn_choose = ttk.Button(
             analysis_group, text="Выбрать", command=self.choose_analysis_function)
         ag_btn_choose.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
-        ag_btn_export = ttk.Button(
-            analysis_group, text="Экспорт")
-        ag_btn_export.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
 
         # Фрейм фильтров
         filtr_group = tk.LabelFrame(toolbar, text='Фильтры')
@@ -139,11 +136,13 @@ class main_gui:
                                                  "Номер телефона",
                                                  "Город"])
         self.fg_cb_filter.pack(side=tk.TOP, padx=5, pady=5)
+        self.fg_cb_filter.configure(state="disabled")
         self.fg_cb_filter.current(0)
 
         self.fg_btn_filtr = ttk.Button(
             filtr_group, text="Рефреш таблицы", command=self.refresh_from_database)
-        self.fg_btn_filtr.pack(side=tk.TOP, padx=5, pady=5)
+        self.fg_btn_filtr.pack(side=tk.TOP, padx=5,
+                               pady=5, fill=tk.X, expand=1)
 
         # Фрейм таблицы и табов
         bottom_frame = tk.Frame(bd=10)

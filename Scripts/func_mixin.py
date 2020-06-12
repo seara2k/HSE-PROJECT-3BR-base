@@ -35,17 +35,18 @@ class main_funcs:
         self.tree_all.insert("", "end", values=(
             row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
         self.tree_1.insert("", "end", values=(
-            row[0], row[1], row[2]))
+            row[0], row[1], row[3]))
 
         self.tree_2.insert("", "end", values=(
             row[0], row[4], row[5]))
 
         self.tree_3.insert("", "end", values=(
-            row[3], row[5], row[6]))
+            row[2], row[4], row[6]))
 
     def add(self, add_array):
         self.database.add(add_array)
         self.refresh_from_database()
+        self.if_changed = 1
 
     def delete(self):
         """
@@ -59,6 +60,7 @@ class main_funcs:
             row_id = getattr(self, tree).item(row)["values"][0]
             self.database.delete(row_id)
         self.refresh_from_database()
+        self.if_changed = 1
 
     def chosen_tree(self):
         """
@@ -86,6 +88,7 @@ class main_funcs:
         """
         self.database.change(ID, array)
         self.refresh_from_database()
+        self.if_changed = 1
 
 
 # def delete_from_table(self):
@@ -105,7 +108,6 @@ class main_funcs:
 
     def sort(self, tv, col, reverse, tv_name):
         """
-
         Параметры: tv -
                    col -
                    reverse -
@@ -201,16 +203,14 @@ class main_funcs:
         Автор:
         """
         try:
-            f = open(".\\Database\\database.pickle", 'rb')
+            f = open(self.pickle_position, 'rb')
         except:
             messagebox.showerror(title='Ошибка!',
-                                 message="Не обнаружено database.pickle файла в .\\Database, программа автоматически создаст его")
-            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
-            self.save()
+                                 message="Не обнаружено database.pickle файла в" + self.pickle_position)
+            self.new()
         else:
             self.database = pickle.load(f)
             f.close()
-            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
         finally:
             self.refresh_from_database()
 
@@ -226,6 +226,7 @@ class main_funcs:
         if opening_path == "":
             return
         self.pickle_position = opening_path
+        self.save_to_settings()
         self.title(self.pickle_position)
         with open(self.pickle_position, 'rb') as f:
             self.database = pickle.load(f)
@@ -239,9 +240,13 @@ class main_funcs:
         Возвращает:
         Автор:
         """
-        with open(self.pickle_position, 'wb') as f:
-            pickle.dump(self.database, f)
-            f.close()
+        if self.pickle_position == "":
+            self.save_to_pickle()
+
+        else:
+            with open(self.pickle_position, 'wb') as f:
+                pickle.dump(self.database, f)
+                f.close()
 
     def new(self):
         """
@@ -250,22 +255,23 @@ class main_funcs:
         Возвращает:
         Автор:
         """
-        action = messagebox.askyesnocancel(title="Сохранить изменения?",
-                                           message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
+        action = self.check_if_changed()
 
         if action == True:
             self.save()
             self.database.re_init()
             self.refresh_from_database()
-            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
-            self.title(self.pickle_position)
-            self.save()
+            self.pickle_position = ""
+            self.save_to_settings()
+            self.title("untitled")
+            self.if_changed == 0
         elif action == False:
             self.database.re_init()
             self.refresh_from_database()
-            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
-            self.title(self.pickle_position)
-            self.save()
+            self.pickle_position = ""
+            self.save_to_settings()
+            self.title("untitled")
+            self.if_changed == 0
 
     def open(self):
         """
@@ -274,13 +280,15 @@ class main_funcs:
         Возвращает:
         Автор:
         """
-        action = messagebox.askyesnocancel(title="Сохранить изменения?",
-                                           message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
+        action = self.check_if_changed()
         if action == True:
             self.save()
             self.true_load()
+            self.if_changed == 0
+
         elif action == False:
             self.true_load()
+            self.if_changed == 0
 
     def save_to_pickle(self):
         """
@@ -295,6 +303,7 @@ class main_funcs:
             return
         else:
             self.pickle_position = saving_path
+            self.save_to_settings()
             self.title(self.pickle_position)
             self.save()
 
@@ -305,7 +314,6 @@ class main_funcs:
         Возвращает:
         Автор:
         """
-        # saving_path=''
         saving_path = filedialog.asksaveasfilename(
             title="Сохранить в xlsx", initialdir=".\\Database", filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx")
         if saving_path == "":
@@ -314,14 +322,15 @@ class main_funcs:
             self.database.dataframe.to_excel(saving_path, index=False)
 
     def import_from_excel(self):
-        action = messagebox.askyesnocancel(title="Сохранить изменения?",
-                                           message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
+        action = self.check_if_changed()
 
         if action == True:
             self.save()
             self.get_excel()
+            self.if_changed == 0
         elif action == False:
             self.get_excel()
+            self.if_changed == 0
 
     def get_excel(self):
         opening_path = filedialog.askopenfilename(title="Открыть xlsx", initialdir=".\\Database", filetypes=[
@@ -332,9 +341,23 @@ class main_funcs:
         else:
             self.database.dataframe = pd.read_excel(opening_path)
             self.refresh_from_database()
-            self.pickle_position = os.getcwd() + "\\Database\\database.pickle"
-            self.title(self.pickle_position)
+            self.pickle_position = ""
+            self.save_to_settings()
+            self.title("untitled")
             self.save()
 
     def get_help(self):
         os.system("start " + (os.getcwd() + "\\Notes\\govno.docx"))
+
+    def check_if_changed(self):
+        if self.if_changed == 1:
+            action = messagebox.askyesnocancel(title="Сохранить изменения?",
+                                               message=self.pickle_position + " фаил был модифицирован, сохранить изменения?", icon="warning")
+            return action
+        else:
+            return False
+
+    def save_to_settings(self):
+        with open(".\\Scripts\\settings.py", 'w') as f:
+            f.write('last_opened_pickle="' + self.pickle_position + '"')
+            f.close()
