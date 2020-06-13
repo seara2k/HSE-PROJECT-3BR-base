@@ -459,3 +459,11 @@ class main_funcs:
         with open(".\\Scripts\\settings.py", 'w') as f:
             f.write('last_opened_pickle="' + self.pickle_position + '"')
             f.close()
+
+    def on_closing(self):
+        action = self.check_if_changed()
+        if action == True:
+            if self.save() == True:
+                self.destroy()
+        elif action == False:
+            self.destroy()

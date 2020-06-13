@@ -42,3 +42,4 @@ class Main(tk.Tk, gm.main_gui, fm.main_funcs):
         self.if_changed = 0
         self.title(self.pickle_position)
         self.launch_pickle()
+        self.protocol("WM_DELETE_WINDOW", self.on_closing)

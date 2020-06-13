@@ -153,6 +153,7 @@ class child_add(tk.Toplevel):
                 self.grab_set()
                 self.focus_set()
         if self.fate == "change":
+            self.title("Изменить элемент")
             if self.check_input():
                 self.parent.change_row(self.row[0], [int(self.entry_ID.get()),
                                                 str(self.entry_Full_Name.get(
