@@ -461,6 +461,15 @@ class main_funcs:
             f.close()
 
     def on_closing(self):
+        """
+        Спрашивает сохранить или нет про закрытии программы
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         action = self.check_if_changed()
         if action == True:
             if self.save() == True:
