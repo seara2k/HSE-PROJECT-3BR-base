@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-import lib
 from . import base_stats_window as base_stats_window
 # pylint: disable=C0103
 

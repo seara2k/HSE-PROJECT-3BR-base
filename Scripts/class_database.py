@@ -13,9 +13,9 @@ class df:
         ----------
         Автор: Никоненко А.Р.
         """
-        self.dataframe = pd.DataFrame(columns=['Н_СОТР', 'ФИО', 'ГОР',
-                                               'Н_ТЕЛ', 'СПЕЦ',
-                                               'ЧАС', 'ЗП_ЧАС'])
+        self.dataframe = pd.DataFrame(columns=['Номер сотрудника', 'ФИО', 'Город',
+                                               'Номер телефона', 'Специальность',
+                                               'Часы', 'Зарплата в час'])
 
     def re_init(self):
         """
@@ -27,9 +27,9 @@ class df:
         ----------
         Автор: Литвинов В.С.
         """
-        self.dataframe = pd.DataFrame(columns=['Н_СОТР', 'ФИО', 'ГОР',
-                                               'Н_ТЕЛ', 'СПЕЦ',
-                                               'ЧАС', 'ЗП_ЧАС'])
+        self.dataframe = pd.DataFrame(columns=['Номер сотрудника', 'ФИО', 'Город',
+                                               'Номер телефона', 'Специальность',
+                                               'Часы', 'Зарплата в час'])
 
     def add(self, add_array):
         """
@@ -42,9 +42,9 @@ class df:
         ----------
         Автор: Никоненко А.Р.
         """
-        adding_row = pd.DataFrame(columns=['Н_СОТР', 'ФИО', 'ГОР',
-                                           'Н_ТЕЛ', 'СПЕЦ',
-                                           'ЧАС', 'ЗП_ЧАС'])
+        adding_row = pd.DataFrame(columns=['Номер сотрудника', 'ФИО', 'Город',
+                                           'Номер телефона', 'Специальность',
+                                           'Часы', 'Зарплата в час'])
         adding_row.loc[0, :] = add_array
         self.dataframe = self.dataframe.append(adding_row, ignore_index=True)
 
@@ -60,7 +60,7 @@ class df:
         Автор: Никоненко А.Р.
         """
         self.dataframe = self.dataframe.drop(
-            self.dataframe.loc[self.dataframe["Н_СОТР"] == w_id].index)
+            self.dataframe.loc[self.dataframe["Номер сотрудника"] == w_id].index)
 
     def change(self, w_id, array):
         """
@@ -74,5 +74,6 @@ class df:
         ----------
         Автор: Никоненко А.Р.
         """
-        temp = self.dataframe.loc[self.dataframe["Н_СОТР"] == w_id].index
+        temp = self.dataframe.loc[self.dataframe[
+            "Номер сотрудника"] == w_id].index
         self.dataframe.loc[temp, :] = array

@@ -8,7 +8,7 @@ import pickle
 
 class main_funcs:
 
-    def refresh_from_database(self):
+    def refresh_from_database(self,dataframe):
         """
         Регенерирует таблицу из датафрейма
         ----------
@@ -24,10 +24,11 @@ class main_funcs:
             for column in getattr(self, tree + "_columns"):
                 getattr(self, tree).heading(column, image="")
 
-        for i in range(len(self.database.dataframe.index)):
-            row = sum(self.database.dataframe.iloc[[i]].values.tolist(), [])
+        for i in range(len(dataframe.index)):
+            row = sum(dataframe.iloc[[i]].values.tolist(), [])
             self.add_row_to_table(row)
         self.eg_btn_edit.config(state="disabled")
+        self.filtered=0
 
     def add_row_to_table(self, row):
         """
@@ -61,7 +62,7 @@ class main_funcs:
         Автор: Литвинов В.С.
         """
         self.database.add(add_array)
-        self.refresh_from_database()
+        self.refresh_from_database(self.database.dataframe)
         self.if_changed = 1
 
     def delete(self):
@@ -78,7 +79,7 @@ class main_funcs:
         for row in getattr(self, tree).selection():
             row_id = getattr(self, tree).item(row)["values"][0]
             self.database.delete(row_id)
-        self.refresh_from_database()
+        self.refresh_from_database(self.database.dataframe)
         self.if_changed = 1
 
     def chosen_tree(self):
@@ -112,7 +113,7 @@ class main_funcs:
         Автор: Литвинов В.С.
         """
         self.database.change(ID, array)
-        self.refresh_from_database()
+        self.refresh_from_database(self.database.dataframe)
         self.if_changed = 1
 
     def sort(self, tv, col, reverse, tv_name):
@@ -202,11 +203,12 @@ class main_funcs:
         Автор: Литвинов В.С.
         """
         tree = self.chosen_tree()
-        if ((len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0)):
-            self.eg_btn_edit.config(state="disabled")
+        if tree == "tree_all":
+            if ((len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0)):
+                self.eg_btn_edit.config(state="disabled")
 
-        else:
-            self.eg_btn_edit.config(state="normal")
+            else:
+                self.eg_btn_edit.config(state="normal")
 
     def deselect_rows(self, event):
         """
@@ -218,6 +220,14 @@ class main_funcs:
         ----------
         Автор: Литвинов В.С.
         """
+        if self.chosen_tree() != "tree_all":
+            self.eg_btn_add.configure(state="disabled")
+            self.eg_btn_edit.configure(state="disabled")
+            self.eg_btn_delete.configure(state="disabled")
+        else:
+            self.eg_btn_add.configure(state="normal")
+            # self.eg_btn_edit.configure(state="normal")
+            self.eg_btn_delete.configure(state="normal")
         for tree in self.tree_names:
             if len(getattr(self, tree).selection()) > 0:
                 getattr(self, tree).selection_remove(
@@ -237,13 +247,13 @@ class main_funcs:
             f = open(self.pickle_position, 'rb')
         except:
             messagebox.showerror(title='Ошибка!',
-                                 message="Не обнаружено .pickle файла " + self.pickle_position)
+                                 message="Не обнаружено последнего открытого .pickle файла " + self.pickle_position)
             self.new()
         else:
             self.database = pickle.load(f)
             f.close()
         finally:
-            self.refresh_from_database()
+            self.refresh_from_database(self.database.dataframe)
 
     def true_load(self):
         """
@@ -265,7 +275,7 @@ class main_funcs:
         with open(self.pickle_position, 'rb') as f:
             self.database = pickle.load(f)
             f.close()
-            self.refresh_from_database()
+            self.refresh_from_database(self.database.dataframe)
 
     def save(self):
         """
@@ -305,14 +315,14 @@ class main_funcs:
         if action == True:
             if self.save() == True:
                 self.database.re_init()
-                self.refresh_from_database()
+                self.refresh_from_database(self.database.dataframe)
                 self.pickle_position = ""
                 # self.save_to_settings()
                 self.title("untitled")
                 self.if_changed = 0
         elif action == False:
             self.database.re_init()
-            self.refresh_from_database()
+            self.refresh_from_database(self.database.dataframe)
             self.pickle_position = ""
             # self.save_to_settings()
             self.title("untitled")
@@ -412,7 +422,7 @@ class main_funcs:
             return
         else:
             self.database.dataframe = pd.read_excel(opening_path)
-            self.refresh_from_database()
+            self.refresh_from_database(self.database.dataframe)
             self.pickle_position = ""
             # self.save_to_settings()
             self.title("untitled")
@@ -476,3 +486,21 @@ class main_funcs:
                 self.destroy()
         elif action == False:
             self.destroy()
+
+    def filter(self, ID, name, city, number, spec, hour, pay):
+        df2 = self.database.dataframe
+        if ID != '':
+            df2 = df2.loc[df2['Номер сотрудника'] == int(ID)]
+        if name != '':
+            df2 = df2.loc[df2['ФИО'] == name]
+        if city != '':
+            df2 = df2.loc[df2['Город'] == city]
+        if number != '':
+            df2 = df2.loc[df2['Номер телефона'] == number]
+        if spec != '':
+            df2 = df2.loc[df2['Специальность'] == spec]
+        if hour != '':
+            df2 = df2.loc[df2['Часы'] == int(hour)]
+        if pay != '':
+            df2 = df2.loc[df2['Зарплата в час'] == int(pay)]
+        return df2

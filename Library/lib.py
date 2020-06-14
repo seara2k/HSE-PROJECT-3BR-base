@@ -169,68 +169,23 @@ base_stats_rows = {"Количество элементов": amount_of_elements
                    "Максимальный элемент": maximum, "Минимальный элемент": minimum}
 
 
-def open_file(path):
-    """
-    Преобразование таблицы .xlsx в базу данных
-    ----------
-    Параметры:
-    ----------
-    Возвращает:
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    w = pd.read_excel(path)
-    return w
-
-
-def append(w):
-    """
-    Добавление строки в базе данных
-    ----------
-    Параметры:
-            w - база данных
-    ----------
-    Возвращает: изменённая база данных
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    w1 = pd.DataFrame([], index=[0], columns=['Н_СОТР', 'ФИО', 'ГОР', 'Н_ТЕЛ',
-                                              'СПЕЦ', 'ЗП_ЧАС', 'ЧАС'])
-    w1.loc[0, 'Н_СОТР'] = input()
-    w1.loc[0, 'ФИО'] = input()
-    w1.loc[0, 'ГОР'] = input()
-    w1.loc[0, 'Н_ТЕЛ'] = input()
-    w1.loc[0, 'СПЕЦ'] = input()
-    w1.loc[0, 'ЗП_ЧАС'] = input()
-    w1.loc[0, 'ЧАС'] = input()
-    return w.append(w1, ignore_index=True)
-
-
-def export(w):
-    """
-    Экспорт таблицы в .xlsx
-    ----------
-    Параметры: -
-    ----------
-    Возвращает: -
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    w.to_excel("output.xlsx")
-
-
 # Сводная Таблица
-def summary():
-    """
-    Сводная диаграмма
+def summary(df, kach1_nazv, kach2_nazv, kol_nazv):
+    '''
+    Создание датафрейма для сводной таблицы
     ----------
-    Параметры: -
+    Параметры:
+        df - Исходный датафрейм
+        kach1_nazv - название качественного столбца 1
+        kach2_nazv - название качественного столбца 2
+        kol_nazv - название численного столбца
     ----------
     Возвращает: -
     ----------
-    Автор: -
-    """
-    pass
+    Автор: Никоненко А.Р.
+    '''
+    return pd.pivot_table(df, index=kach1_nazv, columns=kach2_nazv,
+                          values=kol_nazv, aggfunc='mean')
 
 
 # Столбчатая Диаграмма
@@ -377,7 +332,7 @@ def good_looking_columns(number_of_columns):
         return 157
     if number_of_columns == 7:
         return 135
-    if number_of_columns == 8:
+    if number_of_columns >= 8:
         return 119
 
 

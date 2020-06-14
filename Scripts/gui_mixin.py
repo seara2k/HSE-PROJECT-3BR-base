@@ -120,6 +120,9 @@ class main_gui:
         """
         child_about_program.child_about_program(self)
 
+    def open_filter(self):
+        child_add.child_add(self, "filter")
+
     def widgets(self):
         """
         Конструктор меню сверху слева главного окна
@@ -186,9 +189,9 @@ class main_gui:
         editing_group.pack(side=tk.LEFT, padx=0, pady=0,
                            anchor=tk.N, fill=tk.Y)
 
-        eg_btn_add = ttk.Button(
+        self.eg_btn_add = ttk.Button(
             editing_group, text='Добавить строку', width=30, command=self.open_add)
-        eg_btn_add.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X, expand=1)
+        self.eg_btn_add.pack(side=tk.TOP, padx=5, pady=5, fill=tk.X, expand=1)
 
         self.eg_btn_edit = ttk.Button(
             editing_group, text="Изменить", command=self.change)
@@ -196,9 +199,10 @@ class main_gui:
                               pady=5, fill=tk.X, expand=1)
         self.eg_btn_edit.config(state="disabled")
 
-        eg_btn_delete = ttk.Button(
+        self.eg_btn_delete = ttk.Button(
             editing_group, text="Удалить", command=self.delete)
-        eg_btn_delete.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X, expand=1)
+        self.eg_btn_delete.pack(side=tk.LEFT, padx=5,
+                                pady=5, fill=tk.X, expand=1)
 
         # Фрейм анализов
         analysis_group = tk.LabelFrame(toolbar, text='Метод анализа')
@@ -223,19 +227,15 @@ class main_gui:
         filtr_group = tk.LabelFrame(toolbar, text='Фильтры')
         filtr_group.pack(side=tk.LEFT, padx=0, pady=0, anchor=tk.N, fill=tk.Y)
 
-        self.fg_cb_filter = ttk.Combobox(filtr_group,
-                                         values=["Номер сотрудника",
-                                                 "ФИО",
-                                                 "Номер телефона",
-                                                 "Город"])
-        self.fg_cb_filter.pack(side=tk.TOP, padx=5, pady=5)
-        self.fg_cb_filter.configure(state="disabled")
-        self.fg_cb_filter.current(0)
-
         self.fg_btn_filtr = ttk.Button(
-            filtr_group, text="Рефреш таблицы", command=self.refresh_from_database)
+            filtr_group, text="Выбрать фильтрацию", command=self.open_filter)
         self.fg_btn_filtr.pack(side=tk.TOP, padx=5,
                                pady=5, fill=tk.X, expand=1)
+
+        self.fg_btn_refresh = ttk.Button(
+            filtr_group, text="Очистить фильтрацию", command=lambda: self.refresh_from_database(self.database.dataframe))
+        self.fg_btn_refresh.pack(side=tk.TOP, padx=5,
+                                 pady=5, fill=tk.X, expand=1)
 
         # Фрейм таблицы и табов
         bottom_frame = tk.Frame(bd=10)

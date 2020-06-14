@@ -156,17 +156,17 @@ class child_add(tk.Toplevel):
             self.title("Изменить элемент")
             if self.check_input():
                 self.parent.change_row(self.row[0], [int(self.entry_ID.get()),
-                                                str(self.entry_Full_Name.get(
-                                                )),
-                                                str(self.entry_City.get(
-                                                )),
-                                                str(self.entry_Phone_Number.get(
-                                                )),
-                                                str(self.entry_Speciality.get(
-                                                )),
-                                                int(self.entry_Time.get(
-                                                )),
-                                                int(self.entry_Pays_An_Hour.get())])
+                                                     str(self.entry_Full_Name.get(
+                                                     )),
+                                                     str(self.entry_City.get(
+                                                     )),
+                                                     str(self.entry_Phone_Number.get(
+                                                     )),
+                                                     str(self.entry_Speciality.get(
+                                                     )),
+                                                     int(self.entry_Time.get(
+                                                     )),
+                                                     int(self.entry_Pays_An_Hour.get())])
                 self.destroy()
             else:
                 messagebox.showerror(
@@ -176,6 +176,28 @@ class child_add(tk.Toplevel):
                 self.grab_set()
                 self.focus_set()
             self.parent.eg_btn_edit.config(state="disabled")
+        if self.fate == "filter":
+            self.title("Выбрать фильтрацию")
+            if self.check_input():
+                filtered_dataframe = self.parent.filter(self.entry_ID.get(),
+                                                        self.entry_Full_Name.get(),
+                                                        self.entry_City.get(),
+                                                        self.entry_Phone_Number.get(),
+                                                        self.entry_Speciality.get(),
+                                                        self.entry_Time.get(),
+                                                        self.entry_Pays_An_Hour.get())
+
+                self.parent.refresh_from_database(filtered_dataframe)
+                self.parent.filtered = 1
+                self.parent.filtered_dataframe = filtered_dataframe
+                self.destroy()
+            else:
+                messagebox.showerror(
+                    title="Ошибка ввода",
+                    message="Ввод должен быть в формате:\nчисло\nстрока\nстрока\nстрока или число\nстрока\nчисло\nчисло,\nТакже недопускается пустой ввод.",
+                    parent=self)
+                self.grab_set()
+                self.focus_set()
 
     def check_input(self):
         """
@@ -195,16 +217,37 @@ class child_add(tk.Toplevel):
                        self.entry_Time.get(),
                        self.entry_Pays_An_Hour.get()]
         value_output = []
-        for value in value_array:
-            try:
-                temp = int(value)
-                value_output.append("int")
-            except ValueError:
-                temp = str(value)
-                value_output.append("str")
-        if value_array.count("") == 7:
-            return False
-        return true_value_output == value_output
+        if self.fate == "filter":
+            count = 0
+            for value in value_array:
+                count = count + 1
+                if (count == 4):
+                    value_output.append("")
+                if value != "":
+                    try:
+                        temp = int(value)
+                        value_output.append("int")
+                    except ValueError:
+                        temp = str(value)
+                        value_output.append("str")
+                else:
+                    value_output.append("")
+            if value_output.count("") == 7:
+                return False
+            for i in range(7):
+                if ((true_value_output[i] != value_output[i]) and (value_output[i] != "")):
+                    return False
+                else:
+                    return True
+        else:
+            for value in value_array:
+                try:
+                    temp = int(value)
+                    value_output.append("int")
+                except ValueError:
+                    temp = str(value)
+                    value_output.append("str")
+            return true_value_output == value_output
 
     def clear(self):
         """
