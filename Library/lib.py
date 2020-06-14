@@ -212,6 +212,7 @@ def bar_chart(kach_st_1, kach_st_2, name1, name2):
     ax.bar(position, kach_st_2,  color=np.random.rand(7, 3))
 
     ax.set_xticks(position)
+    fig.savefig('Graphics/bar_chart.png')
 
     labels = ax.set_xticklabels(kach_st_1)
 
@@ -244,6 +245,7 @@ def histogramm(kach_st, kol_st, name1, name2):
     ax.bar(position, kol_st, color=np.random.rand(7, 3))
 
     ax.set_xticks(position)
+    fig.savefig('Graphics/histogramm.png')
 
     labels = ax.set_xticklabels(kach_st,
                                 verticalalignment='top')
@@ -279,6 +281,7 @@ def boxplot(kach_st, kol_st, name1, name2):
                whiskerprops={'color': "#539caf"},
                capprops={'color': "#539caf"})
     ax.set_xticklabels(kach_st)
+    fig.savefig('Graphics/boxplot.png')
     plt.show()
 
 
@@ -316,6 +319,7 @@ def scatter(kach_st, kol_st_1, kol_st_2, name1, name2, name3):
     plt.xlabel(name1)
     plt.ylabel(name2)
     plt.legend(fontsize=12)
+    plt.savefig('Graphics/scatter.png')
     plt.show()
 
 
