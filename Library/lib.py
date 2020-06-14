@@ -189,7 +189,7 @@ def summary(df, kach1_nazv, kach2_nazv, kol_nazv):
 
 
 # Столбчатая Диаграмма
-def bar_chart(kach_st_1, kach_st_2):
+def bar_chart(kach_st_1, kach_st_2, name1, name2):
     """
     Построение столбчатой диаграммы
     ----------

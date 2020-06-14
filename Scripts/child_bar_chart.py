@@ -91,4 +91,4 @@ class child_bar_chart(tk.Toplevel):
         column_name_2_eng = lib.translate_to_eng(column_name_2_ru)
         var_1 = self.parent.get_values(column_name_1_eng)
         var_2 = self.parent.get_values(column_name_2_eng)
-        lib.bar_chart(var_1, var_2)
+        lib.bar_chart(var_1, var_2, column_name_1_ru, column_name_2_ru)
