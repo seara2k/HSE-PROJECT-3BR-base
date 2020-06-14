@@ -202,9 +202,11 @@ def bar_chart(kach_st_1, kach_st_2, name1, name2):
     Автор: Чихватова А.А.
     """
     position = np.arange(len(kach_st_1))
+    for i in range(len(kach_st_1)):
+        kach_st_1[i] = kach_st_1[i].replace(' ', '\n')
 
     fig, ax = plt.subplots()
-
+    ax.set_title(f' Столбчатая диаграмма зависимости {name1} от {name2}')
     ax.bar(position, kach_st_2,  color=np.random.rand(7, 3))
 
     ax.set_xticks(position)
