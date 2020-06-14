@@ -105,4 +105,5 @@ class child_dispersion(tk.Toplevel):
         fixed_var_2 = [int(i) for i in var_2]
         fixed_var_3 = [int(i) for i in var_3]
 
-        lib.scatter(var_1, fixed_var_2, fixed_var_3)
+        lib.scatter(var_1, fixed_var_2, fixed_var_3,
+                    column_name_1_ru, column_name_2_ru, column_name_3_ru)

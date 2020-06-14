@@ -33,7 +33,12 @@ class child_add(tk.Toplevel):
         ----------
         Автор: Литвинов В.С.
         """
-        self.title("Добавить элемент")
+        if self.fate == "add":
+            self.title("Добавить элемент")
+        elif self.fate == "change":
+            self.title("Изменить элемент")
+        elif self.fate == "filter":
+            self.title("Выбрать фильтрацию")
         self.geometry('300x295')
         self.resizable(False, False)
 
@@ -153,7 +158,6 @@ class child_add(tk.Toplevel):
                 self.grab_set()
                 self.focus_set()
         if self.fate == "change":
-            self.title("Изменить элемент")
             if self.check_input():
                 self.parent.change_row(self.row[0], [int(self.entry_ID.get()),
                                                      str(self.entry_Full_Name.get(
@@ -177,7 +181,6 @@ class child_add(tk.Toplevel):
                 self.focus_set()
             self.parent.eg_btn_edit.config(state="disabled")
         if self.fate == "filter":
-            self.title("Выбрать фильтрацию")
             if self.check_input():
                 filtered_dataframe = self.parent.filter(self.entry_ID.get(),
                                                         self.entry_Full_Name.get(),

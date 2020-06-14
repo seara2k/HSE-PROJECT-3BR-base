@@ -88,4 +88,4 @@ class child_histogram(tk.Toplevel):
         var_1 = self.parent.get_values(column_name_1_eng)
         var_2 = self.parent.get_values(column_name_2_eng)
         fixed_var_2 = [int(i) for i in var_2]
-        lib.histogramm(var_1, fixed_var_2)
+        lib.histogramm(var_1, fixed_var_2, column_name_1_ru, column_name_2_ru)
