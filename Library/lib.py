@@ -206,7 +206,9 @@ def bar_chart(kach_st_1, kach_st_2, name1, name2):
         kach_st_1[i] = kach_st_1[i].replace(' ', '\n')
 
     fig, ax = plt.subplots()
-    ax.set_title(f' Столбчатая диаграмма зависимости {name1} от {name2}')
+    ax.set_title(f' Столбчатая диаграмма зависимости {name2.lower()} от {name1.lower()}')
+    ax.set_xlabel(name1)
+    ax.set_ylabel(name2)
     ax.bar(position, kach_st_2,  color=np.random.rand(7, 3))
 
     ax.set_xticks(position)
@@ -220,7 +222,7 @@ def bar_chart(kach_st_1, kach_st_2, name1, name2):
 
 
 # Гистограмма
-def histogramm(kach_st, kol_st):
+def histogramm(kach_st, kol_st, name1, name2):
     """
     Построение гистограммы
     ----------
@@ -236,7 +238,9 @@ def histogramm(kach_st, kol_st):
     for i in range(len(kach_st)):
         kach_st[i] = kach_st[i].replace(' ', '\n')
     fig, ax = plt.subplots()
-
+    ax.set_title(f'Гистограмма зависимости {name2.lower()} от {name1.lower()}')
+    ax.set_xlabel(name1)
+    ax.set_ylabel(name2)
     ax.bar(position, kol_st, color=np.random.rand(7, 3))
 
     ax.set_xticks(position)
@@ -251,7 +255,7 @@ def histogramm(kach_st, kol_st):
 
 
 # Диаграмма Бокса-Вискера
-def boxplot(kach_st, kol_st):
+def boxplot(kach_st, kol_st, name1, name2):
     """
     Построение диаграммы Бокса-Вискера
     ----------
@@ -264,8 +268,10 @@ def boxplot(kach_st, kol_st):
     Автор: Чихватова А.А.
     """
     fig = plt.figure()
-    fig.suptitle('Диаграмма Бокса-Висскера')
     ax = fig.add_subplot(111)
+    ax.set_title(f'Диаграмма Бокса-Вискера зависимости {name2.lower()} от {name1.lower()}')
+    ax.set_xlabel(name1)
+    ax.set_ylabel(name2)
     ax.boxplot(kol_st,
                patch_artist=True,
                medianprops={'color': "#297083"},
@@ -277,7 +283,7 @@ def boxplot(kach_st, kol_st):
 
 
 # Диаграмма Рассеивания
-def scatter(kach_st, kol_st_1, kol_st_2):
+def scatter(kach_st, kol_st_1, kol_st_2, name1, name2, name3):
     """
     Построение диаграммы рассеяния
     ----------
@@ -306,7 +312,9 @@ def scatter(kach_st, kol_st_1, kol_st_2):
 
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
-    plt.title("Диаграмма Рассеивания", fontsize=22)
+    plt.title(f' Рассеяние {name1.lower()} по {name2.lower()} и {name3.lower()}', fontsize=22)
+    plt.xlabel(name1)
+    plt.ylabel(name2)
     plt.legend(fontsize=12)
     plt.show()
 
