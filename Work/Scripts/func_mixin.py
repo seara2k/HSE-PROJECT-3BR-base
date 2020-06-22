@@ -246,8 +246,8 @@ class main_funcs:
         try:
             f = open(self.pickle_position, 'rb')
         except:
-            messagebox.showerror(title='Ошибка!',
-                                 message="Не обнаружено последнего открытого .pickle файла " + self.pickle_position)
+            # messagebox.showerror(title='Ошибка!',
+            #                     message="Не обнаружено последнего открытого .pickle файла " + self.pickle_position)
             self.new()
         else:
             self.database = pickle.load(f)
