@@ -43,7 +43,7 @@ class summary_table_window(tk.Toplevel):
         # Меню
         mainmenu = tk.Menu(self)
         filemenu = tk.Menu(mainmenu, tearoff=0)
-        filemenu.add_command(label="Экспорт в excel", command=lambda:self.parent.export_to_excel(self.summary_dataframe,True))
+        filemenu.add_command(label="Экспорт в excel", command=lambda:self.parent.export_to_excel(self.summary_dataframe,True,True))
         mainmenu.add_cascade(label="Экспорт", menu=filemenu)
         self.config(menu=mainmenu)
 

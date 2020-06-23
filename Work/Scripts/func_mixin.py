@@ -369,7 +369,7 @@ class main_funcs:
             self.save()
             return True
 
-    def export_to_excel(self, dataframe,index):
+    def export_to_excel(self, dataframe,index,summary):
         """
         Экспорт базы данных в .xlsx файл
         ----------
@@ -384,6 +384,8 @@ class main_funcs:
         if saving_path == "":
             return
         else:
+            if self.filtered == 1 and summary==False:
+                dataframe=self.filtered_dataframe
             dataframe.to_excel(saving_path, index=index)
 
     def import_from_excel(self):
