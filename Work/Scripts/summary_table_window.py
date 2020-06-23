@@ -40,6 +40,13 @@ class summary_table_window(tk.Toplevel):
         Автор: Литвинов В.С.
         """
 
+        # Меню
+        mainmenu = tk.Menu(self)
+        filemenu = tk.Menu(mainmenu, tearoff=0)
+        filemenu.add_command(label="Экспорт в excel", command=lambda:self.parent.export_to_excel(self.summary_dataframe,True))
+        mainmenu.add_cascade(label="Экспорт", menu=filemenu)
+        self.config(menu=mainmenu)
+
         # Фрейм окна
         summary_table_window = tk.LabelFrame(
             self, text="Параметры")
@@ -52,6 +59,7 @@ class summary_table_window(tk.Toplevel):
         else:
             self.summary_dataframe = lib.summary(
                 self.parent.filtered_dataframe, self.column_name_1_ru, self.column_name_2_ru, self.column_name_3_ru)
+
         columns_index = list(self.summary_dataframe.index)
         columns_fixed = list(self.summary_dataframe)
         columns_fixed.insert(0, self.column_name_2_ru)

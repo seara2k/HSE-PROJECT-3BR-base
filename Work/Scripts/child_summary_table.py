@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from . import summary_table_window as summary_table_window
 
 # pylint: disable=C0103
@@ -50,7 +50,7 @@ class child_summary_table(tk.Toplevel):
         lbl_kach_col_1.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
         self.cb_kach_col_1 = ttk.Combobox(kach_col_1_group, values=["Номер сотрудника", "ФИО", "Город",
-                                                               "Номер телефона", "Специальность"])
+                                                                    "Номер телефона", "Специальность"])
         self.cb_kach_col_1.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_kach_col_1.current(0)
 
@@ -62,7 +62,7 @@ class child_summary_table(tk.Toplevel):
         lbl_kach_col_2.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
         self.cb_kach_col_2 = ttk.Combobox(kach_col_2_group, values=["Номер сотрудника", "ФИО", "Город",
-                                                               "Номер телефона", "Специальность"])
+                                                                    "Номер телефона", "Специальность"])
         self.cb_kach_col_2.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_kach_col_2.current(0)
 
@@ -73,7 +73,7 @@ class child_summary_table(tk.Toplevel):
         lbl_numeral.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
 
         self.cb_numeral = ttk.Combobox(numeral_group, values=[
-                                  "Часы", "Зарплата в час"])
+            "Часы", "Зарплата в час"])
         self.cb_numeral.pack(side=tk.RIGHT, padx=5, pady=5)
         self.cb_numeral.current(0)
 
@@ -98,7 +98,14 @@ class child_summary_table(tk.Toplevel):
         column_name_1_ru = self.cb_kach_col_1.get()
         column_name_2_ru = self.cb_kach_col_2.get()
         column_name_3_ru = self.cb_numeral.get()
-        self.destroy()
-        summary_table_window.summary_table_window(
-            self.parent, column_name_1_ru, column_name_2_ru, column_name_3_ru)
-        
+        if column_name_1_ru == column_name_2_ru:
+            messagebox.showerror(
+                title="Ошибка ввода",
+                message="Качественные столбцы одинаковые",
+                parent=self)
+            self.grab_set()
+            self.focus_set()
+        else:
+            self.destroy()
+            summary_table_window.summary_table_window(
+                self.parent, column_name_1_ru, column_name_2_ru, column_name_3_ru)

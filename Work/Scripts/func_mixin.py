@@ -8,7 +8,7 @@ import pickle
 
 class main_funcs:
 
-    def refresh_from_database(self,dataframe):
+    def refresh_from_database(self, dataframe):
         """
         Регенерирует таблицу из датафрейма
         ----------
@@ -28,7 +28,7 @@ class main_funcs:
             row = sum(dataframe.iloc[[i]].values.tolist(), [])
             self.add_row_to_table(row)
         self.eg_btn_edit.config(state="disabled")
-        self.filtered=0
+        self.filtered = 0
 
     def add_row_to_table(self, row):
         """
@@ -247,7 +247,8 @@ class main_funcs:
             f = open(self.pickle_position, 'rb')
         except:
             # messagebox.showerror(title='Ошибка!',
-            #                     message="Не обнаружено последнего открытого .pickle файла " + self.pickle_position)
+            # message="Не обнаружено последнего открытого .pickle файла " +
+            # self.pickle_position)
             self.new()
         else:
             self.database = pickle.load(f)
@@ -368,7 +369,7 @@ class main_funcs:
             self.save()
             return True
 
-    def export_to_excel(self):
+    def export_to_excel(self, dataframe,index):
         """
         Экспорт базы данных в .xlsx файл
         ----------
@@ -383,7 +384,7 @@ class main_funcs:
         if saving_path == "":
             return
         else:
-            self.database.dataframe.to_excel(saving_path, index=False)
+            dataframe.to_excel(saving_path, index=index)
 
     def import_from_excel(self):
         """

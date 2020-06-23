@@ -145,7 +145,7 @@ class main_gui:
         filemenu.add_command(label="Импорт из excel",
                              command=self.import_from_excel)
         filemenu.add_command(label="Экспорт в excel",
-                             command=self.export_to_excel)
+                             command=lambda: self.export_to_excel(self.database.dataframe,False))
 
         helpmenu = tk.Menu(mainmenu, tearoff=0)
         helpmenu.add_command(label="Помощь", command=self.get_help)
