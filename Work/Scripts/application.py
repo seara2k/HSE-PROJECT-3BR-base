@@ -2,12 +2,12 @@ import sys
 import os
 import tkinter as tk
 from tkinter import ttk
-from . import constants as const
 os.chdir(os.getcwd())
 sys.path.append(os.path.abspath(".\\Library"))
 from . import gui_mixin as gm
 from . import func_mixin as fm
 from . import class_database as df
+from . import constants as const
 
 
 # pylint: disable=C0103

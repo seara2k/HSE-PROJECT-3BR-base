@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from . import constants as const
-import lib
+import graphical_analysis as ga
+import list_processing as lp
 
 # pylint: disable=C0103
 
@@ -97,14 +98,14 @@ class child_dispersion(tk.Toplevel):
         column_name_1_ru = self.cb_kach_col.get()
         column_name_2_ru = self.cb_numeral_1.get()
         column_name_3_ru = self.cb_numeral_2.get()
-        column_name_1_eng = lib.translate_to_eng(column_name_1_ru)
-        column_name_2_eng = lib.translate_to_eng(column_name_2_ru)
-        column_name_3_eng = lib.translate_to_eng(column_name_3_ru)
+        column_name_1_eng = lp.translate_to_eng(column_name_1_ru)
+        column_name_2_eng = lp.translate_to_eng(column_name_2_ru)
+        column_name_3_eng = lp.translate_to_eng(column_name_3_ru)
         var_1 = self.parent.get_values(column_name_1_eng)
         var_2 = self.parent.get_values(column_name_2_eng)
         var_3 = self.parent.get_values(column_name_3_eng)
         fixed_var_2 = [int(i) for i in var_2]
         fixed_var_3 = [int(i) for i in var_3]
 
-        lib.scatter(var_1, fixed_var_2, fixed_var_3,
+        ga.scatter(var_1, fixed_var_2, fixed_var_3,
                     column_name_1_ru, column_name_2_ru, column_name_3_ru)

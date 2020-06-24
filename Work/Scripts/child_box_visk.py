@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from . import constants as const
-import lib
+import graphical_analysis as ga
+import list_processing as lp
 
 # pylint: disable=C0103
 
@@ -85,9 +86,9 @@ class child_box_visk(tk.Toplevel):
         """
         column_name_1_ru = self.cb_kach_col.get()
         column_name_2_ru = self.cb_numeral.get()
-        column_name_1_eng = lib.translate_to_eng(column_name_1_ru)
-        column_name_2_eng = lib.translate_to_eng(column_name_2_ru)
+        column_name_1_eng = lp.translate_to_eng(column_name_1_ru)
+        column_name_2_eng = lp.translate_to_eng(column_name_2_ru)
         var_1 = self.parent.get_values(column_name_1_eng)
         var_2 = self.parent.get_values(column_name_2_eng)
         fixed_var_2 = results = [int(i) for i in var_2]
-        lib.boxplot(var_1, fixed_var_2, column_name_1_ru, column_name_2_ru)
+        ga.box_plot(var_1, fixed_var_2, column_name_1_ru, column_name_2_ru)

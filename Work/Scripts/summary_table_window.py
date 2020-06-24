@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 from . import constants as const
-import lib
+import graphical_analysis as ga
+import list_processing as lp
 
 # pylint: disable=C0103
 
@@ -55,17 +56,17 @@ class summary_table_window(tk.Toplevel):
 
         # Размер, ширина колонок и таблица
         if self.parent.filtered == 0:
-            self.summary_dataframe = lib.summary(
+            self.summary_dataframe = ga.summary(
                 self.parent.database.dataframe, self.column_name_1_ru, self.column_name_2_ru, self.column_name_3_ru)
         else:
-            self.summary_dataframe = lib.summary(
+            self.summary_dataframe = ga.summary(
                 self.parent.filtered_dataframe, self.column_name_1_ru, self.column_name_2_ru, self.column_name_3_ru)
 
         columns_index = list(self.summary_dataframe.index)
         columns_fixed = list(self.summary_dataframe)
         columns_fixed.insert(0, self.column_name_2_ru)
         number_of_columns = len(columns_fixed)
-        self.width = lib.good_looking_columns(number_of_columns)
+        self.width = lp.good_looking_columns(number_of_columns)
         self.tree = ttk.Treeview(
             summary_table_window, columns=columns_fixed, height=20, show="headings")
 

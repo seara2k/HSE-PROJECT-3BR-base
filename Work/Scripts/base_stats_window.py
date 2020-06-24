@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from . import constants as const
-import lib
+import list_processing as lp
 
 # pylint: disable=C0103
 
@@ -46,8 +46,8 @@ class base_stats_window(tk.Toplevel):
 
         # Размер, ширина колонок и таблица
         number_of_columns = len(self.column_names_ru)
-        self.width = lib.good_looking_columns(number_of_columns)
-        self.column_names_eng = [lib.translate_to_eng(
+        self.width = lp.good_looking_columns(number_of_columns)
+        self.column_names_eng = [lp.translate_to_eng(
             self.column_names_ru[x]) for x in range(number_of_columns)]
         self.tree = ttk.Treeview(
             base_stats_window, columns=self.column_names_eng, height=20, show="headings")
@@ -82,7 +82,7 @@ class base_stats_window(tk.Toplevel):
         """
         self.column_names_eng.remove("Properties")
 
-        for row_name in lib.base_stats_rows.items():
+        for row_name in lp.base_stats_rows.items():
             row = [row_name[0]]
             for name in self.column_names_eng:
                 column = self.parent.get_values(name)
