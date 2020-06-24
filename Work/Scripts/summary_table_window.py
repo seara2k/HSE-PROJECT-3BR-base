@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from . import constants as const
 import lib
 
 # pylint: disable=C0103
@@ -25,7 +26,7 @@ class summary_table_window(tk.Toplevel):
         self.column_name_3_ru = column_name_3_ru
         self.parent = parent
         self.title("Сводная таблица")
-        self.geometry("1000x350")
+        self.geometry(const.summary_table_window)
         self.resizable(False, False)
         self.init_GUI()
 
@@ -92,7 +93,5 @@ class summary_table_window(tk.Toplevel):
         tree_scrollbar_horizontal.pack(side=tk.BOTTOM, fill="x")
 
         self.tree.pack(pady=5)
-
-        # Не даёт перейти в другое окно
         self.grab_set()
         self.focus_set()

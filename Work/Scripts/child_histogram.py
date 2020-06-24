@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from . import constants as const
 import lib
 
 # pylint: disable=C0103
@@ -21,7 +22,7 @@ class child_histogram(tk.Toplevel):
         super().__init__()
         self.parent = parent
         self.title("Анализ")
-        self.geometry('340x133')
+        self.geometry(const.histogram_variables_window)
         self.resizable(False, False)
         self.init_GUI()
 

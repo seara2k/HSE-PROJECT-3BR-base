@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from . import constants as const
 # pylint: disable=C0103
 
 
@@ -19,7 +20,7 @@ class child_about_program(tk.Toplevel):
         super().__init__()
         self.parent = parent
         self.title("О программе")
-        self.geometry('320x160')
+        self.geometry(const.about_program_window)
         self.resizable(False, False)
         self.init_GUI()
 

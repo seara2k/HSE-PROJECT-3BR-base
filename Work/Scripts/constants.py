@@ -1,0 +1,13 @@
+# Windows sizes
+main_window = "1000x550"
+base_stats_window = "1000x350"
+summary_table_window = "1000x350"
+about_program_window = "320x160"
+add_element_window = "300x295"
+bar_chart_variables_window = "340x133"
+base_stats_variables_window = "200x280"
+box_whiskers_variables_window = "340x133"
+scatter_variables_window = "340x160"
+histogram_variables_window = "340x133"
+summary_table_variables_window = "340x160"
+

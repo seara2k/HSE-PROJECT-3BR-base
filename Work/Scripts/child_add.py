@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-
+from . import constants as const
 # pylint: disable=C0103
 
 
@@ -39,7 +39,7 @@ class child_add(tk.Toplevel):
             self.title("Изменить элемент")
         elif self.fate == "filter":
             self.title("Выбрать фильтрацию")
-        self.geometry('300x295')
+        self.geometry(const.add_element_window)
         self.resizable(False, False)
 
         # Фрейм окна

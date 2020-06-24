@@ -2,7 +2,7 @@ import sys
 import os
 import tkinter as tk
 from tkinter import ttk
-
+from . import constants as const
 os.chdir(os.getcwd())
 sys.path.append(os.path.abspath(".\\Library"))
 from . import gui_mixin as gm
@@ -30,7 +30,7 @@ class Main(tk.Tk, gm.main_gui, fm.main_funcs):
         self.init_GUI()
         self.widgets()
         self.title("DataBase")
-        self.geometry("1000x550")
+        self.geometry(const.main_window)
         self.resizable(False, False)
         self.add_img_up = tk.PhotoImage(
             file=".\\Graphics\\Materials\\arrow_up.gif")

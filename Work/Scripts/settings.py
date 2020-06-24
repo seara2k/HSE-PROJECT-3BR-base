@@ -1,1 +1,1 @@
-last_opened_pickle="X:/Desktop/Github/3BR-base/Work/Data/database.pickle"
+last_opened_pickle="D:/Programming/PycharmProjects/Polyakov/3BR-base/Work/Data/database.pickle"
