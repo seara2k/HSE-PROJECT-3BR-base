@@ -173,6 +173,7 @@ class child_add(tk.Toplevel):
             tree = self.parent.chosen_tree()
             self.row = getattr(self.parent, tree).item(
                 getattr(self.parent, tree).selection())["values"]
+            self.id_check = self.row[0]
             self.entry_ID.insert(0, self.row[0])
             self.entry_Full_Name.insert(0, self.row[1])
             self.entry_City.insert(0, self.row[2])
@@ -224,7 +225,7 @@ class child_add(tk.Toplevel):
                 self.focus_set()
         if self.fate == "change":
             if self.check_input():
-                if self.parent.get_values("ID").count(self.entry_ID.get()) >= 1:
+                if ((self.parent.get_values("ID").count(self.entry_ID.get()) >= 1) and (int(self.entry_ID.get()) != self.id_check)):
                     messagebox.showerror(
                         title="Ошибка ввода",
                         message="Такой номер сотрудника уже есть", parent=self)
@@ -253,7 +254,6 @@ class child_add(tk.Toplevel):
                 self.focus_set()
             self.parent.eg_btn_edit.config(state="disabled")
         if self.fate == "filter":
-            # if self.check_input():
             filtered_dataframe = self.parent.filter(self.cb_id.get(),
                                                     self.cb_full_name.get(),
                                                     self.cb_city.get(),
