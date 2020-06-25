@@ -196,18 +196,25 @@ class child_add(tk.Toplevel):
         """
         if self.fate == "add":
             if self.check_input():
-                self.parent.add([int(self.entry_ID.get()),
-                                 str(self.entry_Full_Name.get(
-                                 )),
-                                 str(self.entry_City.get(
-                                 )),
-                                 str(self.entry_Phone_Number.get(
-                                 )),
-                                 str(self.entry_Speciality.get(
-                                 )),
-                                 int(self.entry_Time.get(
-                                 )),
-                                 int(self.entry_Pays_An_Hour.get())])
+                if self.parent.get_values("ID").count(self.entry_ID.get()) >= 1:
+                    messagebox.showerror(
+                        title="Ошибка ввода",
+                        message="Такой номер сотрудника уже есть", parent=self)
+                    self.grab_set()
+                    self.focus_set()
+                else:
+                    self.parent.add([int(self.entry_ID.get()),
+                                     str(self.entry_Full_Name.get(
+                                     )),
+                                     str(self.entry_City.get(
+                                     )),
+                                     str(self.entry_Phone_Number.get(
+                                     )),
+                                     str(self.entry_Speciality.get(
+                                     )),
+                                     int(self.entry_Time.get(
+                                     )),
+                                     int(self.entry_Pays_An_Hour.get())])
             else:
                 messagebox.showerror(
                     title="Ошибка ввода",
@@ -217,19 +224,26 @@ class child_add(tk.Toplevel):
                 self.focus_set()
         if self.fate == "change":
             if self.check_input():
-                self.parent.change_row(self.row[0], [int(self.entry_ID.get()),
-                                                     str(self.entry_Full_Name.get(
-                                                     )),
-                                                     str(self.entry_City.get(
-                                                     )),
-                                                     str(self.entry_Phone_Number.get(
-                                                     )),
-                                                     str(self.entry_Speciality.get(
-                                                     )),
-                                                     int(self.entry_Time.get(
-                                                     )),
-                                                     int(self.entry_Pays_An_Hour.get())])
-                self.destroy()
+                if self.parent.get_values("ID").count(self.entry_ID.get()) >= 1:
+                    messagebox.showerror(
+                        title="Ошибка ввода",
+                        message="Такой номер сотрудника уже есть", parent=self)
+                    self.grab_set()
+                    self.focus_set()
+                else:
+                    self.parent.change_row(self.row[0], [int(self.entry_ID.get()),
+                                                         str(self.entry_Full_Name.get(
+                                                         )),
+                                                         str(self.entry_City.get(
+                                                         )),
+                                                         str(self.entry_Phone_Number.get(
+                                                         )),
+                                                         str(self.entry_Speciality.get(
+                                                         )),
+                                                         int(self.entry_Time.get(
+                                                         )),
+                                                         int(self.entry_Pays_An_Hour.get())])
+                    self.destroy()
             else:
                 messagebox.showerror(
                     title="Ошибка ввода",
