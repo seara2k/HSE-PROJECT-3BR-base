@@ -57,35 +57,20 @@ def bar_chart(kach_st_1, kach_st_2, name1, name2):
 
 
 # Гистограмма
-def histogramm(kach_st, kol_st, name1, name2):
-    """
-    Построение гистограммы
-    ----------
-    Параметры:
-            kach_st - качественный столбец
-            kol_st - численный столбец
-    ----------
-    Возвращает: -
-    ----------
-    Автор: Чихватова А.А.
-    """
-    position = np.arange(len(kach_st))
-    for i in range(len(kach_st)):
-        kach_st[i] = kach_st[i].replace(' ', '\n')
-    fig, ax = plt.subplots()
-    ax.set_title(f'Гистограмма зависимости {name2.lower()} от {name1.lower()}')
-    ax.set_xlabel(name1)
-    ax.set_ylabel(name2)
-    ax.bar(position, kol_st, color=np.random.rand(7, 3))
-
-    ax.set_xticks(position)
-    fig.savefig('Graphics/histogramm.png')
-
-    ax.set_xticklabels(kach_st, verticalalignment='top')
-
-    fig.set_figwidth(10)
-    fig.set_figheight(6)
-
+def histogram(kach, kol, name_kach, name_kol):
+    d = {'kol': kol, 'kach': kach}
+    df = pd.DataFrame(d)
+    df_agg = df.groupby(kach)
+    vals = [df['kol'].values.tolist() for i, df in df_agg]
+    plt.figure(figsize=(16, 9), dpi=80)
+    colors = [plt.cm.Spectral(i/float(len(vals)-1)) for i in range(len(vals))]
+    n, bins, patches = plt.hist(vals, stacked=True, density=False, edgecolor='black', color=colors[:len(vals)])
+    plt.legend({group: col for group, col in zip(np.unique(df['kach']).tolist(), colors[:len(vals)])})
+    plt.title(f"Гистограмма распределения частоты {name_kach} по {name_kol}", fontsize=22)
+    plt.xlabel(name_kol)
+    plt.ylabel("Частота")
+    # plt.xticks(ticks=bins[::7], labels=[round(x, 1) for x in bins[::7]])
+    plt.savefig('Graphics/histogram.png')
     plt.show()
 
 
