@@ -226,7 +226,7 @@ class child_add(tk.Toplevel):
                 self.focus_set()
         if self.fate == "change":
             if self.check_input():
-                if ((self.parent.get_values("ID").count(self.entry_ID.get()) >= 1) and (int(self.entry_ID.get()) != self.id_check)):
+                if (self.parent.get_values("ID").count(self.entry_ID.get()) >= 1) and (int(self.entry_ID.get()) != self.id_check):
                     messagebox.showerror(
                         title="Ошибка ввода",
                         message="Такой номер сотрудника уже есть", parent=self)

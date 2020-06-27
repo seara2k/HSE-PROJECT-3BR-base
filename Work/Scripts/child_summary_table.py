@@ -105,6 +105,11 @@ class child_summary_table(tk.Toplevel):
                 parent=self)
             self.grab_set()
             self.focus_set()
+        elif len(self.parent.tree_all.get_children()) == 0:
+            messagebox.showerror(
+                title="Ошибка ввода",
+                message="Нету элементов в базе данных",
+                parent=self)
         else:
             self.destroy()
             summary_table_window.summary_table_window(

@@ -292,13 +292,14 @@ class main_gui:
         self.tree_all.pack()
         self.tree_all.bind("<<TreeviewSelect>>", self.edit_button_check)
 
-        self.tree_1_columns = ['ID', 'Full_Name', "Phone_Number"]
+        self.tree_1_columns = ['ID', 'Full_Name', "Phone_Number", "City"]
         self.tree_1 = ttk.Treeview(
             tab_1, columns=self.tree_1_columns, height=20, show="headings")
 
-        self.tree_1.column('ID', width=315, anchor=tk.CENTER)
-        self.tree_1.column('Full_Name', width=315, anchor=tk.CENTER)
-        self.tree_1.column("Phone_Number", width=315, anchor=tk.CENTER)
+        self.tree_1.column('ID', width=236, anchor=tk.CENTER)
+        self.tree_1.column('Full_Name', width=236, anchor=tk.CENTER)
+        self.tree_1.column("Phone_Number", width=236, anchor=tk.CENTER)
+        self.tree_1.column("City", width=236, anchor=tk.CENTER)
 
         self.tree_1.heading("ID", text="Номер сотрудника", command=lambda:
                             self.sort(self.tree_1, "ID", False, "tree_1"))
@@ -306,6 +307,8 @@ class main_gui:
                             self.sort(self.tree_1, "Full_Name", False, "tree_1"))
         self.tree_1.heading("Phone_Number", text="Номер телефона", command=lambda:
                             self.sort(self.tree_1, "Phone_Number", False, "tree_1"))
+        self.tree_1.heading("City", text="Город", command=lambda:
+                            self.sort(self.tree_1, "City", False, "tree_1"))
 
         tree_scrollbar_vertical_1 = tk.Scrollbar(
             tab_1, orient="vertical", command=self.tree_1.yview)
