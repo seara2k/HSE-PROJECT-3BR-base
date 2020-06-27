@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from . import constants as const
 import graphical_analysis as ga
 import list_processing as lp
 
@@ -27,7 +26,7 @@ class summary_table_window(tk.Toplevel):
         self.column_name_3_ru = column_name_3_ru
         self.parent = parent
         self.title("Сводная таблица")
-        self.geometry(const.summary_table_window)
+        self.geometry(self.parent.cfg["Window sizes"]["summary_table_window"])
         self.resizable(False, False)
         self.init_GUI()
 

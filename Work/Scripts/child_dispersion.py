@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from . import constants as const
 import graphical_analysis as ga
 import list_processing as lp
 
@@ -23,7 +22,7 @@ class child_dispersion(tk.Toplevel):
         super().__init__()
         self.parent = parent
         self.title("Анализ")
-        self.geometry(const.scatter_variables_window)
+        self.geometry(self.parent.cfg["Window sizes"]["scatter_variables_window"])
         self.resizable(False, False)
         self.init_GUI()
 

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
-from . import constants as const
+
 # pylint: disable=C0103
 
 
@@ -21,7 +21,16 @@ class child_add(tk.Toplevel):
         super().__init__()
         self.fate = fate
         self.parent = parent
+        if self.fate == "add":
+            self.title("Добавить элемент")
+        elif self.fate == "change":
+            self.title("Изменить элемент")
+        elif self.fate == "filter":
+            self.title("Выбрать фильтрацию")
+        self.geometry(self.parent.cfg["Window sizes"]["add_element_window"])
+        self.resizable(False, False)
         self.init_GUI()
+
 
     def init_GUI(self):
         """
@@ -33,14 +42,6 @@ class child_add(tk.Toplevel):
         ----------
         Автор: Литвинов В.С.
         """
-        if self.fate == "add":
-            self.title("Добавить элемент")
-        elif self.fate == "change":
-            self.title("Изменить элемент")
-        elif self.fate == "filter":
-            self.title("Выбрать фильтрацию")
-        self.geometry(const.add_element_window)
-        self.resizable(False, False)
 
         # Фрейм окна
         adding_group = tk.LabelFrame(self, text='Параметры')
@@ -94,52 +95,52 @@ class child_add(tk.Toplevel):
             self.entry_City.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
-        Phone_Number_group = tk.Frame(adding_group)
-        Phone_Number_group.pack(side=tk.TOP, fill=tk.X)
-        lbl_Phone_Number = tk.Label(Phone_Number_group, text='Номер телефона')
+        phone_number_group = tk.Frame(adding_group)
+        phone_number_group.pack(side=tk.TOP, fill=tk.X)
+        lbl_Phone_Number = tk.Label(phone_number_group, text='Номер телефона')
         lbl_Phone_Number.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
             values = list(set(self.parent.get_values("Phone_Number")))
             values.insert(0, "")
             self.cb_phone_number = ttk.Combobox(
-                Phone_Number_group, values=values)
+                phone_number_group, values=values)
             self.cb_phone_number.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.cb_phone_number.current(0)
         else:
-            self.entry_Phone_Number = ttk.Entry(Phone_Number_group)
+            self.entry_Phone_Number = ttk.Entry(phone_number_group)
             self.entry_Phone_Number.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
-        Speciality_group = tk.Frame(adding_group)
-        Speciality_group.pack(side=tk.TOP, fill=tk.X)
-        lbl_Speciality = tk.Label(Speciality_group, text='Специальность')
-        lbl_Speciality.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
+        speciality_group = tk.Frame(adding_group)
+        speciality_group.pack(side=tk.TOP, fill=tk.X)
+        lbl_speciality = tk.Label(speciality_group, text='Специальность')
+        lbl_speciality.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
             values = list(set(self.parent.get_values("Speciality")))
             values.insert(0, "")
-            self.cb_speciality = ttk.Combobox(Speciality_group, values=values)
+            self.cb_speciality = ttk.Combobox(speciality_group, values=values)
             self.cb_speciality.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.cb_speciality.current(0)
         else:
-            self.entry_Speciality = ttk.Entry(Speciality_group)
+            self.entry_Speciality = ttk.Entry(speciality_group)
             self.entry_Speciality.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
-        Time_group = tk.Frame(adding_group)
-        Time_group.pack(side=tk.TOP, fill=tk.X)
-        lbl_Time = tk.Label(Time_group, text='Часы')
-        lbl_Time.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
+        time_group = tk.Frame(adding_group)
+        time_group.pack(side=tk.TOP, fill=tk.X)
+        lbl_time = tk.Label(time_group, text='Часы')
+        lbl_time.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
             values = list(set(self.parent.get_values("Time")))
             values.insert(0, "")
-            self.cb_time = ttk.Combobox(Time_group, values=values)
+            self.cb_time = ttk.Combobox(time_group, values=values)
             self.cb_time.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.cb_time.current(0)
         else:
-            self.entry_Time = ttk.Entry(Time_group)
+            self.entry_Time = ttk.Entry(time_group)
             self.entry_Time.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 

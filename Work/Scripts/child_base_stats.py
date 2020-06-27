@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from . import base_stats_window as base_stats_window
-from . import constants as const
+
 # pylint: disable=C0103
 
 
@@ -21,7 +21,7 @@ class child_base_stats(tk.Toplevel):
         super().__init__()
         self.parent = parent
         self.title("Параметры базовой статистики")
-        self.geometry(const.base_stats_variables_window)
+        self.geometry(self.parent.cfg["Window sizes"]["base_stats_variables_window"])
         self.resizable(False, False)
         self.init_GUI()
 

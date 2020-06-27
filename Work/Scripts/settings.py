@@ -1,1 +1,0 @@
-last_opened_pickle="X:/Desktop/Github/3BR-base/Work/Data/database.pickle"

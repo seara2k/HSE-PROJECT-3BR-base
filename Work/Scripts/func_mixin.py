@@ -490,6 +490,10 @@ class main_funcs:
         elif action == False:
             self.destroy()
 
+        self.cfg["File"]["last_opened_pickle"]=self.pickle_position
+        with open(".\\Scripts\\settings.ini", "w") as config_file:
+            self.cfg.write(config_file)
+
     def filter(self, ID, name, city, number, spec, hour, pay):
         df2 = self.database.dataframe
         if ID != '':

@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from . import constants as const
 import list_processing as lp
 
 # pylint: disable=C0103
@@ -24,7 +23,7 @@ class base_stats_window(tk.Toplevel):
         self.column_names_ru = column_names_ru
         self.parent = parent
         self.title("Базовая статистика")
-        self.geometry(const.base_stats_window)
+        self.geometry(self.parent.cfg["Window sizes"]["base_stats_window"])
         self.resizable(False, False)
         self.init_GUI()
 

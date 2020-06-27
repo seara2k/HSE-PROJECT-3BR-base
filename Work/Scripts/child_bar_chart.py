@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-from . import constants as const
 import graphical_analysis as ga
 import list_processing as lp
 # pylint: disable=C0103
@@ -22,7 +21,7 @@ class child_bar_chart(tk.Toplevel):
         super().__init__()
         self.parent = parent
         self.title("Анализ")
-        self.geometry(const.bar_chart_variables_window)
+        self.geometry(self.parent.cfg["Window sizes"]["bar_chart_variables_window"])
         self.resizable(False, False)
         self.init_GUI()
 

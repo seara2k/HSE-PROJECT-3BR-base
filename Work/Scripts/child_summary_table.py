@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 from . import summary_table_window as summary_table_window
-from . import constants as const
 
 # pylint: disable=C0103
 
@@ -22,7 +21,7 @@ class child_summary_table(tk.Toplevel):
         super().__init__()
         self.parent = parent
         self.title("Параметры сводной таблицы")
-        self.geometry(const.summary_table_variables_window)
+        self.geometry(self.parent.cfg["Window sizes"]["summary_table_variables_window"])
         self.resizable(False, False)
         self.init_GUI()
 
