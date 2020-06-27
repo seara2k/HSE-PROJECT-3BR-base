@@ -116,12 +116,16 @@ class child_base_stats(tk.Toplevel):
                 title="Ошибка ввода",
                 message="Ничего не выбрано",
                 parent=self)
+            self.grab_set()
+            self.focus_set()
 
         elif len(self.parent.tree_all.get_children()) == 0:
             messagebox.showerror(
                 title="Ошибка ввода",
                 message="Нету элементов в базе данных",
                 parent=self)
+            self.grab_set()
+            self.focus_set()
         else:
             self.destroy()
             base_stats_window.base_stats_window(self.parent, column_names_ru)
