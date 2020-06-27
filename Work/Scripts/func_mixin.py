@@ -43,7 +43,7 @@ class main_funcs:
         self.tree_all.insert("", "end", values=(
             row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
         self.tree_1.insert("", "end", values=(
-            row[0], row[1], row[3]))
+            row[0], row[1], row[3], row[2]))
 
         self.tree_2.insert("", "end", values=(
             row[0], row[4], row[5]))
@@ -369,7 +369,7 @@ class main_funcs:
             self.save()
             return True
 
-    def export_to_excel(self, dataframe,index,summary):
+    def export_to_excel(self, dataframe, index, summary):
         """
         Экспорт базы данных в .xlsx файл
         ----------
@@ -384,8 +384,8 @@ class main_funcs:
         if saving_path == "":
             return
         else:
-            if self.filtered == 1 and summary==False:
-                dataframe=self.filtered_dataframe
+            if self.filtered == 1 and summary == False:
+                dataframe = self.filtered_dataframe
             dataframe.to_excel(saving_path, index=index)
 
     def import_from_excel(self):
