@@ -7,7 +7,7 @@ os.chdir(os.getcwd())
 sys.path.append(os.path.abspath(".\\Library"))
 from . import gui_mixin as gm
 from . import func_mixin as fm
-from . import class_database as df
+from . import class_database as db
 
 
 # pylint: disable=C0103
@@ -26,7 +26,7 @@ class Main(tk.Tk, gm.main_gui, fm.main_funcs):
         Автор: Литвинов В.С.
         """
         super().__init__()
-        self.database = df.df()
+        self.database = db.db()
         self.cfg = configparser.ConfigParser()
         self.cfg.read(".\\settings.ini")
         self.add_img_up = tk.PhotoImage(

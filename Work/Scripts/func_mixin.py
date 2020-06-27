@@ -8,7 +8,7 @@ import pickle
 
 class main_funcs:
 
-    def refresh_from_database(self, dataframe):
+    def refresh_from_database(self, database):
         """
         Регенерирует таблицу из датафрейма
         ----------
@@ -24,32 +24,25 @@ class main_funcs:
             for column in getattr(self, tree + "_columns"):
                 getattr(self, tree).heading(column, image="")
 
-        for i in range(len(dataframe.index)):
-            row = sum(dataframe.iloc[[i]].values.tolist(), [])
-            self.add_row_to_table(row)
+        database.merge()
+        for i in range(len(database.dataframe_all.index)):
+            row = sum(database.dataframe_all.iloc[[i]].values.tolist(), [])
+            self.tree_all.insert("", "end", values=row)
+
+        for i in range(len(database.dataframe_1.index)):
+            row = sum(database.dataframe_1.iloc[[i]].values.tolist(), [])
+            self.tree_1.insert("", "end", values=row)
+
+        for i in range(len(database.dataframe_2.index)):
+            row = sum(database.dataframe_2.iloc[[i]].values.tolist(), [])
+            self.tree_2.insert("", "end", values=row)
+
+        for i in range(len(database.dataframe_3.index)):
+            row = sum(database.dataframe_3.iloc[[i]].values.tolist(), [])
+            self.tree_3.insert("", "end", values=row)
+
         self.eg_btn_edit.config(state="disabled")
         self.filtered = 0
-
-    def add_row_to_table(self, row):
-        """
-        Запись добавленных данных в таблицу
-        ----------
-        Параметры: row - список введённых данных
-        ----------
-        Возвращает: -
-        ----------
-        Автор: Литвинов В.С.
-        """
-        self.tree_all.insert("", "end", values=(
-            row[0], row[1], row[2], row[3], row[4], row[5], row[6]))
-        self.tree_1.insert("", "end", values=(
-            row[0], row[1], row[3], row[2]))
-
-        self.tree_2.insert("", "end", values=(
-            row[0], row[4], row[5]))
-
-        self.tree_3.insert("", "end", values=(
-            row[2], row[4], row[6]))
 
     def add(self, add_array):
         """
@@ -61,8 +54,15 @@ class main_funcs:
         ----------
         Автор: Литвинов В.С.
         """
-        self.database.add(add_array)
-        self.refresh_from_database(self.database.dataframe)
+        tree = self.chosen_tree()
+        if tree == "tree_1":
+            self.database.add_specialist(add_array)
+        if tree == "tree_2":
+            self.database.add_hours(add_array)
+        if tree == "tree_3":
+            self.database.add_jobs(add_array)
+
+        self.refresh_from_database(self.database)
         self.if_changed = 1
 
     def delete(self):
@@ -76,11 +76,99 @@ class main_funcs:
         Авторы: Литвинов В.С и Никоненко А.Р.
         """
         tree = self.chosen_tree()
-        for row in getattr(self, tree).selection():
-            row_id = getattr(self, tree).item(row)["values"][0]
-            self.database.delete(row_id)
-        self.refresh_from_database(self.database.dataframe)
+        if tree == "tree_1":
+            for row in getattr(self, tree).selection():
+                row_id = getattr(self, tree).item(row)["values"][0]
+                self.database.delete_specialist(row_id)
+        elif tree == "tree_2":
+            for row in getattr(self, tree).selection():
+                row_id = getattr(self, tree).item(row)["values"][0]
+                self.database.delete_hours(row_id)
+        elif tree == "tree_3":
+            for row in getattr(self, tree).selection():
+                row_city = getattr(self, tree).item(row)["values"][0]
+                row_speciality = getattr(self, tree).item(row)["values"][1]
+                print(row_city, row_speciality)
+                self.database.delete_jobs(row_city, row_speciality)
+
+        self.refresh_from_database(self.database)
         self.if_changed = 1
+
+    def change_row(self, change_array):
+        """
+        Изменяет строку в датафрейме
+        ----------
+        Параметры: - identity - номер сотрудника, array - массив изменений
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
+
+        tree = self.chosen_tree()
+        if tree == "tree_1":
+            for row in getattr(self, tree).selection():
+                row_id = getattr(self, tree).item(row)["values"][0]
+                self.database.change_specialist(row_id, change_array)
+        elif tree == "tree_2":
+            for row in getattr(self, tree).selection():
+                row_id = getattr(self, tree).item(row)["values"][0]
+                self.database.change_hours(row_id, change_array)
+        elif tree == "tree_3":
+            for row in getattr(self, tree).selection():
+                row_city = getattr(self, tree).item(row)["values"][0]
+                row_speciality = getattr(self, tree).item(row)["values"][1]
+                self.database.change_jobs(
+                    row_city, row_speciality, change_array)
+
+        self.refresh_from_database(self.database)
+        self.if_changed = 1
+
+
+def filtr(self, identity, name, city, number, spec, hour, pay):
+    filtered_frame = self.database
+    if identity != '':
+        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+            filtered_database.dataframe_all['Номер сотрудника'] == int(identity)]
+        filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+            filtered_database.dataframe_1['Номер сотрудника'] == int(identity)]
+        filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+            filtered_database.dataframe_2['Номер сотрудника'] == int(identity)]
+    if name != '':
+        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+            filtered_database.dataframe_all['ФИО'] == name]
+        filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+            filtered_database.dataframe_1['ФИО'] == name]
+    if city != '':
+        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+            filtered_database.dataframe_all['Город'] == city]
+        filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+            filtered_database.dataframe_1['Город'] == city]
+        filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+            filtered_database.dataframe_3['Город'] == city]
+    if number != '':
+        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+            filtered_database.dataframe_all['Номер телефона'] == number]
+        filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+            filtered_database.dataframe_1['Номер телефона'] == number]
+    if spec != '':
+        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+            filtered_database.dataframe_all['Специальность'] == spec]
+        filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+            filtered_database.dataframe_2['Специальность'] == spec]
+        filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+            filtered_database.dataframe_3['Специальность'] == spec]
+    if hour != '':
+        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+            filtered_database.dataframe_all['Часы'] == int(hour)]
+        filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+            filtered_database.dataframe_2['Часы'] == int(hour)]
+    if pay != '':
+        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+            filtered_database.dataframe_all['Зарплата в час'] == int(pay)]
+        filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+            filtered_database.dataframe_3['Зарплата в час'] == int(pay)]
+    return filtered_database
 
     def chosen_tree(self):
         """
@@ -101,20 +189,6 @@ class main_funcs:
         elif self.tab_parent.tab(self.tab_parent.select(), "text") == "Работы":
             tree = "tree_3"
         return tree
-
-    def change_row(self, ID, array):
-        """
-        Изменяет строку в датафрейме
-        ----------
-        Параметры: - ID - номер сотрудника, array - массив изменений
-        ----------
-        Возвращает: -
-        ----------
-        Автор: Литвинов В.С.
-        """
-        self.database.change(ID, array)
-        self.refresh_from_database(self.database.dataframe)
-        self.if_changed = 1
 
     def sort(self, tv, col, reverse, tv_name):
         """
@@ -203,12 +277,11 @@ class main_funcs:
         Автор: Литвинов В.С.
         """
         tree = self.chosen_tree()
-        if tree == "tree_all":
-            if ((len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0)):
-                self.eg_btn_edit.config(state="disabled")
+        if ((len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0)):
+            self.eg_btn_edit.config(state="disabled")
 
-            else:
-                self.eg_btn_edit.config(state="normal")
+        else:
+            self.eg_btn_edit.config(state="normal")
 
     def deselect_rows(self, event):
         """
@@ -220,14 +293,6 @@ class main_funcs:
         ----------
         Автор: Литвинов В.С.
         """
-        if self.chosen_tree() != "tree_all":
-            self.eg_btn_add.configure(state="disabled")
-            self.eg_btn_edit.configure(state="disabled")
-            self.eg_btn_delete.configure(state="disabled")
-        else:
-            self.eg_btn_add.configure(state="normal")
-            # self.eg_btn_edit.configure(state="normal")
-            self.eg_btn_delete.configure(state="normal")
         for tree in self.tree_names:
             if len(getattr(self, tree).selection()) > 0:
                 getattr(self, tree).selection_remove(
@@ -254,7 +319,7 @@ class main_funcs:
             self.database = pickle.load(f)
             f.close()
         finally:
-            self.refresh_from_database(self.database.dataframe)
+            self.refresh_from_database(self.database)
 
     def true_load(self):
         """
@@ -276,7 +341,7 @@ class main_funcs:
         with open(self.pickle_position, 'rb') as f:
             self.database = pickle.load(f)
             f.close()
-            self.refresh_from_database(self.database.dataframe)
+            self.refresh_from_database(self.database)
 
     def save(self):
         """
@@ -316,16 +381,14 @@ class main_funcs:
         if action == True:
             if self.save() == True:
                 self.database.re_init()
-                self.refresh_from_database(self.database.dataframe)
+                self.refresh_from_database(self.database)
                 self.pickle_position = ""
-                # self.save_to_settings()
                 self.title("untitled")
                 self.if_changed = 0
         elif action == False:
             self.database.re_init()
-            self.refresh_from_database(self.database.dataframe)
+            self.refresh_from_database(self.database)
             self.pickle_position = ""
-            # self.save_to_settings()
             self.title("untitled")
             self.if_changed = 0
 
@@ -369,6 +432,7 @@ class main_funcs:
             self.save()
             return True
 
+
     def export_to_excel(self, dataframe, index, summary):
         """
         Экспорт базы данных в .xlsx файл
@@ -384,9 +448,19 @@ class main_funcs:
         if saving_path == "":
             return
         else:
+            if summart == True:
+                dataframe.to_excel(saving_path, index=index)
             if self.filtered == 1 and summary == False:
                 dataframe = self.filtered_dataframe
             dataframe.to_excel(saving_path, index=index)
+
+    def give_excel(self):
+        saving_path = filedialog.asksaveasfilename(
+            title="Сохранить в xlsx", initialdir=".\\Output", filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx")
+        if saving_path == "":
+            return
+        else:
+            export_to_excel(saving_path)
 
     def import_from_excel(self):
         """
@@ -424,10 +498,9 @@ class main_funcs:
         if opening_path == "":
             return
         else:
-            self.database.dataframe = pd.read_excel(opening_path)
-            self.refresh_from_database(self.database.dataframe)
+            self.database.launch_from_one(opening_path)
+            self.refresh_from_database(self.database)
             self.pickle_position = ""
-            # self.save_to_settings()
             self.title("untitled")
 
     def get_help(self):
@@ -469,9 +542,9 @@ class main_funcs:
         ----------
         Автор: Литвинов В.С.
         """
-        with open(".\\Scripts\\settings.py", 'w') as f:
-            f.write('last_opened_pickle="' + self.pickle_position + '"')
-            f.close()
+        self.cfg["File"]["last_opened_pickle"] = self.pickle_position
+        with open(".\\Scripts\\settings.ini", "w") as config_file:
+            self.cfg.write(config_file)
 
     def on_closing(self):
         """
@@ -489,25 +562,3 @@ class main_funcs:
                 self.destroy()
         elif action == False:
             self.destroy()
-
-        self.cfg["File"]["last_opened_pickle"]=self.pickle_position
-        with open(".\\Scripts\\settings.ini", "w") as config_file:
-            self.cfg.write(config_file)
-
-    def filter(self, ID, name, city, number, spec, hour, pay):
-        df2 = self.database.dataframe
-        if ID != '':
-            df2 = df2.loc[df2['Номер сотрудника'] == int(ID)]
-        if name != '':
-            df2 = df2.loc[df2['ФИО'] == name]
-        if city != '':
-            df2 = df2.loc[df2['Город'] == city]
-        if number != '':
-            df2 = df2.loc[df2['Номер телефона'] == number]
-        if spec != '':
-            df2 = df2.loc[df2['Специальность'] == spec]
-        if hour != '':
-            df2 = df2.loc[df2['Часы'] == int(hour)]
-        if pay != '':
-            df2 = df2.loc[df2['Зарплата в час'] == int(pay)]
-        return df2
