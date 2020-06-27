@@ -110,6 +110,8 @@ class child_summary_table(tk.Toplevel):
                 title="Ошибка ввода",
                 message="Нету элементов в базе данных",
                 parent=self)
+            self.grab_set()
+            self.focus_set()
         else:
             self.destroy()
             summary_table_window.summary_table_window(
