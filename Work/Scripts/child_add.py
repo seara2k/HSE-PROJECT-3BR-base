@@ -60,6 +60,10 @@ class child_add(tk.Toplevel):
             self.id_combobox.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.id_combobox.current(0)
+            self.id_sign_combobox=ttk.Combobox(id_subframe, values=["=",">",">=","<","<="],width=2,state="readonly")
+            self.id_sign_combobox.pack(
+                side=tk.RIGHT, padx=5, pady=5)
+            self.id_sign_combobox.current(0)
         else:
             self.id_entry = ttk.Entry(id_subframe)
             self.id_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
@@ -151,6 +155,10 @@ class child_add(tk.Toplevel):
             self.time_combobox.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.time_combobox.current(0)
+            self.time_sign_combobox=ttk.Combobox(time_subframe, values=["=",">",">=","<","<="],width=2,state="readonly")
+            self.time_sign_combobox.pack(
+                side=tk.RIGHT, padx=5, pady=5)
+            self.time_sign_combobox.current(0)
         else:
             self.time_entry = ttk.Entry(time_subframe)
             self.time_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
@@ -170,6 +178,10 @@ class child_add(tk.Toplevel):
             self.pays_an_hour_combobox.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.pays_an_hour_combobox.current(0)
+            self.pays_an_hour_sign_combobox=ttk.Combobox(pays_an_hour_subframe, values=["=",">",">=","<","<="],width=2,state="readonly")
+            self.pays_an_hour_sign_combobox.pack(
+                side=tk.RIGHT, padx=5, pady=5)
+            self.pays_an_hour_sign_combobox.current(0)
         else:
             self.pays_an_hour_entry = ttk.Entry(pays_an_hour_subframe)
             self.pays_an_hour_entry.pack(
@@ -261,17 +273,37 @@ class child_add(tk.Toplevel):
                 self.destroy()
 
         elif self.fate == "filter":
-            self.parent.filtered_database = self.parent.filter(self.id_combobox.get(),
+            try:
+                if self.id_combobox.get()!="":
+                    int(self.id_combobox.get())
+                if self.time_combobox.get()!="":
+                    int(self.time_combobox.get())
+                if self.pays_an_hour_combobox.get()!="":
+                    int(self.pays_an_hour_combobox.get())
+
+                self.parent.filtered_database = self.parent.filter(self.id_combobox.get(),
+                                                               self.id_sign_combobox.get(),
                                                                self.full_name_combobox.get(),
                                                                self.city_combobox.get(),
                                                                self.phone_number_combobox.get(),
                                                                self.speciality_combobox.get(),
                                                                self.time_combobox.get(),
-                                                               self.pays_an_hour_combobox.get())
+                                                               self.time_sign_combobox.get(),
+                                                               self.pays_an_hour_combobox.get(),
+                                                               self.pays_an_hour_sign_combobox.get())
 
-            self.parent.refresh_from_database(self.parent.filtered_database)
-            self.parent.filtered = 1
-            self.destroy()
+                self.parent.refresh_from_database(self.parent.filtered_database)
+                self.parent.filtered = 1
+                self.destroy()
+            except ValueError:
+                messagebox.showerror(
+                    title="Ошибка ввода",
+                    message="Номер сотрудника, часы и зарплата в час должны быть числами",
+                    parent=self)
+                self.grab_set()
+                self.focus_set()
+
+
 
     def check_variables_type(self):
         if self.parent.chosen_tree() == "tree_1":
@@ -433,12 +465,15 @@ class child_add(tk.Toplevel):
         """
         if self.fate == "filter":
             self.id_combobox.current(0)
+            self.id_sign_combobox.current(0)
             self.full_name_combobox.current(0)
             self.city_combobox.current(0)
             self.phone_number_combobox.current(0)
             self.speciality_combobox.current(0)
             self.time_combobox.current(0)
+            self.time_sign_combobox.current(0)
             self.pays_an_hour_combobox.current(0)
+            self.pays_an_hour_sign_combobox.current(0)
         else:
             self.id_entry.delete(0, tk.END)
             self.full_name_entry.delete(0, tk.END)

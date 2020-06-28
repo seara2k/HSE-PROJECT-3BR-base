@@ -1,6 +1,18 @@
 import numpy as np
 
 
+base_stats_rows = ["Количество элементов", "Уникальные элементы",
+                   "Самый частый элемент", "Количество повторений",
+                   "Среднее значение", "Среднеквадратическое отклонение", "Минимальный элемент", "25%", "50%", "75%", "Максимальный элемент"]
+
+
+def base_stats(df, array):
+    df1 = df[array].astype(str).describe(include='all')
+    df2 = df[array].describe(include='all')
+    df2 = df2.fillna(value=df1)
+    return df2.fillna(value='-')
+
+
 def amount_of_elements(var):
     """
     Подсчет элементов в списке
@@ -157,12 +169,6 @@ def minimum(var):
         return '-'
     except IndexError:
         return '-'
-
-
-base_stats_rows = {"Количество элементов": amount_of_elements, "Уникальные элементы": unique_elements,
-                   "Самый частый элемент": most_frequent, "Количество повторений": most_frequent_count,
-                   "Среднее значение": average, "Среднеквадратическое отклонение": standard_deviation,
-                   "Максимальный элемент": maximum, "Минимальный элемент": minimum}
 
 
 def good_looking_columns(number_of_columns):

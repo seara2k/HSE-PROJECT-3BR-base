@@ -80,10 +80,15 @@ class base_stats_window(tk.Toplevel):
         Автор: Литвинов В.С.
         """
         self.column_names_eng.remove("properties")
-
-        for row_name in lp.base_stats_rows.items():
-            row = [row_name[0]]
-            for name in self.column_names_eng:
-                column = self.parent.get_values(name)
-                row.append(row_name[1](column))
+        self.column_names_ru.remove("Свойства")
+        self.dataframe=lp.base_stats(self.parent.database.dataframe_all, self.column_names_ru)
+        for i in range(len(self.dataframe.index)):
+            row = sum(self.dataframe.iloc[[i]].values.tolist(), [])
+            row.insert(0,lp.base_stats_rows[i])
             self.tree.insert("", "end", values=row)
+        # for row_name in lp.base_stats_rows.items():
+        #     row = [row_name[0]]
+        #     for name in self.column_names_eng:
+        #         column = self.parent.get_values(name)
+        #         row.append(row_name[1](column))
+        #     self.tree.insert("", "end", values=row)

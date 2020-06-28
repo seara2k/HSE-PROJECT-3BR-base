@@ -125,19 +125,48 @@ class main_funcs:
         self.refresh_from_database(self.database)
         self.if_changed = 1
 
-    def filter(self, identity, name, city, number, spec, hour, pay):
+    def filter(self, identity, sign_identity, name, city, number, spec, hour, sign_hour, pay, sign_pay):
         filtered_database = db.db()
         filtered_database.dataframe_all = self.database.dataframe_all
         filtered_database.dataframe_1 = self.database.dataframe_1
         filtered_database.dataframe_2 = self.database.dataframe_2
         filtered_database.dataframe_3 = self.database.dataframe_3
         if identity != '':
-            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-                filtered_database.dataframe_all['Номер сотрудника'] == int(identity)]
-            filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
-                filtered_database.dataframe_1['Номер сотрудника'] == int(identity)]
-            filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
-                filtered_database.dataframe_2['Номер сотрудника'] == int(identity)]
+            if sign_identity == '>':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Номер сотрудника'] > int(identity)]
+                filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                    filtered_database.dataframe_1['Номер сотрудника'] > int(identity)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Номер сотрудника'] > int(identity)]
+            if sign_identity == '>=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Номер сотрудника'] >= int(identity)]
+                filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                    filtered_database.dataframe_1['Номер сотрудника'] >= int(identity)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Номер сотрудника'] >= int(identity)]
+            if sign_identity == '=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Номер сотрудника'] == int(identity)]
+                filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                    filtered_database.dataframe_1['Номер сотрудника'] == int(identity)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Номер сотрудника'] == int(identity)]
+            if sign_identity == '<=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Номер сотрудника'] <= int(identity)]
+                filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                    filtered_database.dataframe_1['Номер сотрудника'] <= int(identity)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Номер сотрудника'] <= int(identity)]
+            if sign_identity == '<':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Номер сотрудника'] < int(identity)]
+                filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                    filtered_database.dataframe_1['Номер сотрудника'] < int(identity)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Номер сотрудника'] < int(identity)]
         if name != '':
             filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
                 filtered_database.dataframe_all['ФИО'] == name]
@@ -163,15 +192,57 @@ class main_funcs:
             filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
                 filtered_database.dataframe_3['Специальность'] == spec]
         if hour != '':
-            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-                filtered_database.dataframe_all['Часы'] == int(hour)]
-            filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
-                filtered_database.dataframe_2['Часы'] == int(hour)]
+            if sign_hour == '>':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Часы'] > int(hour)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Часы'] > int(hour)]
+            if sign_hour == '>=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Часы'] >= int(hour)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Часы'] >= int(hour)]
+            if sign_hour == '=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Часы'] == int(hour)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Часы'] == int(hour)]
+            if sign_hour == '<=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Часы'] <= int(hour)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Часы'] <= int(hour)]
+            if sign_hour == '<':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Часы'] < int(hour)]
+                filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                    filtered_database.dataframe_2['Часы'] < int(hour)]
         if pay != '':
-            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-                filtered_database.dataframe_all['Зарплата в час'] == int(pay)]
-            filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
-                filtered_database.dataframe_3['Зарплата в час'] == int(pay)]
+            if sign_pay == '>':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Зарплата в час'] > int(pay)]
+                filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+                    filtered_database.dataframe_3['Зарплата в час'] > int(pay)]
+            if sign_pay == '>=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Зарплата в час'] >= int(pay)]
+                filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+                    filtered_database.dataframe_3['Зарплата в час'] >= int(pay)]
+            if sign_pay == '=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Зарплата в час'] == int(pay)]
+                filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+                    filtered_database.dataframe_3['Зарплата в час'] == int(pay)]
+            if sign_pay == '<=':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Зарплата в час'] <= int(pay)]
+                filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+                    filtered_database.dataframe_3['Зарплата в час'] <= int(pay)]
+            if sign_pay == '<':
+                filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                    filtered_database.dataframe_all['Зарплата в час'] < int(pay)]
+                filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+                    filtered_database.dataframe_3['Зарплата в час'] < int(pay)]
         return filtered_database
 
     def chosen_tree(self):
