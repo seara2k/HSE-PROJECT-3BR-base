@@ -43,10 +43,6 @@ class main_funcs:
             row = sum(database.dataframe_3.iloc[[i]].values.tolist(), [])
             self.tree_3.insert("", "end", values=row)
 
-        for i in range(len(database.dataframe_all.index)):
-            print(sum(database.dataframe_all.iloc[[i]].values.tolist(), []))
-            for value in sum(database.dataframe_all.iloc[[i]].values.tolist(), []):
-                print(type(value))
         self.eg_btn_edit.config(state="disabled")
         self.filtered = 0
 
