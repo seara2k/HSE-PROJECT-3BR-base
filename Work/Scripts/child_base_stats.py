@@ -122,7 +122,7 @@ class child_base_stats(tk.Toplevel):
         elif len(self.parent.tree_all.get_children()) == 0:
             messagebox.showerror(
                 title="Ошибка ввода",
-                message="Нету элементов в базе данных",
+                message="Нету элементов для анализа",
                 parent=self)
             self.grab_set()
             self.focus_set()

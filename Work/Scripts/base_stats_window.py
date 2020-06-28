@@ -79,7 +79,7 @@ class base_stats_window(tk.Toplevel):
         ----------
         Автор: Литвинов В.С.
         """
-        self.column_names_eng.remove("Properties")
+        self.column_names_eng.remove("properties")
 
         for row_name in lp.base_stats_rows.items():
             row = [row_name[0]]

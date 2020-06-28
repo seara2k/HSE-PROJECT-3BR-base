@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from . import child_add as child_add
-from .Analysis import child_base_stats as child_base_stats
-from .Analysis import child_summary_table as child_summary_table
-from .Analysis import child_bar_chart as child_bar_chart
-from .Analysis import child_histogram as child_histogram
-from .Analysis import child_box_visk as child_box_visk
-from .Analysis import child_dispersion as child_dispersion
+from . import child_base_stats as child_base_stats
+from . import child_summary_table as child_summary_table
+from . import child_bar_chart as child_bar_chart
+from . import child_histogram as child_histogram
+from . import child_box_visk as child_box_visk
+from . import child_dispersion as child_dispersion
 from . import child_about_program as child_about_program
 
 
@@ -290,23 +290,23 @@ class main_gui:
 
         self.tree_all.pack()
 
-        self.tree_1_columns = ['id', 'full_name', "phone_number", "city"]
+        self.tree_1_columns = ['id', 'full_name', "city", "phone_number"]
         self.tree_1 = ttk.Treeview(
             tab_1, columns=self.tree_1_columns, height=20, show="headings")
 
         self.tree_1.column('id', width=236, anchor=tk.CENTER)
         self.tree_1.column('full_name', width=236, anchor=tk.CENTER)
-        self.tree_1.column("phone_number", width=236, anchor=tk.CENTER)
         self.tree_1.column("city", width=236, anchor=tk.CENTER)
+        self.tree_1.column("phone_number", width=236, anchor=tk.CENTER)
 
         self.tree_1.heading("id", text="Номер сотрудника", command=lambda:
                             self.sort(self.tree_1, "id", False, "tree_1"))
         self.tree_1.heading("full_name", text='ФИО', command=lambda:
                             self.sort(self.tree_1, "full_name", False, "tree_1"))
-        self.tree_1.heading("phone_number", text="Номер телефона", command=lambda:
-                            self.sort(self.tree_1, "phone_number", False, "tree_1"))
         self.tree_1.heading("city", text="Город", command=lambda:
                             self.sort(self.tree_1, "city", False, "tree_1"))
+        self.tree_1.heading("phone_number", text="Номер телефона", command=lambda:
+                            self.sort(self.tree_1, "phone_number", False, "tree_1"))
 
         tree_scrollbar_vertical_1 = tk.Scrollbar(
             tab_1, orient="vertical", command=self.tree_1.yview)

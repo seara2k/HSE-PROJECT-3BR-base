@@ -204,18 +204,18 @@ def translate_to_eng(input_column):
     Автор: Литвинов В.С.
     """
     if input_column == "Номер сотрудника":
-        return "ID"
+        return "id"
     if input_column == "ФИО":
-        return "Full_Name"
+        return "full_name"
     if input_column == "Город":
-        return "City"
+        return "city"
     if input_column == "Номер телефона":
-        return "Phone_Number"
+        return "phone_number"
     if input_column == "Специальность":
-        return "Speciality"
+        return "speciality"
     if input_column == "Часы":
-        return "Time"
+        return "time"
     if input_column == "Зарплата в час":
-        return "Pays_An_Hour"
+        return "pays_an_hour"
     if input_column == "Свойства":
-        return "Properties"
+        return "properties"

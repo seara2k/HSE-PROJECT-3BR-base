@@ -56,10 +56,10 @@ class summary_table_window(tk.Toplevel):
         # Размер, ширина колонок и таблица
         if self.parent.filtered == 0:
             self.summary_dataframe = ga.summary(
-                self.parent.database.dataframe, self.column_name_1_ru, self.column_name_2_ru, self.column_name_3_ru)
+                self.parent.database.dataframe_all, self.column_name_1_ru, self.column_name_2_ru, self.column_name_3_ru)
         else:
             self.summary_dataframe = ga.summary(
-                self.parent.filtered_dataframe, self.column_name_1_ru, self.column_name_2_ru, self.column_name_3_ru)
+                self.parent.filtered_database.dataframe_all, self.column_name_1_ru, self.column_name_2_ru, self.column_name_3_ru)
 
         columns_index = list(self.summary_dataframe.index)
         columns_fixed = list(self.summary_dataframe)

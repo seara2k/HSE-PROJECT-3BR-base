@@ -7,7 +7,6 @@ import pickle
 from . import class_database as db
 
 
-
 class main_funcs:
 
     def refresh_from_database(self, database):
@@ -298,6 +297,14 @@ class main_funcs:
         ----------
         Автор: Литвинов В.С.
         """
+        if self.chosen_tree() == "tree_all":
+            self.eg_btn_add.config(state="disabled")
+            self.eg_btn_edit.config(state="disabled")
+            self.eg_btn_delete.config(state="disabled")
+        else:
+            self.eg_btn_add.config(state="normal")
+            self.eg_btn_delete.config(state="normal")
+
         for tree in self.tree_names:
             if len(getattr(self, tree).selection()) > 0:
                 getattr(self, tree).selection_remove(

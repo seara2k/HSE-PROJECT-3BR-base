@@ -19,7 +19,7 @@ class child_add(tk.Toplevel):
         Автор: Литвинов В.С.
         """
         super().__init__()
-        self.row = ""
+        self.row = [-1000, -1000, -1000, -1000]
         self.fate = fate
         self.parent = parent
         if self.fate == "add":
@@ -53,7 +53,8 @@ class child_add(tk.Toplevel):
         id_label = tk.Label(id_subframe, text="Номер сотрудника")
         id_label.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
-            values = list(set(self.parent.database.dataframe_all["Номер сотрудника"].tolist()))
+            values = list(set(self.parent.database.dataframe_all[
+                          "Номер сотрудника"].tolist()))
             values.insert(0, "")
             self.id_combobox = ttk.Combobox(id_subframe, values=values)
             self.id_combobox.pack(
@@ -69,15 +70,17 @@ class child_add(tk.Toplevel):
         full_name_label = tk.Label(full_name_subframe, text="ФИО")
         full_name_label.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
-            values = list(set(self.parent.database.dataframe_all["ФИО"].tolist()))
+            values = list(
+                set(self.parent.database.dataframe_all["ФИО"].tolist()))
             values.insert(0, "")
-            self.full_name_combobox = ttk.Combobox(full_name_subframe, values=values)
+            self.full_name_combobox = ttk.Combobox(
+                full_name_subframe, values=values)
             self.full_name_combobox.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.full_name_combobox.current(0)
         else:
             self.full_name_entry = ttk.Entry(full_name_subframe)
-            self.full_name_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X)            
+            self.full_name_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
         city_subframe = tk.Frame(adding_frame)
         city_subframe.pack(side=tk.TOP, fill=tk.X)
@@ -85,7 +88,8 @@ class child_add(tk.Toplevel):
         city_label = tk.Label(city_subframe, text="Город")
         city_label.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
-            values = list(set(self.parent.database.dataframe_all["Город"].tolist()))
+            values = list(
+                set(self.parent.database.dataframe_all["Город"].tolist()))
             values.insert(0, "")
             self.city_combobox = ttk.Combobox(city_subframe, values=values)
             self.city_combobox.pack(
@@ -93,23 +97,27 @@ class child_add(tk.Toplevel):
             self.city_combobox.current(0)
         else:
             self.city_entry = ttk.Entry(city_subframe)
-            self.city_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X)   
+            self.city_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
         phone_number_subframe = tk.Frame(adding_frame)
         phone_number_subframe.pack(side=tk.TOP, fill=tk.X)
 
-        phone_number_label = tk.Label(phone_number_subframe, text="Номер телефона")
+        phone_number_label = tk.Label(
+            phone_number_subframe, text="Номер телефона")
         phone_number_label.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
-            values = list(set(self.parent.database.dataframe_all["Номер телефона"].tolist()))
+            values = list(set(self.parent.database.dataframe_all[
+                          "Номер телефона"].tolist()))
             values.insert(0, "")
-            self.phone_number_combobox = ttk.Combobox(phone_number_subframe, values=values)
+            self.phone_number_combobox = ttk.Combobox(
+                phone_number_subframe, values=values)
             self.phone_number_combobox.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.phone_number_combobox.current(0)
         else:
             self.phone_number_entry = ttk.Entry(phone_number_subframe)
-            self.phone_number_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X) 
+            self.phone_number_entry.pack(
+                side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
         speciality_subframe = tk.Frame(adding_frame)
         speciality_subframe.pack(side=tk.TOP, fill=tk.X)
@@ -117,15 +125,18 @@ class child_add(tk.Toplevel):
         speciality_label = tk.Label(speciality_subframe, text="Специальность")
         speciality_label.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
-            values = list(set(self.parent.database.dataframe_all["Специальность"].tolist()))
+            values = list(set(self.parent.database.dataframe_all[
+                          "Специальность"].tolist()))
             values.insert(0, "")
-            self.speciality_combobox = ttk.Combobox(speciality_subframe, values=values)
+            self.speciality_combobox = ttk.Combobox(
+                speciality_subframe, values=values)
             self.speciality_combobox.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.speciality_combobox.current(0)
         else:
             self.speciality_entry = ttk.Entry(speciality_subframe)
-            self.speciality_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X) 
+            self.speciality_entry.pack(
+                side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
 
         time_subframe = tk.Frame(adding_frame)
         time_subframe.pack(side=tk.TOP, fill=tk.X)
@@ -133,7 +144,8 @@ class child_add(tk.Toplevel):
         time_label = tk.Label(time_subframe, text="Часы")
         time_label.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
-            values = list(set(self.parent.database.dataframe_all["Часы"].tolist()))
+            values = list(
+                set(self.parent.database.dataframe_all["Часы"].tolist()))
             values.insert(0, "")
             self.time_combobox = ttk.Combobox(time_subframe, values=values)
             self.time_combobox.pack(
@@ -146,31 +158,35 @@ class child_add(tk.Toplevel):
         pays_an_hour_subframe = tk.Frame(adding_frame)
         pays_an_hour_subframe.pack(side=tk.TOP, fill=tk.X)
 
-        pays_an_hour_label = tk.Label(pays_an_hour_subframe, text="Зарплата в час")
+        pays_an_hour_label = tk.Label(
+            pays_an_hour_subframe, text="Зарплата в час")
         pays_an_hour_label.pack(side=tk.LEFT, padx=5, pady=5, fill=tk.X)
         if self.fate == "filter":
-            values = list(set(self.parent.database.dataframe_all["Зарплата в час"].tolist()))
+            values = list(set(self.parent.database.dataframe_all[
+                          "Зарплата в час"].tolist()))
             values.insert(0, "")
-            self.pays_an_hour_combobox = ttk.Combobox(pays_an_hour_subframe, values=values)
+            self.pays_an_hour_combobox = ttk.Combobox(
+                pays_an_hour_subframe, values=values)
             self.pays_an_hour_combobox.pack(
                 side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
             self.pays_an_hour_combobox.current(0)
         else:
             self.pays_an_hour_entry = ttk.Entry(pays_an_hour_subframe)
-            self.pays_an_hour_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
+            self.pays_an_hour_entry.pack(
+                side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
         if self.fate == "change" or self.fate == "add":
             if self.parent.chosen_tree() == "tree_1":
                 self.speciality_entry.config(state="disabled")
                 self.time_entry.config(state="disabled")
                 self.pays_an_hour_entry.config(state="disabled")
             elif self.parent.chosen_tree() == "tree_2":
-                self.full_name_entry.config(state="disabled")         
-                self.city_entry.config(state="disabled")   
+                self.full_name_entry.config(state="disabled")
+                self.city_entry.config(state="disabled")
                 self.phone_number_entry.config(state="disabled")
                 self.pays_an_hour_entry.config(state="disabled")
             elif self.parent.chosen_tree() == "tree_3":
                 self.id_entry.config(state="disabled")
-                self.full_name_entry.config(state="disabled")         
+                self.full_name_entry.config(state="disabled")
                 self.phone_number_entry.config(state="disabled")
                 self.time_entry.config(state="disabled")
 
@@ -203,6 +219,9 @@ class child_add(tk.Toplevel):
             button_frame, text="Подтвердить", command=self.start)
         start_button.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X, expand=1)
 
+        self.grab_set()
+        self.focus_set()
+
     def start(self):
         if self.fate == "add":
             if self.parent.chosen_tree() == "tree_1" and self.check_input():
@@ -223,36 +242,38 @@ class child_add(tk.Toplevel):
 
         elif self.fate == "change":
             if self.parent.chosen_tree() == "tree_1" and self.check_input():
-                self.parent.change([int(self.id_entry.get()),
-                                    str(self.full_name_entry.get()),
-                                    str(self.city_entry.get()),
-                                    str(self.phone_number_entry.get())])
+                self.parent.change_row([int(self.id_entry.get()),
+                                        str(self.full_name_entry.get()),
+                                        str(self.city_entry.get()),
+                                        str(self.phone_number_entry.get())])
+                self.destroy()
 
             if self.parent.chosen_tree() == "tree_2" and self.check_input():
-                self.parent.change([int(self.id_entry.get()),
-                                    str(self.speciality_entry.get()),
-                                    int(self.time_entry.get())])
+                self.parent.change_row([int(self.id_entry.get()),
+                                        str(self.speciality_entry.get()),
+                                        int(self.time_entry.get())])
+                self.destroy()
 
             if self.parent.chosen_tree() == "tree_3" and self.check_input():
-                self.parent.change([str(self.city_entry.get()),
-                                    str(self.speciality_entry.get()),
-                                    int(self.pays_an_hour_entry.get())])
-            self.destroy()
+                self.parent.change_row([str(self.city_entry.get()),
+                                        str(self.speciality_entry.get()),
+                                        int(self.pays_an_hour_entry.get())])
+                self.destroy()
 
         elif self.fate == "filter":
             self.parent.filtered_database = self.parent.filter(self.id_combobox.get(),
-                                                                self.full_name_combobox.get(),
-                                                                self.city_combobox.get(),
-                                                                self.phone_number_combobox.get(),
-                                                                self.speciality_combobox.get(),
-                                                                self.time_combobox.get(),
-                                                                self.pays_an_hour_combobox.get())
+                                                               self.full_name_combobox.get(),
+                                                               self.city_combobox.get(),
+                                                               self.phone_number_combobox.get(),
+                                                               self.speciality_combobox.get(),
+                                                               self.time_combobox.get(),
+                                                               self.pays_an_hour_combobox.get())
 
             self.parent.refresh_from_database(self.parent.filtered_database)
             self.parent.filtered = 1
             self.destroy()
 
-    def check_input(self):
+    def check_variables_type(self):
         if self.parent.chosen_tree() == "tree_1":
 
             correct_output = ["int", "str", "str", "str"]
@@ -260,9 +281,6 @@ class child_add(tk.Toplevel):
                            self.full_name_entry.get(),
                            self.city_entry.get(),
                            self.phone_number_entry.get()]
-
-            if self.row == input_array:
-                return True
             output = []
             for item in input_array:
                 try:
@@ -270,11 +288,71 @@ class child_add(tk.Toplevel):
                     if item == self.phone_number_entry.get():
                         output.append("str")
                     else:
-                        output.append("int")    
+                        output.append("int")
                 except ValueError:
                     temp = str(item)
                     output.append("str")
-            if correct_output != output or input_array.count("") != 0:
+            return (correct_output != output or input_array.count("") != 0)
+
+        elif self.parent.chosen_tree() == "tree_2":
+            correct_output = ["int", "str", "int"]
+            input_array = [self.id_entry.get(),
+                           self.speciality_entry.get(),
+                           self.time_entry.get()]
+            output = []
+            for item in input_array:
+                try:
+                    temp = int(item)
+                    output.append("int")
+                except ValueError:
+                    temp = str(item)
+                    output.append("str")
+
+            return (correct_output != output or input_array.count("") != 0)
+
+        elif self.parent.chosen_tree() == "tree_3":
+            correct_output = ["str", "str", "int"]
+            input_array = [self.city_entry.get(),
+                           self.speciality_entry.get(),
+                           self.pays_an_hour_entry.get()]
+            output = []
+            for item in input_array:
+                try:
+                    temp = int(item)
+                    output.append("int")
+                except ValueError:
+                    temp = str(item)
+                    output.append("str")
+
+            return (correct_output != output or input_array.count("") != 0)
+
+    def check_for_changes(self):
+        if self.parent.chosen_tree() == "tree_1":
+            input_array = [int(self.id_entry.get()),
+                           self.full_name_entry.get(),
+                           self.city_entry.get(),
+                           self.phone_number_entry.get()]
+            return input_array == self.row
+        if self.parent.chosen_tree() == "tree_2":
+            input_array = [int(self.id_entry.get()),
+                           self.speciality_entry.get(),
+                           int(self.time_entry.get())]
+            return input_array == self.row
+
+        if self.parent.chosen_tree() == "tree_3":
+            input_array = [self.city_entry.get(),
+                           self.speciality_entry.get(),
+                           int(self.pays_an_hour_entry.get())]
+            return input_array == self.row
+
+    def check_input(self):
+        if self.parent.chosen_tree() == "tree_1":
+
+            if self.check_for_changes():
+                self.destroy()
+                return False
+
+            if self.check_variables_type() == True:
                 messagebox.showerror(
                     title="Ошибка ввода",
                     message="Ввод должен быть в формате:\nЧисло\nСтрока\nСтрока\nСтрока или число\nТакже недопускается пустой ввод.",
@@ -283,7 +361,7 @@ class child_add(tk.Toplevel):
                 self.focus_set()
                 return False
 
-            if self.parent.database.dataframe_1["Номер сотрудника"].tolist().count(int(self.id_entry.get())) >= 1:
+            if self.parent.database.dataframe_1["Номер сотрудника"].tolist().count(int(self.id_entry.get())) >= 1 and (self.row[0] != int(self.id_entry.get())):
                 messagebox.showerror(
                     title="Ошибка ввода",
                     message="Такой номер сотрудника уже есть",
@@ -292,33 +370,13 @@ class child_add(tk.Toplevel):
                 self.focus_set()
                 return False
 
-            if self.parent.database.dataframe_1["ФИО"].tolist().count(self.full_name_entry.get()) >= 1 and self.parent.database.dataframe_1["Город"].tolist().count(self.city_entry.get()) >= 1 and self.parent.database.dataframe_1["Номер телефона"].tolist().count(self.phone_number_entry.get()) >= 1:
-                messagebox.showerror(
-                    title="Ошибка ввода",
-                    message='Такая комбинация "Город + Специальность"  уже есть',
-                    parent=self)
-                self.grab_set()
-                self.focus_set()
-                return False
-
         if self.parent.chosen_tree() == "tree_2":
 
-            correct_output = ["int", "str", "int"]
-            input_array = [self.id_entry.get(),
-                           self.speciality_entry.get(),
-                           self.time_entry.get()]
-            if self.row == input_array:
-                return True
-            output = []
-            for item in input_array:
-                try:
-                    temp = int(item)
-                    output.append("int")
-                except ValueError:
-                    temp = str(item)
-                    output.append("str")
+            if self.check_for_changes():
+                self.destroy()
+                return False
 
-            if correct_output != output or input_array.count("") != 0:
+            if self.check_variables_type() == True:
                 messagebox.showerror(
                     title="Ошибка ввода",
                     message="Ввод должен быть в формате:\nЧисло\nСтрока\nЧисло\nТакже недопускается пустой ввод.",
@@ -327,7 +385,7 @@ class child_add(tk.Toplevel):
                 self.focus_set()
                 return False
 
-            if self.parent.database.dataframe_2["Номер сотрудника"].tolist().count(int(self.id_entry.get())) >= 1:
+            if self.parent.database.dataframe_2["Номер сотрудника"].tolist().count(int(self.id_entry.get())) >= 1 and (self.row[0] != int(self.id_entry.get())):
                 messagebox.showerror(
                     title="Ошибка ввода",
                     message="Такой номер сотрудника уже есть",
@@ -336,32 +394,13 @@ class child_add(tk.Toplevel):
                 self.focus_set()
                 return False
 
-            if self.parent.database.dataframe_2["Специальность"].tolist().count(self.speciality_entry.get()) >= 1 and self.parent.database.dataframe_2["Часы"].tolist().count(int(self.time_entry.get())) >= 1:
-                messagebox.showerror(
-                    title="Ошибка ввода",
-                    message="Такая комбинация данных уже есть",
-                    parent=self)
-                self.grab_set()
-                self.focus_set()
+        if self.parent.chosen_tree() == "tree_3":
+
+            if self.check_for_changes():
+                self.destroy()
                 return False
 
-        if self.parent.chosen_tree() == "tree_3":
-            correct_output = ["str", "str", "int"]
-            input_array = [self.city_entry.get(),
-                           self.speciality_entry.get(),
-                           self.pays_an_hour_entry.get()]
-            if self.row == input_array:
-                return True
-            output = []
-            for item in input_array:
-                try:
-                    temp = int(item)
-                    output.append("int")
-                except ValueError:
-                    temp = str(item)
-                    output.append("str")
-
-            if correct_output != output or input_array.count("") != 0:
+            if self.check_variables_type() == True:
                 messagebox.showerror(
                     title="Ошибка ввода",
                     message="Ввод должен быть в формате:\nСтрока\nСтрока\nЧисло\nТакже недопускается пустой ввод.",
@@ -370,85 +409,17 @@ class child_add(tk.Toplevel):
                 self.focus_set()
                 return False
 
-            if self.parent.database.dataframe_3["Город"].tolist().count(self.city_entry.get()) >= 1 and self.parent.database.dataframe_3["Специальность"].tolist().count(self.speciality_entry.get()) >= 1 :
+
+            if self.parent.database.dataframe_3["Город"].tolist().count(self.city_entry.get()) >= 1 and (self.row[0] != self.city_entry.get()) and self.parent.database.dataframe_3["Специальность"].tolist().count(self.speciality_entry.get()) >= 1 and (self.row[1] != self.speciality_entry.get()):
                 messagebox.showerror(
                     title="Ошибка ввода",
-                    message="Такая комбинация данных уже есть",
+                    message="Такая специальность в городе "+ self.city_entry.get()+ " уже есть",
                     parent=self)
                 self.grab_set()
                 self.focus_set()
                 return False
 
         return True
-
-    # def go(self):
-    #     """
-    #     Начало работы окна, либо добавление либо изменение значений таблицы
-    #     ----------
-    #     Параметры: -
-    #     ----------
-    #     Возвращает: -
-    #     ----------
-    #     Автор: Литвинов В.С.
-    #     """
-    #     if self.fate == "add":
-    #         if self.check_input():
-    #             if self.parent.get_values("ID").count(self.entry_ID.get()) >= 1:
-    #                 messagebox.showerror(
-    #                     title="Ошибка ввода",
-    #                     message="Такой номер сотрудника уже есть", parent=self)
-    #                 self.grab_set()
-    #                 self.focus_set()
-    #             else:
-    #                 self.parent.add([int(self.entry_ID.get()),
-    #                                  str(self.entry_Full_Name.get(
-    #                                  )),
-    #                                  str(self.entry_City.get(
-    #                                  )),
-    #                                  str(self.entry_Phone_Number.get(
-    #                                  )),
-    #                                  str(self.entry_Speciality.get(
-    #                                  )),
-    #                                  int(self.entry_Time.get(
-    #                                  )),
-    #                                  int(self.entry_Pays_An_Hour.get())])
-    #         else:
-    #             messagebox.showerror(
-    #                 title="Ошибка ввода",
-    #                 message="Ввод должен быть в формате:\nЧисло\nСтрока\nСтрока\nСтрока или число\nСтрока\nЧисло\nЧисло\nТакже недопускается пустой ввод.",
-    #                 parent=self)
-    #             self.grab_set()
-    #             self.focus_set()
-    #     if self.fate == "change":
-    #         if self.check_input():
-    #             if (self.parent.get_values("ID").count(self.entry_ID.get()) >= 1) and (int(self.entry_ID.get()) != self.id_check):
-    #                 messagebox.showerror(
-    #                     title="Ошибка ввода",
-    #                     message="Такой номер сотрудника уже есть", parent=self)
-    #                 self.grab_set()
-    #                 self.focus_set()
-    #             else:
-    #                 self.parent.change_row(self.row[0], [int(self.entry_ID.get()),
-    #                                                      str(self.entry_Full_Name.get(
-    #                                                      )),
-    #                                                      str(self.entry_City.get(
-    #                                                      )),
-    #                                                      str(self.entry_Phone_Number.get(
-    #                                                      )),
-    #                                                      str(self.entry_Speciality.get(
-    #                                                      )),
-    #                                                      int(self.entry_Time.get(
-    #                                                      )),
-    #                                                      int(self.entry_Pays_An_Hour.get())])
-    #                 self.destroy()
-    #         else:
-    #             messagebox.showerror(
-    #                 title="Ошибка ввода",
-    #                 message="Ввод должен быть в формате:\nчисло\nстрока\nстрока\nстрока или число\nстрока\nчисло\nчисло,\nТакже недопускается пустой ввод.",
-    #                 parent=self)
-    #             self.grab_set()
-    #             self.focus_set()
-    #         self.parent.eg_btn_edit.config(state="disabled")
 
     def clear(self):
         """
