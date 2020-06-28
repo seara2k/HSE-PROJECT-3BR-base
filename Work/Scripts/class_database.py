@@ -14,7 +14,7 @@ class db:
         Автор: Никоненко А.Р.
         """
         self.dataframe_all = pd.DataFrame(columns=['Номер сотрудника', 'ФИО', 'Город', 'Номер телефона',
-                                                     'Специальность', 'Часы', 'Зарплата в час'])
+                                                   'Специальность', 'Часы', 'Зарплата в час'])
         self.dataframe_1 = pd.DataFrame(columns=['Номер сотрудника', 'ФИО', 'Город', 'Номер телефона'])
         self.dataframe_2 = pd.DataFrame(columns=['Номер сотрудника', 'Специальность', 'Часы'])
         self.dataframe_3 = pd.DataFrame(columns=['Город', 'Специальность', 'Зарплата в час'])
@@ -30,18 +30,20 @@ class db:
         Автор: Литвинов В.С.
         """
         self.dataframe_all = pd.DataFrame(columns=['Номер сотрудника', 'ФИО', 'Город', 'Номер телефона',
-                                                     'Специальность', 'Часы', 'Зарплата в час'])
+                                                   'Специальность', 'Часы', 'Зарплата в час'])
         self.dataframe_1 = pd.DataFrame(columns=['Номер сотрудника', 'ФИО', 'Город', 'Номер телефона'])
         self.dataframe_2 = pd.DataFrame(columns=['Номер сотрудника', 'Специальность', 'Часы'])
         self.dataframe_3 = pd.DataFrame(columns=['Город', 'Специальность', 'Зарплата в час'])
 
-
     def launch_from_one(self, path):
         self.dataframe_all = pd.read_excel(path)
+        self.dataframe_all = self.dataframe_all.drop_duplicates()
         self.dataframe_1 = self.dataframe_all.loc[:, ['Номер сотрудника', 'ФИО', 'Город', 'Номер телефона']]
+        self.dataframe_1 = self.dataframe_1.drop_duplicates()
         self.dataframe_2 = self.dataframe_all.loc[:, ['Номер сотрудника', 'Специальность', 'Часы']]
+        self.dataframe_2 = self.dataframe_2.drop_duplicates()
         self.dataframe_3 = self.dataframe_all.loc[:, ['Город', 'Специальность', 'Зарплата в час']]
-
+        self.dataframe_3 = self.dataframe_3.drop_duplicates()
 
     def merge(self):
 
@@ -145,7 +147,7 @@ class db:
         self.dataframe_2 = self.dataframe_2.drop(
             self.dataframe_2.loc[self.dataframe_2["Номер сотрудника"] == w_id].index)
 
-    def delete_jobs(self, city,speciality):
+    def delete_jobs(self, city, speciality):
         """
         Удаление строки из базы данных
         ----------
@@ -219,7 +221,7 @@ class db:
         if any(self.dataframe_2.duplicated()):
             self.dataframe_2 = self.dataframe_2.drop_duplicates()
 
-    def change_jobs(self, city,speciality, dictionary):
+    def change_jobs(self, city, speciality, dictionary):
         self.dataframe_3 = self.dataframe_3.drop(
             self.dataframe_3.loc[
                 (self.dataframe_3["Город"]) == city & (self.dataframe_3["Специальность"] == speciality)].index)

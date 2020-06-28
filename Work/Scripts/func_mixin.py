@@ -124,51 +124,50 @@ class main_funcs:
         self.refresh_from_database(self.database)
         self.if_changed = 1
 
-
-def filtr(self, identity, name, city, number, spec, hour, pay):
-    filtered_frame = self.database
-    if identity != '':
-        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-            filtered_database.dataframe_all['Номер сотрудника'] == int(identity)]
-        filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
-            filtered_database.dataframe_1['Номер сотрудника'] == int(identity)]
-        filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
-            filtered_database.dataframe_2['Номер сотрудника'] == int(identity)]
-    if name != '':
-        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-            filtered_database.dataframe_all['ФИО'] == name]
-        filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
-            filtered_database.dataframe_1['ФИО'] == name]
-    if city != '':
-        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-            filtered_database.dataframe_all['Город'] == city]
-        filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
-            filtered_database.dataframe_1['Город'] == city]
-        filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
-            filtered_database.dataframe_3['Город'] == city]
-    if number != '':
-        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-            filtered_database.dataframe_all['Номер телефона'] == number]
-        filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
-            filtered_database.dataframe_1['Номер телефона'] == number]
-    if spec != '':
-        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-            filtered_database.dataframe_all['Специальность'] == spec]
-        filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
-            filtered_database.dataframe_2['Специальность'] == spec]
-        filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
-            filtered_database.dataframe_3['Специальность'] == spec]
-    if hour != '':
-        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-            filtered_database.dataframe_all['Часы'] == int(hour)]
-        filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
-            filtered_database.dataframe_2['Часы'] == int(hour)]
-    if pay != '':
-        filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
-            filtered_database.dataframe_all['Зарплата в час'] == int(pay)]
-        filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
-            filtered_database.dataframe_3['Зарплата в час'] == int(pay)]
-    return filtered_database
+    def filter(self, identity, name, city, number, spec, hour, pay):
+        filtered_database = self.database
+        if identity != '':
+            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                filtered_database.dataframe_all['Номер сотрудника'] == int(identity)]
+            filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                filtered_database.dataframe_1['Номер сотрудника'] == int(identity)]
+            filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                filtered_database.dataframe_2['Номер сотрудника'] == int(identity)]
+        if name != '':
+            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                filtered_database.dataframe_all['ФИО'] == name]
+            filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                filtered_database.dataframe_1['ФИО'] == name]
+        if city != '':
+            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                filtered_database.dataframe_all['Город'] == city]
+            filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                filtered_database.dataframe_1['Город'] == city]
+            filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+                filtered_database.dataframe_3['Город'] == city]
+        if number != '':
+            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                filtered_database.dataframe_all['Номер телефона'] == number]
+            filtered_database.dataframe_1 = filtered_database.dataframe_1.loc[
+                filtered_database.dataframe_1['Номер телефона'] == number]
+        if spec != '':
+            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                filtered_database.dataframe_all['Специальность'] == spec]
+            filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                filtered_database.dataframe_2['Специальность'] == spec]
+            filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+                filtered_database.dataframe_3['Специальность'] == spec]
+        if hour != '':
+            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                filtered_database.dataframe_all['Часы'] == int(hour)]
+            filtered_database.dataframe_2 = filtered_database.dataframe_2.loc[
+                filtered_database.dataframe_2['Часы'] == int(hour)]
+        if pay != '':
+            filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
+                filtered_database.dataframe_all['Зарплата в час'] == int(pay)]
+            filtered_database.dataframe_3 = filtered_database.dataframe_3.loc[
+                filtered_database.dataframe_3['Зарплата в час'] == int(pay)]
+        return filtered_database
 
     def chosen_tree(self):
         """
@@ -277,7 +276,7 @@ def filtr(self, identity, name, city, number, spec, hour, pay):
         Автор: Литвинов В.С.
         """
         tree = self.chosen_tree()
-        if ((len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0)):
+        if (len(getattr(self, tree).selection()) >= 2) or (len(getattr(self, tree).selection()) == 0):
             self.eg_btn_edit.config(state="disabled")
 
         else:
@@ -432,7 +431,6 @@ def filtr(self, identity, name, city, number, spec, hour, pay):
             self.save()
             return True
 
-
     def export_to_excel(self, dataframe, index, summary):
         """
         Экспорт базы данных в .xlsx файл
@@ -448,7 +446,7 @@ def filtr(self, identity, name, city, number, spec, hour, pay):
         if saving_path == "":
             return
         else:
-            if summart == True:
+            if summary == True:
                 dataframe.to_excel(saving_path, index=index)
             if self.filtered == 1 and summary == False:
                 dataframe = self.filtered_dataframe
