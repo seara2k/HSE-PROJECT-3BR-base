@@ -29,6 +29,7 @@ def base_stats(df, array):
     df2 = df[array].describe(include='all')
     df2 = df2.fillna(value=df1)
     df_all = pd.concat([df3, df2], axis=1, join='outer')
+    df_all = df_all.fillna(value=df1)
     return df_all.fillna(value='-')
 
 
