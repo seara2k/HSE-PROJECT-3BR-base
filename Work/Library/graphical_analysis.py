@@ -63,13 +63,12 @@ def histogram(kach, kol, name_kach, name_kol):
     df_agg = df.groupby(kach)
     vals = [df['kol'].values.tolist() for i, df in df_agg]
     plt.figure(figsize=(16, 9), dpi=80)
-    colors = [plt.cm.Spectral(i/float(len(vals)-1)) for i in range(len(vals))]
+    colors = [plt.cm.Spectral(i/float(len(vals))) for i in range(len(vals))]
     n, bins, patches = plt.hist(vals, stacked=True, density=False, edgecolor='black', color=colors[:len(vals)])
     plt.legend({group: col for group, col in zip(np.unique(df['kach']).tolist(), colors[:len(vals)])})
     plt.title(f"Гистограмма распределения частоты {name_kach} по {name_kol}", fontsize=22)
     plt.xlabel(name_kol)
     plt.ylabel("Частота")
-    # plt.xticks(ticks=bins[::7], labels=[round(x, 1) for x in bins[::7]])
     plt.savefig('Graphics/histogram.png')
     plt.show()
 
@@ -123,8 +122,7 @@ def scatter(kach_st, kol_st_1, kol_st_2, name1, name2, name3):
     midwest = pd.DataFrame(data)
 
     categories = np.unique(midwest['Name'])
-    colors = [plt.cm.tab10(i / float(len(categories) - 1))
-              for i in range(len(categories))]
+    colors = [plt.cm.Spectral(i / float(len(categories))) for i in range(len(categories))]
     plt.figure(figsize=(16, 10), dpi=80, facecolor='w', edgecolor='k')
     for i, Name in enumerate(categories):
         plt.scatter('Hours', 'Salary',
@@ -134,8 +132,8 @@ def scatter(kach_st, kol_st_1, kol_st_2, name1, name2, name3):
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
     plt.title(f' Рассеяние {name1.lower()} по {name2.lower()} и {name3.lower()}', fontsize=22)
-    plt.xlabel(name1)
-    plt.ylabel(name2)
+    plt.xlabel(name2)
+    plt.ylabel(name3)
     plt.legend(fontsize=12)
     plt.savefig('Graphics/scatter.png')
     plt.show()

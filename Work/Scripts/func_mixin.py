@@ -638,7 +638,7 @@ class main_funcs:
         Автор: Литвинов В.С.
         """
         self.cfg["File"]["last_opened_pickle"] = self.pickle_position
-        with open(".\\Scripts\\settings.ini", "w") as config_file:
+        with open(".\\settings.ini", "w") as config_file:
             self.cfg.write(config_file)
 
     def on_closing(self):

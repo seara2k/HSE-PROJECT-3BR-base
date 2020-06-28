@@ -1,174 +1,19 @@
-import numpy as np
-
+import pandas as pd
 
 base_stats_rows = ["Количество элементов", "Уникальные элементы",
                    "Самый частый элемент", "Количество повторений",
-                   "Среднее значение", "Среднеквадратическое отклонение", "Минимальный элемент", "25%", "50%", "75%", "Максимальный элемент"]
+                   "Среднее значение", "Среднеквадратическое отклонение", "Минимальный элемент", "25%", "50%",
+                   "75%", "Максимальный элемент"]
 
 
 def base_stats(df, array):
+    df3 = pd.DataFrame(index=['count', 'unique', 'top', 'freq', 'mean',
+                              'std', 'min', '25%', '50%', '75%', 'max'])
     df1 = df[array].astype(str).describe(include='all')
     df2 = df[array].describe(include='all')
     df2 = df2.fillna(value=df1)
-    return df2.fillna(value='-')
-
-
-def amount_of_elements(var):
-    """
-    Подсчет элементов в списке
-    ----------
-    Параметры:
-            var - список элементов
-    ----------
-    Возвращает: количество элементов
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    return len(var)
-
-
-def unique_elements(var):
-    """
-    Подсчет уникальных элементов в списке
-    ----------
-    Параметры:
-            var - список элементов
-    ----------
-    Возвращает: количество уникальных элементов
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    return len(set(var))
-
-
-def most_frequent(var):
-    """
-    Поиск самого частого элемента в списке
-    ----------
-    Параметры:
-            var - список элементов
-    ----------
-    Возвращает: первый самый частый элемент
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    var_set = set(var)
-    count = 0
-    most_frequent_element = None
-    for i in var_set:
-        element = var.count(i)
-        if element > count:
-            count = element
-            most_frequent_element = i
-    return most_frequent_element
-
-
-def most_frequent_count(var):
-    """
-    Подсчет повторений самого частого элемента в списке
-    ----------
-    Параметры:
-            var - список элементов
-    ----------
-    Возвращает: количество повторений первого самого частого элемента
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    var_set = set(var)
-    count = 0
-    for i in var_set:
-        element = var.count(i)
-        if element > count:
-            count = element
-    return count
-
-
-def average(var):
-    """
-    Подсчет среднего значения в списке элементов
-    ----------
-    Параметры:
-            var - список элементов
-    ----------
-    Возвращает: среднее значение (прочерк, если подсчитать значение нельзя)
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    elem_sum = 0
-    try:
-        for i in range(len(var)):
-            elem_sum += float(var[i])
-        return f'{(elem_sum / len(var)):.{3}f}'
-    except ValueError:
-        return '-'
-    except TypeError:
-        return '-'
-    except ZeroDivisionError:
-        return '-'
-
-
-def standard_deviation(var):
-    """
-    Подсчет среднеквадратического отклонения
-    ----------
-    Параметры:
-            var - список элементов
-    ----------
-    Возвращает: среднеквадратическое отклонение (прочерк, если подсчитать значение нельзя)
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    try:
-        result = [int(item) for item in var]
-        return f'{np.std(result):.{3}f}'
-    except ValueError:
-        return '-'
-
-
-def maximum(var):
-    """
-    Поиск максимального элемента в списке
-    ----------
-    Параметры:
-            var - список элементов
-    ----------
-    Возвращает: максимальный элемент (прочерк, если поиск невозможен)
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    try:
-        maxi = float(var[0])
-        for i in var:
-            if float(i) > maxi:
-                maxi = float(i)
-        return maxi
-    except ValueError:
-        return '-'
-    except IndexError:
-        return '-'
-
-
-def minimum(var):
-    """
-    Поиск минимального элемента в списке
-    ----------
-    Параметры:
-            var - список элементов
-    ----------
-    Возвращает: минимальный элемент (прочерк, если поиск невозможен)
-    ----------
-    Автор: Никоненко А.Р.
-    """
-    try:
-        mini = float(var[0])
-        for i in var:
-            if float(i) < mini:
-                mini = float(i)
-        return mini
-    except ValueError:
-        return '-'
-    except IndexError:
-        return '-'
+    df_all = pd.concat([df3,df2], axis=1, join='outer')
+    return df_all.fillna(value='-')
 
 
 def good_looking_columns(number_of_columns):
