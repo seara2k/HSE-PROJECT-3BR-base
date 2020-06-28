@@ -37,7 +37,12 @@ class base_stats_window(tk.Toplevel):
         ----------
         Автор: Литвинов В.С.
         """
-
+        # Меню
+        mainmenu = tk.Menu(self)
+        filemenu = tk.Menu(mainmenu, tearoff=0)
+        filemenu.add_command(label="Экспорт в excel", command=lambda:self.parent.give_excel(self.dataframe,False))
+        mainmenu.add_cascade(label="Экспорт", menu=filemenu)
+        self.config(menu=mainmenu)
         # Фрейм окна
         base_stats_window = tk.LabelFrame(
             self, text="Параметры")
@@ -81,14 +86,11 @@ class base_stats_window(tk.Toplevel):
         """
         self.column_names_eng.remove("properties")
         self.column_names_ru.remove("Свойства")
-        self.dataframe=lp.base_stats(self.parent.database.dataframe_all, self.column_names_ru)
+        if self.parent.filtered == 0:
+            self.dataframe=lp.base_stats(self.parent.database.dataframe_all, self.column_names_ru)
+        else:
+            self.dataframe=lp.base_stats(self.parent.filtered_database.dataframe_all, self.column_names_ru)
+        
         for i in range(len(self.dataframe.index)):
             row = sum(self.dataframe.iloc[[i]].values.tolist(), [])
-            row.insert(0,lp.base_stats_rows[i])
             self.tree.insert("", "end", values=row)
-        # for row_name in lp.base_stats_rows.items():
-        #     row = [row_name[0]]
-        #     for name in self.column_names_eng:
-        #         column = self.parent.get_values(name)
-        #         row.append(row_name[1](column))
-        #     self.tree.insert("", "end", values=row)
