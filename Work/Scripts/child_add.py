@@ -414,9 +414,6 @@ class child_add(tk.Toplevel):
         """
         if self.parent.chosen_tree() == "tree_1":
 
-            if self.check_for_changes():
-                self.destroy()
-                return False
 
             if self.check_variables_type() == True:
                 messagebox.showerror(
@@ -425,6 +422,10 @@ class child_add(tk.Toplevel):
                     parent=self)
                 self.grab_set()
                 self.focus_set()
+                return False
+
+            if self.check_for_changes():
+                self.destroy()
                 return False
 
             if self.parent.database.dataframe_1["Номер сотрудника"].tolist().count(int(self.id_entry.get())) >= 1 and (self.row[0] != int(self.id_entry.get())):
@@ -438,9 +439,6 @@ class child_add(tk.Toplevel):
 
         if self.parent.chosen_tree() == "tree_2":
 
-            if self.check_for_changes():
-                self.destroy()
-                return False
 
             if self.check_variables_type() == True:
                 messagebox.showerror(
@@ -449,6 +447,10 @@ class child_add(tk.Toplevel):
                     parent=self)
                 self.grab_set()
                 self.focus_set()
+                return False
+                
+            if self.check_for_changes():
+                self.destroy()
                 return False
 
             if self.parent.database.dataframe_2["Номер сотрудника"].tolist().count(int(self.id_entry.get())) >= 1 and (self.row[0] != int(self.id_entry.get())):
@@ -462,9 +464,6 @@ class child_add(tk.Toplevel):
 
         if self.parent.chosen_tree() == "tree_3":
 
-            if self.check_for_changes():
-                self.destroy()
-                return False
 
             if self.check_variables_type() == True:
                 messagebox.showerror(
@@ -475,6 +474,9 @@ class child_add(tk.Toplevel):
                 self.focus_set()
                 return False
 
+            if self.check_for_changes():
+                self.destroy()
+                return False
 
             if self.parent.database.dataframe_3["Город"].tolist().count(self.city_entry.get()) >= 1 and (self.row[0] != self.city_entry.get()) and self.parent.database.dataframe_3["Специальность"].tolist().count(self.speciality_entry.get()) >= 1 and (self.row[1] != self.speciality_entry.get()):
                 messagebox.showerror(
