@@ -16,7 +16,7 @@ def summary(df, attr1_name, attr2_name, num_name):
     ----------
     Возвращает: -
     ----------
-    Автор: Никоненко А.Р.
+    Автор: Чихватова. А.А.
     """
     return pd.pivot_table(df, index=attr1_name, columns=attr2_name,
                           values=num_name, aggfunc='mean')
@@ -30,6 +30,8 @@ def bar_chart(kach_st_1, kach_st_2, name1, name2):
     Параметры:
             kach_st_1 - качественный столбец 1
             kach_st_2 - качетсвенный столбец 2
+            name1 - название качественного столбца 1
+            name2 - название качественного столбца 2
     ----------
     Возвращает: -
     ----------
@@ -58,6 +60,19 @@ def bar_chart(kach_st_1, kach_st_2, name1, name2):
 
 # Гистограмма
 def histogram(kach, kol, name_kach, name_kol):
+    """
+    Построение столбчатой диаграммы
+    ----------
+    Параметры:
+            kach - качественный столбец
+            kol - количественный столбец
+            name_kach - название качественного столбца
+            name_kol - название количественного столбца
+    ----------
+    Возвращает: -
+    ----------
+    Автор: Чихватова А.А.
+    """
     d = {'kol': kol, 'kach': kach}
     df = pd.DataFrame(d)
     df_agg = df.groupby(kach)
@@ -111,6 +126,9 @@ def scatter(kach_st, kol_st_1, kol_st_2, name1, name2, name3):
             kach_st - качественный столбец
             kol_st_1 - численный столбец 1
             kol_st_2 - численный столбец 2
+            name1 - название качественного столбца
+            name2 - название количественного столбца 1
+            name3 - название количественного столбца 2
     ----------
     Возвращает: -
     ----------

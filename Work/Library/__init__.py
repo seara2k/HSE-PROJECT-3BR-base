@@ -4,7 +4,7 @@
 graphical_analysis - модуль построения графических отчётов
 list_processing - модуль обработки списка
 ----------
-Автор: Никоненко А.Р.
+Автор: Чихватова А.А.
 """
 from Library import list_processing as lp
 from Library import graphical_analysis

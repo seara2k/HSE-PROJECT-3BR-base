@@ -44,7 +44,7 @@ class main_gui:
         ----------
         Возвращает: -
         ----------
-        Автор: Литвинов В.С.
+        Автор: Чихватова А.А.
         """
         child_base_stats.child_base_stats(self)
 
@@ -56,7 +56,7 @@ class main_gui:
         ----------
         Возвращает: -
         ----------
-        Автор: Литвинов В.С.
+        Автор: Чихватова А.А.
         """
         child_summary_table.child_summary_table(self)
 
@@ -68,7 +68,7 @@ class main_gui:
         ----------
         Возвращает: -
         ----------
-        Автор: Литвинов В.С.
+        Автор: Чихватова А.А.
         """
         child_bar_chart.child_bar_chart(self)
 
@@ -80,7 +80,7 @@ class main_gui:
         ----------
         Возвращает: -
         ----------
-        Автор: Литвинов В.С.
+        Автор: Чихватова А.А.
         """
         child_histogram.child_histogram(self)
 
@@ -92,7 +92,7 @@ class main_gui:
         ----------
         Возвращает: -
         ----------
-        Автор: Литвинов В.С.
+        Автор: Чихватова А.А.
         """
         child_box_visk.child_box_visk(self)
 
@@ -104,7 +104,7 @@ class main_gui:
         ----------
         Возвращает: -
         ----------
-        Автор: Литвинов В.С.
+        Автор: Чихватова А.А.
         """
         child_dispersion.child_dispersion(self)
 
@@ -121,6 +121,15 @@ class main_gui:
         child_about_program.child_about_program(self)
 
     def open_filter(self):
+        """
+        Вызывает окно выбора фильтров
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         child_add.child_add(self, "filter")
 
     def widgets(self):
@@ -131,7 +140,7 @@ class main_gui:
         ----------
         Возвращает: -
         ----------
-        Автор: Литвинов В.С.
+        Автор: Чихватова А.А.
         """
         mainmenu = tk.Menu(self)
 
@@ -164,7 +173,7 @@ class main_gui:
         ----------
         Возвращает: -
         ----------
-        Автор: Литвинов В.С.
+        Автор: Чихватова А.А.
         """
         # design and mats
         ttk.Style().configure("TNotebook.Tab", padding=('50', '5'))

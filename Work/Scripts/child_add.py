@@ -235,6 +235,15 @@ class child_add(tk.Toplevel):
         self.focus_set()
 
     def start(self):
+        """
+        Функция считывания ввёдных значений
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         if self.fate == "add":
             if self.parent.chosen_tree() == "tree_1" and self.check_input():
                 self.parent.add([int(self.id_entry.get()),
@@ -303,9 +312,16 @@ class child_add(tk.Toplevel):
                 self.grab_set()
                 self.focus_set()
 
-
-
     def check_variables_type(self):
+        """
+        Проверка типов введённых значений
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         if self.parent.chosen_tree() == "tree_1":
 
             correct_output = ["int", "str", "str", "str"]
@@ -359,6 +375,15 @@ class child_add(tk.Toplevel):
             return (correct_output != output or input_array.count("") != 0)
 
     def check_for_changes(self):
+        """
+        Проверка изменения значений
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         if self.parent.chosen_tree() == "tree_1":
             input_array = [int(self.id_entry.get()),
                            self.full_name_entry.get(),
@@ -378,6 +403,15 @@ class child_add(tk.Toplevel):
             return input_array == self.row
 
     def check_input(self):
+        """
+        Проверка введённых значений на правильность ввода
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         if self.parent.chosen_tree() == "tree_1":
 
             if self.check_for_changes():

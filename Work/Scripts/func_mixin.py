@@ -13,7 +13,8 @@ class main_funcs:
         """
         Регенерирует таблицу из датафрейма
         ----------
-        Параметры: -
+        Параметры:
+                database - датафрейм
         ----------
         Возвращает: -
         ----------
@@ -126,6 +127,25 @@ class main_funcs:
         self.if_changed = 1
 
     def filter(self, identity, sign_identity, name, city, number, spec, hour, sign_hour, pay, sign_pay):
+        """
+        Сортировка справочников
+        ----------
+        Параметры:
+                identity - Фильтр значения Номер сотрудника
+                sign_identity - знак фильтра значения Номер сотрудника
+                name - Фильтр значения ФИО
+                city - Фильтр значения Город
+                number - Фильтр значения Номер телефона
+                spec - Фильтр значения Специальность
+                hour - Фильтр значения Часы
+                sign_hour - знак фильтра значения Часы
+                pay - Фильтр значения Зарплата в час
+                sign_pay - знак фильтра значения Зарплата в час
+        ----------
+        Возвращает: отфильтрованный класс датафрейма
+        ----------
+        Автор: Никоненко А.Р.
+        """
         filtered_database = db.db()
         filtered_database.dataframe_all = self.database.dataframe_all
         filtered_database.dataframe_1 = self.database.dataframe_1
@@ -550,6 +570,15 @@ class main_funcs:
                 self.give_excel(self.database.dataframe_3, False)
 
     def give_excel(self, dataframe, index):
+        """
+        Окно экспорта в .xlsx файл
+        ----------
+        Параметры: -
+        ----------
+        Возвращает: -
+        ----------
+        Автор: Литвинов В.С.
+        """
         saving_path = filedialog.asksaveasfilename(
             title="Сохранить в xlsx", initialdir=".\\Output", filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx")
         if saving_path == "":
@@ -629,7 +658,7 @@ class main_funcs:
 
     def save_to_settings(self):
         """
-        Изменение файла settings.py
+        Изменение файла settings.ini
         ----------
         Параметры: -
         ----------

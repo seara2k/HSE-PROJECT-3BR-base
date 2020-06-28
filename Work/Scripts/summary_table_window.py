@@ -10,7 +10,7 @@ class summary_table_window(tk.Toplevel):
 
     def __init__(self, parent, column_name_1_ru, column_name_2_ru, column_name_3_ru):
         """
-        Конструктор окна вывода базовой статистики
+        Конструктор окна вывода сводной таблицы
         ----------
         Параметры:
                 parent - класс родителя
@@ -32,7 +32,7 @@ class summary_table_window(tk.Toplevel):
 
     def init_GUI(self):
         """
-        Конструктор интерфейса окна базовой статистики
+        Конструктор интерфейса окна сводной таблицы
         ----------
         Параметры: -
         ----------
