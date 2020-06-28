@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 # Сводная Таблица
-def summary(df1, attr1_name, attr2_name, num_name):
+def summary(df, attr1_name, attr2_name, num_name):
     """
     Создание датафрейма для сводной таблицы
     ----------
@@ -18,8 +18,6 @@ def summary(df1, attr1_name, attr2_name, num_name):
     ----------
     Автор: Чихватова. А.А.
     """
-    df = df1.astype({'Номер сотрудника': float, 'ФИО': str, 'Город': str,
-                     'Номер телефона': str, 'Специальность': str, 'Часы': float, 'Зарплата в час': float})
     return pd.pivot_table(df, index=attr1_name, columns=attr2_name,
                           values=num_name, aggfunc='mean')
 

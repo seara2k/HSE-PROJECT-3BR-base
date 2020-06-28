@@ -43,6 +43,15 @@ class main_funcs:
             row = sum(database.dataframe_3.iloc[[i]].values.tolist(), [])
             self.tree_3.insert("", "end", values=row)
 
+        database.dataframe_all = database.dataframe_all.astype({'Номер сотрудника': int, 'ФИО': str, 'Город': str,
+                                                                'Номер телефона': str, 'Специальность': str, 'Часы': int, 'Зарплата в час': int})
+        database.dataframe_1 = database.dataframe_1.astype({'Номер сотрудника': int, 'ФИО': str, 'Город': str,
+                                                            'Номер телефона': str})
+        database.dataframe_2 = database.dataframe_2.astype(
+            {'Номер сотрудника': int, 'Специальность': str, 'Часы': int})
+        database.dataframe_3 = database.dataframe_3.astype(
+            {'Город': str, 'Специальность': str,  'Зарплата в час': int})
+
         self.eg_btn_edit.config(state="disabled")
         self.filtered = 0
 
@@ -90,7 +99,6 @@ class main_funcs:
             for row in getattr(self, tree).selection():
                 row_city = getattr(self, tree).item(row)["values"][0]
                 row_speciality = getattr(self, tree).item(row)["values"][1]
-                print(row_city, row_speciality)
                 self.database.delete_jobs(row_city, row_speciality)
 
         self.refresh_from_database(self.database)
