@@ -4,6 +4,8 @@ from tkinter import filedialog
 from tkinter import ttk, messagebox
 import pandas as pd
 import pickle
+from . import class_database as db
+
 
 
 class main_funcs:
@@ -18,12 +20,12 @@ class main_funcs:
         ----------
         Автор: Литвинов В.С.
         """
+
         for tree in self.tree_names:
             getattr(self, tree).delete(*getattr(self, tree).get_children())
 
             for column in getattr(self, tree + "_columns"):
                 getattr(self, tree).heading(column, image="")
-
         database.merge()
         for i in range(len(database.dataframe_all.index)):
             row = sum(database.dataframe_all.iloc[[i]].values.tolist(), [])
@@ -125,7 +127,11 @@ class main_funcs:
         self.if_changed = 1
 
     def filter(self, identity, name, city, number, spec, hour, pay):
-        filtered_database = self.database
+        filtered_database = db.db()
+        filtered_database.dataframe_all = self.database.dataframe_all
+        filtered_database.dataframe_1 = self.database.dataframe_1
+        filtered_database.dataframe_2 = self.database.dataframe_2
+        filtered_database.dataframe_3 = self.database.dataframe_3
         if identity != '':
             filtered_database.dataframe_all = filtered_database.dataframe_all.loc[
                 filtered_database.dataframe_all['Номер сотрудника'] == int(identity)]
@@ -431,7 +437,7 @@ class main_funcs:
             self.save()
             return True
 
-    def export_to_excel(self, dataframe, index, summary):
+    def export_to_excel(self, index):
         """
         Экспорт базы данных в .xlsx файл
         ----------
@@ -441,24 +447,37 @@ class main_funcs:
         ----------
         Автор: Никоненко А.Р.
         """
-        saving_path = filedialog.asksaveasfilename(
-            title="Сохранить в xlsx", initialdir=".\\Output", filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx")
-        if saving_path == "":
-            return
-        else:
-            if summary == True:
-                dataframe.to_excel(saving_path, index=index)
-            if self.filtered == 1 and summary == False:
-                dataframe = self.filtered_dataframe
-            dataframe.to_excel(saving_path, index=index)
+        if self.filtered == 1:
+            if self.chosen_tree() == "tree_all":
+                self.give_excel(self.filtered_database.dataframe_all, False)
+            elif self.chosen_tree() == "tree_1":
+                self.give_excel(self.filtered_database.dataframe_1, False)
 
-    def give_excel(self):
+            elif self.chosen_tree() == "tree_2":
+                self.give_excel(self.filtered_database.dataframe_2, False)
+
+            elif self.chosen_tree() == "tree_3":
+                self.give_excel(self.filtered_database.dataframe_3, False)
+        elif self.filtered == 0:
+            if self.chosen_tree() == "tree_all":
+                self.give_excel(self.database.dataframe_all, False)
+
+            elif self.chosen_tree() == "tree_1":
+                self.give_excel(self.database.dataframe_1, False)
+
+            elif self.chosen_tree() == "tree_2":
+                self.give_excel(self.database.dataframe_2, False)
+
+            elif self.chosen_tree() == "tree_3":
+                self.give_excel(self.database.dataframe_3, False)
+
+    def give_excel(self, dataframe, index):
         saving_path = filedialog.asksaveasfilename(
             title="Сохранить в xlsx", initialdir=".\\Output", filetypes=[("Excel file", ".xlsx")], defaultextension=".xlsx")
         if saving_path == "":
             return
         else:
-            export_to_excel(saving_path)
+            dataframe.to_excel(saving_path, index=index)
 
     def import_from_excel(self):
         """

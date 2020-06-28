@@ -158,21 +158,21 @@ class child_add(tk.Toplevel):
         else:
             self.pays_an_hour_entry = ttk.Entry(pays_an_hour_subframe)
             self.pays_an_hour_entry.pack(side=tk.RIGHT, padx=5, pady=5, fill=tk.X)
-
-        if self.parent.chosen_tree() == "tree_1":
-            self.speciality_entry.config(state="disabled")
-            self.time_entry.config(state="disabled")
-            self.pays_an_hour_entry.config(state="disabled")
-        elif self.parent.chosen_tree() == "tree_2":
-            self.full_name_entry.config(state="disabled")         
-            self.city_entry.config(state="disabled")   
-            self.phone_number_entry.config(state="disabled")
-            self.pays_an_hour_entry.config(state="disabled")
-        elif self.parent.chosen_tree() == "tree_3":
-            self.id_entry.config(state="disabled")
-            self.full_name_entry.config(state="disabled")         
-            self.phone_number_entry.config(state="disabled")
-            self.time_entry.config(state="disabled")
+        if self.fate == "change" or self.fate == "add":
+            if self.parent.chosen_tree() == "tree_1":
+                self.speciality_entry.config(state="disabled")
+                self.time_entry.config(state="disabled")
+                self.pays_an_hour_entry.config(state="disabled")
+            elif self.parent.chosen_tree() == "tree_2":
+                self.full_name_entry.config(state="disabled")         
+                self.city_entry.config(state="disabled")   
+                self.phone_number_entry.config(state="disabled")
+                self.pays_an_hour_entry.config(state="disabled")
+            elif self.parent.chosen_tree() == "tree_3":
+                self.id_entry.config(state="disabled")
+                self.full_name_entry.config(state="disabled")         
+                self.phone_number_entry.config(state="disabled")
+                self.time_entry.config(state="disabled")
 
         if self.fate == "change":
             tree = self.parent.chosen_tree()
@@ -240,15 +240,15 @@ class child_add(tk.Toplevel):
             self.destroy()
 
         elif self.fate == "filter":
-            self.parent.filtered_dataframe = self.parent.filter(self.id_entry.get(),
-                                                                self.full_name_entry.get(),
-                                                                self.city_entry.get(),
-                                                                self.phone_number_entry.get(),
-                                                                self.speciality_entry.get(),
-                                                                self.time_entry.get(),
-                                                                self.pays_an_hour_entry.get())
+            self.parent.filtered_database = self.parent.filter(self.id_combobox.get(),
+                                                                self.full_name_combobox.get(),
+                                                                self.city_combobox.get(),
+                                                                self.phone_number_combobox.get(),
+                                                                self.speciality_combobox.get(),
+                                                                self.time_combobox.get(),
+                                                                self.pays_an_hour_combobox.get())
 
-            self.parent.refresh_from_database(self.parent.filtered_dataframe)
+            self.parent.refresh_from_database(self.parent.filtered_database)
             self.parent.filtered = 1
             self.destroy()
 

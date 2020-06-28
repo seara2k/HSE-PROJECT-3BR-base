@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from . import child_add as child_add
-from . import child_base_stats as child_base_stats
-from . import child_summary_table as child_summary_table
-from . import child_bar_chart as child_bar_chart
-from . import child_histogram as child_histogram
-from . import child_box_visk as child_box_visk
-from . import child_dispersion as child_dispersion
+from .Analysis import child_base_stats as child_base_stats
+from .Analysis import child_summary_table as child_summary_table
+from .Analysis import child_bar_chart as child_bar_chart
+from .Analysis import child_histogram as child_histogram
+from .Analysis import child_box_visk as child_box_visk
+from .Analysis import child_dispersion as child_dispersion
 from . import child_about_program as child_about_program
 
 
@@ -145,7 +145,7 @@ class main_gui:
         filemenu.add_command(label="Импорт из excel",
                              command=self.import_from_excel)
         filemenu.add_command(label="Экспорт в excel",
-                             command=lambda: self.export_to_excel(self.database,False,False))
+                             command=lambda: self.export_to_excel(False))
 
         helpmenu = tk.Menu(mainmenu, tearoff=0)
         helpmenu.add_command(label="Помощь", command=self.get_help)
@@ -232,7 +232,7 @@ class main_gui:
                                pady=5, fill=tk.X, expand=1)
 
         self.fg_btn_refresh = ttk.Button(
-            filtr_group, text="Очистить фильтрацию", command=lambda: self.refresh_from_database(self.database.dataframe))
+            filtr_group, text="Очистить фильтрацию", command=lambda: self.refresh_from_database(self.database))
         self.fg_btn_refresh.pack(side=tk.TOP, padx=5,
                                  pady=5, fill=tk.X, expand=1)
 
