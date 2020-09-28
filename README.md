@@ -1,5 +1,20 @@
 # 3BR-base
+# EN
+Projet for learning basic python libraries - tkinter, pandas, numpy, matplotlib, pickle.
+# Programs features: 
+Tkinter interface
 
+Third normal form of the base
+
+Add, delete, change rows of workers(base)
+
+Save/Open to/from pickle/excel
+
+Tables filter
+
+Building graphs 
+
+# RU
 Программа/проект для изучения основных библиотек python - tkinter, pandas, numpy, matplotlib, pickle.
 # Возможности программы: 
 Удобный интерфейс
