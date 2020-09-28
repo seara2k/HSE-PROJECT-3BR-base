@@ -1,6 +1,6 @@
 # 3BR-base
 # EN
-Projet for learning basic python libraries - tkinter, pandas, numpy, matplotlib, pickle.
+University projet for learning basic python libraries - tkinter, pandas, numpy, matplotlib, pickle.
 # Programs features: 
 Tkinter interface
 
@@ -15,7 +15,7 @@ Tables filter
 Building graphs 
 
 # RU
-Программа/проект для изучения основных библиотек python - tkinter, pandas, numpy, matplotlib, pickle.
+Вузовская программа/проект для изучения основных библиотек python - tkinter, pandas, numpy, matplotlib, pickle.
 # Возможности программы: 
 Удобный интерфейс
 
